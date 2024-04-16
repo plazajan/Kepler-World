@@ -1,5 +1,6 @@
 ==================================================================================
-CELESTIAL MECHANICS
+CELESTIAL MECHANICS 
+for students before calculs
 
 TO DO: turn this into exercises in a Jupyter notebook.
 
