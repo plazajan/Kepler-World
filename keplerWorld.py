@@ -7,7 +7,7 @@ and results are later scaled down to be displayed in turtle graphics.
 The simulation tests if the resulting orbits and planets' movements conform
 to the Kepler laws, and to their enhancements, such as the Vis Viva Equation.
 This provides an example of continuing local effect (of the law of gravity),
-having a global effect (of eliptical orbits with details specified by Kepler.) 
+having a global effect (of elliptical orbits with details specified by Kepler.) 
 """
 
 #==================================================================================
@@ -19,13 +19,13 @@ from math import sqrt, pi, sin, cos
 
 # Astronomical data in kilograms, meters, seconds, from Wikipedia.
 
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 
 G = 6.67430e-11 # m^3 / (kg * s^2). Gravitational constant
 DAY = 24*60*60  # s
 KM = 1000 # m
 
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 
 def bcsFromAPm(A,P,m):
     """A - aphelion in m, P - perihelion in m, m - mass in kg."""
@@ -43,14 +43,14 @@ def bcsFromAPm(A,P,m):
 #print(bcsFromAPm(A_E,  P_E,  m_E ))
 #print(bcsFromAPm(A_Ma, P_Ma, m_Ma))
 
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 # Sun
 
 # white
 M_S = 1.98847e30 # Mass in kg.
 R_S = 696000*KM  # Radius in m.
 
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 # Mercury
 
 # grey
@@ -68,7 +68,7 @@ b_Me    = bcs[0]   # semi-minor axis in m.
 c_Me    = bcs[1]   # linear eccentricity = center-to-focus distance, in m.
 sMax_Me = bcs[2]   # Max speed (at the prihelion) in m/s.
 
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 # Venus
 
 # yellow/white
@@ -86,7 +86,7 @@ b_V    = bcs[0]    # semi-minor axis in m.
 c_V    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
 sMax_V = bcs[2]    # Max speed (at the prihelion) in m/s.
 
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 # Earth
 
 # blue
@@ -104,7 +104,7 @@ b_E    = bcs[0]     # semi-minor axis in m.
 c_E    = bcs[1]     # linear eccentricity = center-to-focus distance, in m.
 sMax_E = bcs[2]     # Max speed (at the prihelion) in m/s.
 
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 # Mars
 
 # red
@@ -122,7 +122,7 @@ b_Ma    = bcs[0]    # semi-minor axis in m.
 c_Ma    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
 sMax_Ma = bcs[2]    # Max speed (at the prihelion) in m/s.
 
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 # Jupiter
 
 # requires a bigger scaling constant in simulations!
@@ -142,7 +142,7 @@ b_J    = bcs[0]    # semi-minor axis in m.
 c_J    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
 sMax_J = bcs[2]    # Max speed (at the prihelion) in m/s.
 
-###----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 # Saturn
 
 # requires a bigger scaling constant in simulations!
@@ -162,7 +162,7 @@ b_S    = bcs[0]    # semi-minor axis in m.
 c_S    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
 sMax_S = bcs[2]    # Max speed (at the prihelion) in m/s.
 
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 # Uranus
 
 # requires a bigger scaling constant in simulations!
@@ -182,7 +182,7 @@ b_U    = bcs[0]    # semi-minor axis in m.
 c_U    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
 sMax_U = bcs[2]    # Max speed (at the prihelion) in m/s.
 
-###----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 # Neptune
 
 # requires a bigger scaling constant in simulations!
@@ -202,7 +202,7 @@ b_N    = bcs[0]    # semi-minor axis in m.
 c_N    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
 sMax_N = bcs[2]    # Max speed (at the prihelion) in m/s.
 
-#==================================================================================
+#=================================================================================
 # SIMULATION PARAMETERS
 
 # A scaling factor suitable for showing orbits of the 4 inner planets.
@@ -213,7 +213,7 @@ SCALING = 1000000000 # Real distances in meters will be divided by this
 TIME_STEP = 1000 # seconds.
         # Position, velocity, acceleration will be updated every TIME_STEP.
 
-#==================================================================================
+#=================================================================================
 # PLANETS
 
 class Planet(object):
@@ -288,7 +288,7 @@ class Planet(object):
     def pensize(self):
         return(self._pensize)
 
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 # Planets - global constants.
 
 # The sun is at (0,0)
@@ -317,7 +317,7 @@ PLANET11 = Planet(m_E, P_E, 0, 0, 1.1*S10, TIME_STEP, "Planet11")
 PLANET12 = Planet(m_E, P_E, 0, 0, 1.2*S10, TIME_STEP, "Planet12")
 PLANET13 = Planet(m_E, P_E, 0, 0, 1.3*S10, TIME_STEP, "Planet13")
 
-#==================================================================================
+#=================================================================================
 # AUXILIARY FUNCTIONS
 
 def sky(skyColor="black", showSun=True):
@@ -339,7 +339,7 @@ def sky(skyColor="black", showSun=True):
 
 #sky()
 
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
    
 def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0, focusColor="white"):
     """Drwas an ellipse centered at (-leftShift,0) and the the foci;
@@ -372,7 +372,7 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0, focusColor="white"):
 #sky(showSun=False)
 #drawEllipse(200,100)
         
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 
 def simulate0(planet: Planet):
     # version 0, just draw the orbit, do not verify laws, formulas.
@@ -517,7 +517,7 @@ def simulate(planet: Planet):
 #simulate(PLANET08)
 #simulate(PLANET07)
 
-#==================================================================================
+#=================================================================================
 # FUNCTIONS CALLED BY main
 
 def innerPlanets():
@@ -604,7 +604,7 @@ def innerPlanets():
 # 687.85 - from the simulation.
 # 0.13 % error
    
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 
 def testKepler(planet):
     """Precondition: planet position (x,y) must have x>0, y=0,
@@ -641,7 +641,7 @@ def testKepler(planet):
 
 #testKepler(PLANET12)
 
-#==================================================================================
+#=================================================================================
 
 def main():
     print("Welcome to Kepler's World.")
@@ -672,5 +672,5 @@ def main():
 if __name__ == "__main__":
     main()
 
-#==================================================================================
+#=================================================================================
 
