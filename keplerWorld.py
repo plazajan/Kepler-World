@@ -23,6 +23,7 @@ from math import sqrt, pi, sin, cos
 
 G = 6.67430e-11 # m^3 / (kg * s^2). Gravitational constant
 DAY = 24*60*60  # s
+KM = 1000 # m
 
 #----------------------------------------------------------------------------------
 
@@ -47,15 +48,15 @@ def bcsFromAPm(A,P,m):
 
 # white
 M_S = 1.98847e30 # Mass in kg.
-R_S = 696000000  # Radius in m.
+R_S = 696000*KM  # Radius in m.
 
 #----------------------------------------------------------------------------------
 # Mercury
 
 # grey
-A_Me = 69820000000 # Aphelion in m.
-P_Me = 46000000000 # Perihlion in m.
-a_Me = 57910000000 # Semi-major axis in m.
+A_Me = 69820000*KM # Aphelion in m.
+P_Me = 46000000*KM # Perihlion in m.
+a_Me = 57910000*KM # Semi-major axis in m.
 e_Me = 0.205630    # Eccentricity.
 T_Me = 87.9691*DAY # Sidereal orbital period in s.
 s_Me = 47360       # Average orbital speed in m/s.
@@ -71,9 +72,9 @@ sMax_Me = bcs[2]   # Max speed (at the prihelion) in m/s.
 # Venus
 
 # yellow/white
-A_V = 108940000000 # Aphelion in m.
-P_V = 107480000000 # Perihlion in m.
-a_V = 108210000000 # Semi-major axis in m.
+A_V = 108940000*KM # Aphelion in m.
+P_V = 107480000*KM # Perihlion in m.
+a_V = 108210000*KM # Semi-major axis in m.
 e_V = 0.006772     # Eccentricity.
 T_V = 224.701*DAY   # Sidereal orbital period in s.
 s_V = 35020        # Average orbital speed in m/s.
@@ -89,9 +90,9 @@ sMax_V = bcs[2]    # Max speed (at the prihelion) in m/s.
 # Earth
 
 # blue
-A_E = 152097597000       # Aphelion in m.
-P_E = 147098450000       # Perihlion in m.
-a_E = 149598023000       # Semi-major axis in m.
+A_E = 152097597*KM       # Aphelion in m.
+P_E = 147098450*KM       # Perihlion in m.
+a_E = 149598023*KM       # Semi-major axis in m.
 e_E = 0.0167086          # Eccentricity
 T_E = 365.2563630040*DAY # Sidereal orbital period in s. 
 S_E = 29782.7            # Average orbital speed in m/s.
@@ -107,9 +108,9 @@ sMax_E = bcs[2]     # Max speed (at the prihelion) in m/s.
 # Mars
 
 # red
-A_Ma = 249261000000 # Aphelion in m.
-P_Ma = 206650000000 # Perihlion in m.
-a_Ma = 227939366000 # Semi-major axis in m.
+A_Ma = 249261000*KM # Aphelion in m.
+P_Ma = 206650000*KM # Perihlion in m.
+a_Ma = 227939366*KM # Semi-major axis in m.
 e_Ma = 0.0934       # Eccentricity.
 T_Ma = 686.980*DAY  # Sidereal orbital period in s.
 s_Ma = 24070        # Average orbital speed in m/s.
@@ -127,9 +128,9 @@ sMax_Ma = bcs[2]    # Max speed (at the prihelion) in m/s.
 # requires a bigger scaling constant in simulations!
 
 # yellow
-A_J = 816363000000 # Aphelion in m.
-P_J = 740595000000 # Perihlion in m.
-a_J = 778479000000 # Semi-major axis in m.
+A_J = 816363000*KM # Aphelion in m.
+P_J = 740595000*KM # Perihlion in m.
+a_J = 778479000*KM # Semi-major axis in m.
 e_J = 0.0489       # Eccentricity.
 T_J = 4332.59*DAY    # Sidereal orbital period in s.
 s_J = 13070        # Average orbital speed in m/s.
@@ -147,9 +148,9 @@ sMax_J = bcs[2]    # Max speed (at the prihelion) in m/s.
 # requires a bigger scaling constant in simulations!
 
 # yellow
-A_S = 1514500000000 # Aphelion in m.
-P_S = 1352550000000 # Perihlion in m.
-a_S = 1433530000000 # Semi-major axis in m.
+A_S = 1514500000*KM # Aphelion in m.
+P_S = 1352550000*KM # Perihlion in m.
+a_S = 1433530000*KM # Semi-major axis in m.
 e_S = 0.0565        # Eccentricity.
 T_S = 10755.70*DAY  # Sidereal orbital period in s. 
 s_S = 9680          # Average orbital speed in m/s.
@@ -167,9 +168,9 @@ sMax_S = bcs[2]    # Max speed (at the prihelion) in m/s.
 # requires a bigger scaling constant in simulations!
 
 # white
-A_U = 3006390000000 # Aphelion in m.
-P_U = 2735560000000 # Perihlion in m.
-a_U = 2870972000000 # Semi-major axis in m.
+A_U = 3006390000*KM # Aphelion in m.
+P_U = 2735560000*KM # Perihlion in m.
+a_U = 2870972000*KM # Semi-major axis in m.
 e_U = 0.04717       # Eccentricity.
 T_U = 30,688.5*DAY    # Sidereal orbital period in s.
 s_U = 6800          # Average orbital speed in m/s.
@@ -187,9 +188,9 @@ sMax_U = bcs[2]    # Max speed (at the prihelion) in m/s.
 # requires a bigger scaling constant in simulations!
 
 # blue
-A_N = 4540000000000 # Aphelion in m.
-P_N = 4460000000000 # Perihlion in m.
-a_N = 4500000000000 # Semi-major axis in m.
+A_N = 4540000000*KM # Aphelion in m.
+P_N = 4460000000*KM # Perihlion in m.
+a_N = 4500000000*KM # Semi-major axis in m.
 e_N = 0.008678      # Eccentricity.
 T_N = 60195*DAY    # Sidereal orbital period in s.
 s_N = 5.43          # Average orbital speed in m/s.
