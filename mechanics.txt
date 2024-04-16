@@ -1,0 +1,224 @@
+==================================================================================
+CELESTIAL MECHANICS
+
+TO DO: turn this into exercises in a Jupyter notebook.
+
+----------------------------------------------------------------------------------
+Ellipse
+
+Every ellipse on a given plane
+can be defined by specifying two points f1, f2, called foci,
+and a constant d greater than or equal to dist(f1, f2).
+A point p in the plane belong to the ellipse iff
+dist(f1,p) + dist(f2,p) = d.
+
+Parameters:
+
+Consider an ellipse with the foci at (-f,0) and (f,0)
+on a Cartesian plane, where f>=0.
+
+Such an ellipse has a center at (0,0) and
+is symmetric with respect to:
+    point symmetry with respect to (0,0),
+    reflection with respect to the x-axis,
+    reflection with respect to the y-axis.
+
+left vertex, right vertex - the points where the ellipse intersects the x-axis.
+lower vertex, upper vertex - the points where the ellipse intersects the y-axis.
+
+a - semi-major axis - the distance from the center to the right (or left) vertex.
+b - semi-minor axis - the distance from the center to the upper (or lower) vertex.
+c - linar eccentricity - the distance from the center to a focus.
+A - aphelion - the bigger of the distances from the foci to the right vertex.
+P - perihelion - the smaller of the distances from the foci to the right vertex.
+e - eccentricity = c/a.
+
+2c + 2(a-c) = 2 sqrt(b^2 + c^2) -- from Pythagorean equation.
+So, 2a = 2 sqrt(b^2 + c^2)
+So, a = sqrt(b^2 + c^2)
+So, a^2 = b^2 + c^2
+
+P = a-c
+
+A = a+c
+
+a = (A+P)/2
+
+c = a-P = (A+P)/2 - P = (A-P)/2
+
+b^2 = a^2 - c^2 = ((A+P)/2)^2 - ((A-P)/2)^2 = 4AP/4 = AP
+So, b = sqrt(AP)
+
+e = c/a = sqrt(a^2-b^2) / a
+So, c = ae = sqrt(a^2-b^2)
+
+Alternatively, an ellipse with major axis 2a on the x-axis of a Cartesian plane,
+can be obtained by taking a circle with diameter 2a on the x-axis,
+and contracting the plane in (only) the y direction by some constant factor.
+
+A parametric equation of a circle with radius r and the center at (0,0):
+x = r cos t,
+y = r sin t,
+where t in [0, 2pi).
+
+A parametric equation of elipse with semi-major axis a and semi-minor axis b
+and the center at (0,0):
+x = a cos t,
+y = b sin t,
+where t in [0, 2pi).
+
+Exercise
+A parametric equation of elipse with semi-major axis a and semi-minor axis b
+and the center at (-c,0), where a,b,c are given.
+
+Exercise
+A parametric equation of elipse with semi-major axis a and semi-minor axis b
+and the center at (f2,0), where f2 is the right focus f2, 
+everything calculated from a, b.
+
+----------------------------------------------------------------------------------
+Vectors and matrices in R^2.
+
+Adding vectors: ...
+
+Length/magnitude of a vector: |(x,y)| = sqrt(x^2 + y^2)
+
+A unit vector in the direction of vector (x,y):
+
+v = |v|*u, where u is the unit vector in the direction of v
+
+2x2 matrix
+    a b
+    c d
+
+Determinant of this matrix: det M = ad - bc
+
+Area of a parallelogram spanned by two vectors =
+= the absolute value of the determinant of the matrix with such column vectors.
+
+----------------------------------------------------------------------------------
+Newtonian mechanics, laws of motion
+
+A body not subject to forces is at rest or moves straight at a constant speed.
+
+F = ma
+
+Law of gravity: F = G Mm / (r^2)
+
+Velocity is a vector (vx,vy) - may vary with time
+vx - horizontal speed, vy - vertical speed
+
+speed is a scalar - the length/magnitude of velocity
+
+Acceleration is a vector (ax, ay)
+(ax, ay)- horizontal and vertical acceleration.
+For a body moving on a straight line, (vx,vy) and (ax,ay) are parallel.
+For a body moving on a circular orbit, (vx,vy) and (ax,ay) are perpendicular.
+For a body moving on a curve, (vx,vy) and (ax,ay) are not parallel.
+
+Change of position after time dt
+dx += vx * dt
+dy += vy * dt
+
+Change of velocity after time dt
+dvx += ax * dt
+dvy += ay * dt
+
+Acceleration of m orbiting stationary M while at distance r.
+ax = -G*M*x/(r^3) 
+ay = -G*M*y/(r^3)
+
+Centripetal force - the force that makes the body to follow a curved path
+F = ma = mv^2/r
+
+----------------------------------------------------------------------------------
+Planetary motion (celestial mechanics)
+
+The two-body problem parameters (.
+
+G - the gravitational constant = 6.67430e-11 # m^3 / (kg * s^2).
+
+M - the bigger mass (Sun, considered stationary)
+m - the smaller mass (planet, given some initial velocity, subject to Ms gravity.)
+
+mu - gravitational parameter = G(M+m)
+approximately GM when m << M.
+
+r - the distance between M and m (varies with time)
+v - speed of m at its orbit around stationary M (varies with time)
+
+T - orbital period of m in the movement around M.
+a - semi-major axis of the elliptical orbit of m around M.
+
+------
+
+Keplers 1st law:
+
+    the planet moves on an elliptical orbit with the Sun in one focus.
+
+Keplers 2nd law: the planet moves at such a speed that:
+        
+    The line connecting the Sun and the planet
+    sweeps equal areas in equal periods of time,
+
+    The area of the parallelogram spanned by vectors r and v is constant
+
+    The determinant of the square matrix with columns r and v is constant.
+    
+    Vis Viva Equation: v^2 = G(M+m)(2/r - 1/a)
+
+------
+
+Keplers 3rd law:
+
+    T^2 / a^3 = const
+    
+    If orbital period in years, and semi-major axis in AU (astronomical units):
+    P^2 = a^3
+
+    T^2 / a^3 = 4 pi^2 / (G(M+m)) 
+    (If using G in m^3 / (kg * s^2), make sure to use m,s,kg everywhere.)
+    
+In the case of circular orbits this can be easily derived from:
+F = mv^2/r (centripetal)
+F = GMm/(r^2) (gravitational)
+
+We can verify T^2 = a^3 for Mars:
+Mars' sami major axis = 1.524 AU, so its orbital is
+T = sqrt(1.524^3) = 1.88 years
+
+============================================================================
+Celestial Mechanics calculations
+
+----------------------------------------------------------------------------
+The maximum speed of a planet (at the perihelion)
+
+v^2 = G(M+m)(2/r - 1/a)
+so, 
+vmax = G(M+m)(2/P - 1/a) where P = perihelion distance
+solve for a:
+a = PG(M+m) / (2G(M+m)-P*v^2)
+
+----------------------------------------------------------------------------
+Mass of the Sun
+from the Earth-Sun distance and Earth's orbital period
+
+T^2 / a^3 = 4 pi^2 / (GM) because M>>m (mass of Sun >> mass of Earth)
+T - Earth's orbital period
+a - Earth's semi-major axis ~ distance to Sun
+T, a are observable.
+From the equation, one can calculate the mass of the Sun.
+
+----------------------------------------------------------------------------
+Mass of the Earth
+from the distance to the Moon and the Moon's orbital period
+
+----------------------------------------------------------------------------
+Mass of Mars
+from the distance to its moon Phobos and Phobos' orbital period.
+
+----------------------------------------------------------------------------
+Mass of Jupyter
+from the distance to its moon Io and Io's orbital period.
+
+============================================================================
