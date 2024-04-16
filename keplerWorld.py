@@ -639,7 +639,7 @@ def testKepler(planet):
     print(round(TS/DAY,2), "- from the simulation")
     print( round(abs(TS-T)*100/T, 2), "% discrepancy")
 
-#testKepler(PLANET12)
+testKepler(PLANET12)
 
 #=================================================================================
 
@@ -653,8 +653,8 @@ def main():
    Print actual orbital period and that calculated in the simulation.
    
 2. Test Kepler's laws: formulas vs. simulation.
-   Use a made-up celestial body with the same mass and perihelon as Venus
-   but with the maximal speed 20% bigger than that of Venus.
+   Use a made-up celestial body with the same mass and perihelion as Venus
+   but with the maximal speed 1.2 times that of Venus.
 
 3. Exit.
           """)
