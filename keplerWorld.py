@@ -231,7 +231,7 @@ class Planet(object):
     def __init__(self, mass, x, y, vx, vy, timeStep,
                  name=None, color="green", pensize=3):
         """mass in kg,
-           x,y coodinates in m. The Sun is at (0,0).
+           x,y coordinates in m. The Sun is at (0,0).
            vx, vy - velocity in m/s,
            simulation timeStep in s,
            pensize - of the turtle pen while drawing the orbit.
@@ -368,7 +368,7 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
        For an ellipse centered at (0,0) use leftShift=0.
        For an ellipse with the right focus at (0,0), use leftShift = c,
        where c is the linear eccentricity i.e. center-to-focus distance:
-       c = math.sqrt(semiMajorAxis*semiMajorAxis - semiMinorAxis*semiMinorAxis)
+       c = sqrt(semiMajorAxis*semiMajorAxis - semiMinorAxis*semiMinorAxis)
        Note: make sure to create canvas before this function is called.
     """
     if semiMajorAxis < semiMinorAxis:
