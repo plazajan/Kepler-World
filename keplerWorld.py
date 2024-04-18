@@ -1,21 +1,21 @@
 """
 A simple simulation of movements of planets around the Sun.
 It uses a discrete approximation of the real-world continuing
-effect of Newton's law of gravity (F=GMm/rr).
+effect of Newton's law of gravity (F=GMm/rr) on the moving planet.
 
 The calculations are done for actual planets,
 and the results are later scaled down to be displayed in turtle graphics.
 
 The simulation tests if the resulting orbits and planets' movements
-conform to the Kepler laws.
+obay the Kepler laws.
 
-This provides an example of a continuing local effect (of the law of gravity),
-having a global effect (of elliptical orbits with details specified by Kepler.)
+This provides an example of a local effects (of the law of gravity),
+having a global effect (of elliptical orbits with details specified by Kepler.
 
 The simulation shows planets' orbits to scale, 
 but disregards some details not relevant to Kepler's laws.
 Namely, in this simulation (unlike in reality):
-* the orbits of all planets are in the same plane,
+* the orbits of all planets are in the same plane, and
 * for each planet, the foci of its elliptical orbit are on the x-axis
   with the Sun in the right focus.
 """
@@ -25,14 +25,14 @@ from turtle import getscreen, Turtle
 from math import sqrt, pi, sin, cos
 
 #==================================================================================
-# ASTRONOMICAL DATA FROM OBSERVATIONS AND CALCUATIONS 
+# ASTRONOMICAL DATA FROM OBSERVATIONS AND CALCULATIONS 
 
 # Astronomical data in kilograms, meters, seconds, from Wikipedia.
 
 #---------------------------------------------------------------------------------
 
 G = 6.67430e-11 # m^3 / (kg * s^2). Gravitational constant
-DAY = 24*60*60  #s (actual day is 86,400.002s because of slowed down rotation)
+DAY = 24*60*60  #s (actual day is 86400.002 s because of a slowing rotation)
 KM = 1000 # m
 
 #---------------------------------------------------------------------------------
@@ -44,9 +44,10 @@ def bcsFromAPm(A,P,m):
     c = (A - P) / 2 # Linear eccentricity = center-to-focus distance, in m.
     mu = G * (M_S + m) # Gravitational parameter.
     sMax = sqrt(mu * (2/P - 1/a)) # speed at perihelion (max speed)
+    sMin = sqrt(mu * (2/A - 1/a)) # speed at aphelion (min speed)
     # e = c / a; # eccentricity.
     # T = sqrt(4 * pi * pi * a * a * a / mu) # Orbital period.
-    return b, c, sMax
+    return b, c, sMax, sMin
     
 #print(bcsFromAPm(A_Me, P_Me, m_Me))
 #print(bcsFromAPm(A_V,  P_V,  m_V ))
@@ -77,6 +78,7 @@ bcs = bcsFromAPm(A_Me, P_Me, m_Me)
 b_Me    = bcs[0]   # semi-minor axis in m.
 c_Me    = bcs[1]   # linear eccentricity = center-to-focus distance, in m.
 sMax_Me = bcs[2]   # Max speed (at the prihelion) in m/s.
+sMin_Me = bcs[3]   # Min speed (at the aphelion) in m/s.
 
 #---------------------------------------------------------------------------------
 # Venus
@@ -95,6 +97,7 @@ bcs = bcsFromAPm(A_V, P_V, m_V)
 b_V    = bcs[0]    # semi-minor axis in m.
 c_V    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
 sMax_V = bcs[2]    # Max speed (at the prihelion) in m/s.
+sMin_V = bcs[3]    # Min speed (at the aphelion) in m/s.
 
 #---------------------------------------------------------------------------------
 # Earth
@@ -113,6 +116,7 @@ bcs = bcsFromAPm(A_E, P_E, m_E)
 b_E    = bcs[0]     # semi-minor axis in m.
 c_E    = bcs[1]     # linear eccentricity = center-to-focus distance, in m.
 sMax_E = bcs[2]     # Max speed (at the prihelion) in m/s.
+sMin_E = bcs[3]    # Min speed (at the aphelion) in m/s.
 
 #---------------------------------------------------------------------------------
 # Mars
@@ -131,6 +135,7 @@ bcs = bcsFromAPm(A_Ma, P_Ma, m_Ma)
 b_Ma    = bcs[0]    # semi-minor axis in m.
 c_Ma    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
 sMax_Ma = bcs[2]    # Max speed (at the prihelion) in m/s.
+sMin_Ma = bcs[3]    # Min speed (at the aphelion) in m/s.
 
 #---------------------------------------------------------------------------------
 # Jupiter
@@ -151,6 +156,7 @@ bcs = bcsFromAPm(A_J, P_J, m_J)
 b_J    = bcs[0]    # semi-minor axis in m.
 c_J    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
 sMax_J = bcs[2]    # Max speed (at the prihelion) in m/s.
+sMin_J = bcs[3]    # Min speed (at the aphelion) in m/s.
 
 #---------------------------------------------------------------------------------
 # Saturn
@@ -171,6 +177,7 @@ bcs = bcsFromAPm(A_S, P_S, m_S)
 b_S    = bcs[0]    # semi-minor axis in m.
 c_S    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
 sMax_S = bcs[2]    # Max speed (at the prihelion) in m/s.
+sMin_S = bcs[3]    # Min speed (at the aphelion) in m/s.
 
 #---------------------------------------------------------------------------------
 # Uranus
@@ -191,6 +198,7 @@ bcs = bcsFromAPm(A_U, P_U, m_U)
 b_U    = bcs[0]    # semi-minor axis in m.
 c_U    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
 sMax_U = bcs[2]    # Max speed (at the prihelion) in m/s.
+sMin_U = bcs[3]    # Min speed (at the aphelion) in m/s.
 
 #---------------------------------------------------------------------------------
 # Neptune
@@ -211,6 +219,7 @@ bcs = bcsFromAPm(A_N, P_N, m_N)
 b_N    = bcs[0]    # semi-minor axis in m.
 c_N    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
 sMax_N = bcs[2]    # Max speed (at the prihelion) in m/s.
+sMin_N = bcs[3]    # Min speed (at the aphelion) in m/s.
 
 #=================================================================================
 # SIMULATION PARAMETERS
