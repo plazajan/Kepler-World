@@ -50,7 +50,7 @@ c = a-P = (A+P)/2 - P = (A-P)/2
 b^2 = a^2 - c^2 = ((A+P)/2)^2 - ((A-P)/2)^2 = 4AP/4 = AP
 So, b = sqrt(AP)
 
-e = c/a = sqrt(a^2-b^2) / a
+e = c/a = sqrt(a^2-b^2) / a = sqrt(1- (b^2)/(a^2))
 So, c = ae = sqrt(a^2-b^2)
 
 Alternatively, an ellipse with major axis 2a on the x-axis of a Cartesian plane,
