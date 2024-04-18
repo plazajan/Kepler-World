@@ -178,6 +178,7 @@ Keplers 3rd law:
     P^2 = a^3
 
     T^2 / a^3 = 4 pi^2 / (G(M+m)) 
+    i.e. T = 2 pi sqrt(a^3 / (G(M+m) )
     (If using G in m^3 / (kg * s^2), make sure to use m,s,kg everywhere.)
     
 In the case of circular orbits this can be easily derived from:
