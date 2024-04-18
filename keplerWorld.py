@@ -333,6 +333,7 @@ S10 = sqrt(G*(M_S+m_E)/P_E)
 
 # Made-up planets, for computational experiments
 # with the default pencolor=green
+# planet 0.7, planet 0.8, ..., planet 1.3
 PLANET07 = Planet(m_E, P_E, 0, 0, 0.7*S10, TIME_STEP, "Planet07") 
 PLANET08 = Planet(m_E, P_E, 0, 0, 0.8*S10, TIME_STEP, "Planet08")
 PLANET09 = Planet(m_E, P_E, 0, 0, 0.9*S10, TIME_STEP, "Planet09")
@@ -379,6 +380,7 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
        where c is the linear eccentricity i.e. center-to-focus distance:
        c = sqrt(semiMajorAxis*semiMajorAxis - semiMinorAxis*semiMinorAxis)
        Note: make sure to create canvas before this function is called.
+       Note: the parameters are in turtle canvas units, (not in meters).
     """
     if semiMajorAxis < semiMinorAxis:
         raise ValueError(
@@ -401,7 +403,7 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
         y = semiMinorAxis*sin(angle)
         t.goto(x-leftShift,y)
 
-#sky(showSun=False)
+#sky(showSun=False) # run/uncomment this before running drawEllipse
 #drawEllipse(200,100, 0, "pink")
      
 #---------------------------------------------------------------------------------
@@ -456,7 +458,7 @@ def simulate(planet: Planet):
 
     # The planet is back at the perihelion.
 
-#sky()
+#sky() # run/uncomment this before running simulate!
 #simulate(PLANET12)
 
 #-----------------------------------------------------------------------------
@@ -580,7 +582,7 @@ def simulateAndTest(planet: Planet):
     
     return a,b,kepler2discrepancyPercent,T
 
-#sky() # run/uncomment this before running simulate!    
+#sky() # run/uncomment this before running simulateAndTest!    
 #simulateAndTest(PLANET12)
 #simulate(PLANET11)
 #simulate(PLANET10)
