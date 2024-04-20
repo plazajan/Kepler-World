@@ -34,7 +34,8 @@ from math import sqrt, pi, sin, cos
 
 G = 6.67430e-11 # m^3 / (kg * s^2). Gravitational constant
 DAY = 24*60*60  #s (actual day is 86400.002 s because of a slowing rotation)
-KM = 1000 # m
+KM = 1_000 # m
+SEC = 1 # s 
 
 #---------------------------------------------------------------------------------
 
@@ -60,83 +61,83 @@ def bcsFromAPm(A,P,m):
 
 # white
 M_S = 1.98847e30 # Mass in kg.
-R_S = 696000*KM  # Radius in m.
+R_S = 696_000*KM # Radius in m.
 
 #---------------------------------------------------------------------------------
 # Mercury
 
 # grey
-A_Me = 69820000*KM # Aphelion distance in m.
-P_Me = 46000000*KM # Perihlion in m.
-a_Me = 57910000*KM # Semi-major axis in m.
-e_Me = 0.205630    # Eccentricity.
-T_Me = 87.9691*DAY # Sidereal orbital period in s.
-s_Me = 47360       # Average orbital speed in m/s.
-m_Me = 3.3011e23   # Mass in kg.
+m_Me = 3.3011e23     # Mass in kg.
+A_Me = 69_820_000*KM # Aphelion distance in m.
+P_Me = 46_000_000*KM # Perihlion in m.
+a_Me = 57_910_000*KM # Semi-major axis in m.
+e_Me = 0.205630      # Eccentricity.
+s_Me = 47.36*KM/SEC  # Average orbital speed in m/s.
+T_Me = 87.9691*DAY   # Sidereal orbital period in s.
 
 bcs = bcsFromAPm(A_Me, P_Me, m_Me)
 
-b_Me    = bcs[0]   # Semi-minor axis in m.
-c_Me    = bcs[1]   # Linear eccentricity = center-to-focus distance, in m.
-sMax_Me = bcs[2]   # Max speed (at the prihelion) in m/s.
-sMin_Me = bcs[3]   # Min speed (at the aphelion) in m/s.
+b_Me    = bcs[0]     # Semi-minor axis in m.
+c_Me    = bcs[1]     # Linear eccentricity = center-to-focus distance, in m.
+sMax_Me = bcs[2]     # Max speed (at the prihelion) in m/s.
+sMin_Me = bcs[3]     # Min speed (at the aphelion) in m/s.
 
 #---------------------------------------------------------------------------------
 # Venus
 
 # yellow/white
-A_V = 108940000*KM # Aphelion distance in m.
-P_V = 107480000*KM # Perihlion in m.
-a_V = 108210000*KM # Semi-major axis in m.
-e_V = 0.006772     # Eccentricity.
-T_V = 224.701*DAY  # Sidereal orbital period in s.
-s_V = 35020        # Average orbital speed in m/s.
-m_V = 4.8675e24    # Mass in kg.
+m_V = 4.8675e24      # Mass in kg.
+A_V = 108_940_000*KM # Aphelion distance in m.
+P_V = 107_480_000*KM # Perihlion in m.
+a_V = 108_210_000*KM # Semi-major axis in m.
+e_V = 0.006772       # Eccentricity.
+s_V = 35.02*KM/SEC   # Average orbital speed in m/s.
+T_V = 224.701*DAY    # Sidereal orbital period in s.
 
 bcs = bcsFromAPm(A_V, P_V, m_V)
 
-b_V    = bcs[0]    # Semi-minor axis in m.
-c_V    = bcs[1]    # Linear eccentricity = center-to-focus distance, in m.
-sMax_V = bcs[2]    # Max speed (at the prihelion) in m/s.
-sMin_V = bcs[3]    # Min speed (at the aphelion) in m/s.
+b_V    = bcs[0]      # Semi-minor axis in m.
+c_V    = bcs[1]      # Linear eccentricity = center-to-focus distance, in m.
+sMax_V = bcs[2]      # Max speed (at the prihelion) in m/s.
+sMin_V = bcs[3]      # Min speed (at the aphelion) in m/s.
 
 #---------------------------------------------------------------------------------
 # Earth
 
 # blue
-A_E = 152097597*KM       # Aphelion distance in m.
-P_E = 147098450*KM       # Perihlion in m.
-a_E = 149598023*KM       # Semi-major axis in m.
-e_E = 0.0167086          # Eccentricity
-T_E = 365.2563630040*DAY # Sidereal orbital period in s. 
-S_E = 29782.7            # Average orbital speed in m/s.
 m_E = 5.972168e24        # Mass in kg.
+A_E = 152_097_597*KM     # Aphelion distance in m.
+P_E = 147_098_450*KM     # Perihlion in m.
+a_E = 149_598_023*KM     # Semi-major axis in m.
+e_E = 0.0167086          # Eccentricity
+S_E = 29.7827*KM/SEC     # Average orbital speed in m/s.
+T_E = 365.2563630040*DAY # Sidereal orbital period in s. 
 
 bcs = bcsFromAPm(A_E, P_E, m_E)
 
-b_E    = bcs[0]     # Semi-minor axis in m.
-c_E    = bcs[1]     # Linear eccentricity = center-to-focus distance, in m.
-sMax_E = bcs[2]     # Max speed (at the prihelion) in m/s.
-sMin_E = bcs[3]     # Min speed (at the aphelion) in m/s.
+b_E    = bcs[0]          # Semi-minor axis in m.
+c_E    = bcs[1]          # Linear eccentricity = center-to-focus distance, in m.
+sMax_E = bcs[2]          # Max speed (at the prihelion) in m/s.
+sMin_E = bcs[3]          # Min speed (at the aphelion) in m/s.
 
 #---------------------------------------------------------------------------------
 # Mars
 
 # red
-A_Ma = 249261000*KM # Aphelion distance in m.
-P_Ma = 206650000*KM # Perihlion in m.
-a_Ma = 227939366*KM # Semi-major axis in m.
-e_Ma = 0.0934       # Eccentricity.
-T_Ma = 686.980*DAY  # Sidereal orbital period in s.
-s_Ma = 24070        # Average orbital speed in m/s.
-m_Ma = 6.4171e23    # Mass in kg.
+m_Ma = 6.4171e23      # Mass in kg.
+A_Ma = 249_261_000*KM # Aphelion distance in m.
+P_Ma = 206_650_000*KM # Perihlion in m.
+a_Ma = 227_939_366*KM # Semi-major axis in m.
+e_Ma = 0.0934         # Eccentricity.
+s_Ma = 24.07*KM/SEC   # Average orbital speed in m/s.
+T_Ma = 686.980*DAY    # Sidereal orbital period in s.
 
 bcs = bcsFromAPm(A_Ma, P_Ma, m_Ma)
 
-b_Ma    = bcs[0]    # Semi-minor axis in m.
-c_Ma    = bcs[1]    # Linear eccentricity = center-to-focus distance, in m.
-sMax_Ma = bcs[2]    # Max speed (at the prihelion) in m/s.
-sMin_Ma = bcs[3]    # Min speed (at the aphelion) in m/s.
+b_Ma    = bcs[0]      # Semi-minor axis in m.
+c_Ma    = bcs[1]      # Linear eccentricity = center-to-focus distance, in m.
+sMax_Ma = bcs[2]      # Max speed (at the prihelion) in m/s.
+sMin_Ma = bcs[3]      # Min speed (at the aphelion) in m/s.
 
 #---------------------------------------------------------------------------------
 # Jupiter
@@ -144,13 +145,13 @@ sMin_Ma = bcs[3]    # Min speed (at the aphelion) in m/s.
 # requires a bigger scaling constant in simulations!
 
 # yellow
-A_J = 816363000*KM # Aphelion distance in m.
-P_J = 740595000*KM # Perihlion in m.
-a_J = 778479000*KM # Semi-major axis in m.
-e_J = 0.0489       # Eccentricity.
-T_J = 4332.59*DAY  # Sidereal orbital period in s.
-s_J = 13070        # Average orbital speed in m/s.
-m_J = 1.8982e27    # Mass in kg.
+m_J = 1.8982e27      # Mass in kg.
+A_J = 816_363_000*KM # Aphelion distance in m.
+P_J = 740_595_000*KM # Perihlion in m.
+a_J = 778_479_000*KM # Semi-major axis in m.
+e_J = 0.0489         # Eccentricity.
+s_J = 13.07*KM/SEC   # Average orbital speed in m/s.
+T_J = 4332.59*DAY    # Sidereal orbital period in s.
 
 bcs = bcsFromAPm(A_J, P_J, m_J)
 
@@ -165,13 +166,14 @@ sMin_J = bcs[3]    # Min speed (at the aphelion) in m/s.
 # requires a bigger scaling constant in simulations!
 
 # yellow
-A_S = 1514500000*KM # Aphelion distance in m.
-P_S = 1352550000*KM # Perihlion in m.
-a_S = 1433530000*KM # Semi-major axis in m.
-e_S = 0.0565        # Eccentricity.
-T_S = 10755.70*DAY  # Sidereal orbital period in s. 
-s_S = 9680          # Average orbital speed in m/s.
-m_S = 5.6834e26     # Mass in kg.
+m_S = 5.6834e26        # Mass in kg.
+A_S = 1_514_500_000*KM # Aphelion distance in m.
+P_S = 1_352_550_000*KM # Perihlion in m.
+a_S = 1_433_530_000*KM # Semi-major axis in m.
+e_S = 0.0565           # Eccentricity.
+s_S = 9.68*KM/SEC      # Average orbital speed in m/s.
+T_S = 10755.70*DAY     # Sidereal orbital period in s. 
+
 
 bcs = bcsFromAPm(A_S, P_S, m_S)
 
@@ -186,20 +188,20 @@ sMin_S = bcs[3]    # Min speed (at the aphelion) in m/s.
 # requires a bigger scaling constant in simulations!
 
 # white
-A_U = 3006390000*KM # Aphelion distance in m.
-P_U = 2735560000*KM # Perihlion in m.
-a_U = 2870972000*KM # Semi-major axis in m.
-e_U = 0.04717       # Eccentricity.
-T_U = 30,688.5*DAY  # Sidereal orbital period in s.
-s_U = 6800          # Average orbital speed in m/s.
-m_U = 8.6810e25     # Mass in kg.
+m_U = 8.6810e25        # Mass in kg.
+A_U = 3_006_390_000*KM # Aphelion distance in m.
+P_U = 2_735_560_000*KM # Perihlion in m.
+a_U = 2_870_972_000*KM # Semi-major axis in m.
+e_U = 0.04717          # Eccentricity.
+s_U = 6.80*KM/SEC      # Average orbital speed in m/s.
+T_U = 30,688.5*DAY     # Sidereal orbital period in s.
 
 bcs = bcsFromAPm(A_U, P_U, m_U)
 
-b_U    = bcs[0]    # Semi-minor axis in m.
-c_U    = bcs[1]    # Linear eccentricity = center-to-focus distance, in m.
-sMax_U = bcs[2]    # Max speed (at the prihelion) in m/s.
-sMin_U = bcs[3]    # Min speed (at the aphelion) in m/s.
+b_U    = bcs[0]        # Semi-minor axis in m.
+c_U    = bcs[1]        # Linear eccentricity = center-to-focus distance, in m.
+sMax_U = bcs[2]        # Max speed (at the prihelion) in m/s.
+sMin_U = bcs[3]        # Min speed (at the aphelion) in m/s.
 
 #---------------------------------------------------------------------------------
 # Neptune
@@ -207,13 +209,13 @@ sMin_U = bcs[3]    # Min speed (at the aphelion) in m/s.
 # requires a bigger scaling constant in simulations!
 
 # blue
-A_N = 4540000000*KM # Aphelion distance in m.
-P_N = 4460000000*KM # Perihlion in m.
-a_N = 4500000000*KM # Semi-major axis in m.
-e_N = 0.008678      # Eccentricity.
-T_N = 60195*DAY     # Sidereal orbital period in s.
-s_N = 5.43          # Average orbital speed in m/s.
-m_N = 1.02409e26    # Mass in kg.
+m_N = 1.02409e26       # Mass in kg.
+A_N = 4_540_000_000*KM # Aphelion distance in m.
+P_N = 4_460_000_000*KM # Perihlion in m.
+a_N = 4_500_000_000*KM # Semi-major axis in m.
+e_N = 0.008678         # Eccentricity.
+s_N = 5.43*KM/SEC      # Average orbital speed in m/s.
+T_N = 60195*DAY        # Sidereal orbital period in s.
 
 bcs = bcsFromAPm(A_N, P_N, m_N)
 
@@ -228,11 +230,11 @@ sMin_N = bcs[3]    # Min speed (at the aphelion) in m/s.
 # A scaling factor suitable for showing orbits of the 4 inner planets
 # and made-up planets 0.7 - 1.3
 # Outer planets require a factor 10 times bigger.
-SCALING = 1000000000 # Real distances in meters will be divided by this
+SCALING = 1000000_000 # Real distances in meters will be divided by this
                      # before being given to the turtle.
 
 # Position, velocity, acceleration will be updated every TIME_STEP.
-TIME_STEP = 1000 # seconds
+TIME_STEP = 1_000 # seconds
 # Suitable for inner plenets. Outer planets can use a step 10 times bigger.
 # the bigger the time step, the faster the turtle moves.
         
@@ -257,7 +259,7 @@ class Planet(object):
         self._r2 = self._x*self._x + self._y*self._y # radius squared
                    # we store radius squared 
         self._r = sqrt(self._r2) # radius = distance from Sun's center.
-        self._vx = 0 # horizontal speed in m/s 
+        self._vx = 0 # horizontal speed in m/SEC 
         self._vy = maxSpeed # vertical speed in m/s
         self._ax = -G*M_S*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
         self._ay = -G*M_S*self._y/(self._r2*self._r) # vertical acceleration m/s^2
@@ -281,8 +283,8 @@ class Planet(object):
         self._ax = -G*M_S*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
         self._ay = -G*M_S*self._y/(self._r2*self._r) # vertical acceleration m/s^2
 
-    def position(self, scaling=1):
-        return (self._x/scaling, self._y/scaling)
+    def position(self, scaleDownFactor=1):
+        return (self._x/scaleDownFactor, self._y/scaleDownFactor)
 
     def velocity(self):
         return (self._vx, self._vy)
@@ -425,7 +427,7 @@ def simulate(planet: Planet):
     t.pendown()
     t.pensize(3)
     t.pencolor(planet.color())
-    t.teleport(*planet.position(scaling=SCALING))
+    t.teleport(*planet.position(scaleDownFactor=SCALING))
 
     # The planet starts from its perihelion.
     
@@ -437,7 +439,7 @@ def simulate(planet: Planet):
             if planet.position()[1]<0: # if y<0
                 done = True
                 break
-        t.goto(*planet.position(scaling=SCALING))
+        t.goto(*planet.position(scaleDownFactor=SCALING))
         if done: break
 
     # The planet is now at its aphelion.
@@ -450,7 +452,7 @@ def simulate(planet: Planet):
             if planet.position()[1]>=0: # if y>=0
                 done = True
                 break
-        t.goto(*planet.position(scaling=SCALING))
+        t.goto(*planet.position(scaleDownFactor=SCALING))
         if done: break
 
     # The planet is back at the perihelion.
@@ -479,7 +481,7 @@ def simulateAndTest(planet: Planet):
     t.pendown()
     t.pensize(3)
     t.pencolor(planet.color())
-    t.teleport(*planet.position(scaling=SCALING))
+    t.teleport(*planet.position(scaleDownFactor=SCALING))
 
     # Concerning Kepler's 1st law
     x,y = planet.position() # perihelion,
@@ -522,7 +524,7 @@ def simulateAndTest(planet: Planet):
             if y < 0:
                 done = True
                 break
-        t.goto(*planet.position(scaling=SCALING))
+        t.goto(*planet.position(scaleDownFactor=SCALING))
         if done: break
 
     # The planet is now at its aphelion.
@@ -541,7 +543,7 @@ def simulateAndTest(planet: Planet):
             if y >= 0:
                 done = True
                 break
-        t.goto(*planet.position(scaling=SCALING))
+        t.goto(*planet.position(scaleDownFactor=SCALING))
         if done: break
 
     # The planet is back at the perihelion.
