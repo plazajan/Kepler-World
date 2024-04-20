@@ -27,7 +27,8 @@ from math import sqrt, pi, sin, cos
 #==================================================================================
 # ASTRONOMICAL DATA FROM OBSERVATIONS AND CALCULATIONS 
 
-# Astronomical data in kilograms, meters, seconds, from Wikipedia.
+# Astronomical data in kilograms, meters, seconds.
+# From Wikipedia.
 
 #---------------------------------------------------------------------------------
 
@@ -41,12 +42,12 @@ def bcsFromAPm(A,P,m):
     """A - aphelion in m, P - perihelion in m, m - mass in kg."""
     a = (A + P) / 2 # semi-major axis in m.
     b = sqrt(A * P) # semi-minor axis in m.
-    c = (A - P) / 2 # Linear eccentricity = center-to-focus distance, in m.
-    mu = G * (M_S + m) # Gravitational parameter.
-    sMax = sqrt(mu * (2/P - 1/a)) # speed at perihelion (max speed)
-    sMin = sqrt(mu * (2/A - 1/a)) # speed at aphelion (min speed)
+    c = (A - P) / 2 # linear eccentricity = center-to-focus distance, in m.
+    mu = G * (M_S + m) # gravitational parameter (with respect to the Sun)
+    sMax = sqrt(mu * (2/P - 1/a)) # speed at perihelion - max speed
+    sMin = sqrt(mu * (2/A - 1/a)) # speed at aphelion - min speed
     # e = c / a; # eccentricity.
-    # T = sqrt(4 * pi * pi * a * a * a / mu) # Orbital period.
+    # T = sqrt(4 * pi * pi * a * a * a / mu) # orbital period.
     return b, c, sMax, sMin
     
 #print(bcsFromAPm(A_Me, P_Me, m_Me))
@@ -75,8 +76,8 @@ m_Me = 3.3011e23   # Mass in kg.
 
 bcs = bcsFromAPm(A_Me, P_Me, m_Me)
 
-b_Me    = bcs[0]   # semi-minor axis in m.
-c_Me    = bcs[1]   # linear eccentricity = center-to-focus distance, in m.
+b_Me    = bcs[0]   # Semi-minor axis in m.
+c_Me    = bcs[1]   # Linear eccentricity = center-to-focus distance, in m.
 sMax_Me = bcs[2]   # Max speed (at the prihelion) in m/s.
 sMin_Me = bcs[3]   # Min speed (at the aphelion) in m/s.
 
@@ -94,8 +95,8 @@ m_V = 4.8675e24    # Mass in kg.
 
 bcs = bcsFromAPm(A_V, P_V, m_V)
 
-b_V    = bcs[0]    # semi-minor axis in m.
-c_V    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
+b_V    = bcs[0]    # Semi-minor axis in m.
+c_V    = bcs[1]    # Linear eccentricity = center-to-focus distance, in m.
 sMax_V = bcs[2]    # Max speed (at the prihelion) in m/s.
 sMin_V = bcs[3]    # Min speed (at the aphelion) in m/s.
 
@@ -113,10 +114,10 @@ m_E = 5.972168e24        # Mass in kg.
 
 bcs = bcsFromAPm(A_E, P_E, m_E)
 
-b_E    = bcs[0]     # semi-minor axis in m.
-c_E    = bcs[1]     # linear eccentricity = center-to-focus distance, in m.
+b_E    = bcs[0]     # Semi-minor axis in m.
+c_E    = bcs[1]     # Linear eccentricity = center-to-focus distance, in m.
 sMax_E = bcs[2]     # Max speed (at the prihelion) in m/s.
-sMin_E = bcs[3]    # Min speed (at the aphelion) in m/s.
+sMin_E = bcs[3]     # Min speed (at the aphelion) in m/s.
 
 #---------------------------------------------------------------------------------
 # Mars
@@ -132,8 +133,8 @@ m_Ma = 6.4171e23    # Mass in kg.
 
 bcs = bcsFromAPm(A_Ma, P_Ma, m_Ma)
 
-b_Ma    = bcs[0]    # semi-minor axis in m.
-c_Ma    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
+b_Ma    = bcs[0]    # Semi-minor axis in m.
+c_Ma    = bcs[1]    # Linear eccentricity = center-to-focus distance, in m.
 sMax_Ma = bcs[2]    # Max speed (at the prihelion) in m/s.
 sMin_Ma = bcs[3]    # Min speed (at the aphelion) in m/s.
 
@@ -153,8 +154,8 @@ m_J = 1.8982e27    # Mass in kg.
 
 bcs = bcsFromAPm(A_J, P_J, m_J)
 
-b_J    = bcs[0]    # semi-minor axis in m.
-c_J    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
+b_J    = bcs[0]    # Semi-minor axis in m.
+c_J    = bcs[1]    # Linear eccentricity = center-to-focus distance, in m.
 sMax_J = bcs[2]    # Max speed (at the prihelion) in m/s.
 sMin_J = bcs[3]    # Min speed (at the aphelion) in m/s.
 
@@ -174,8 +175,8 @@ m_S = 5.6834e26     # Mass in kg.
 
 bcs = bcsFromAPm(A_S, P_S, m_S)
 
-b_S    = bcs[0]    # semi-minor axis in m.
-c_S    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
+b_S    = bcs[0]    # Semi-minor axis in m.
+c_S    = bcs[1]    # Linear eccentricity = center-to-focus distance, in m.
 sMax_S = bcs[2]    # Max speed (at the prihelion) in m/s.
 sMin_S = bcs[3]    # Min speed (at the aphelion) in m/s.
 
@@ -195,8 +196,8 @@ m_U = 8.6810e25     # Mass in kg.
 
 bcs = bcsFromAPm(A_U, P_U, m_U)
 
-b_U    = bcs[0]    # semi-minor axis in m.
-c_U    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
+b_U    = bcs[0]    # Semi-minor axis in m.
+c_U    = bcs[1]    # Linear eccentricity = center-to-focus distance, in m.
 sMax_U = bcs[2]    # Max speed (at the prihelion) in m/s.
 sMin_U = bcs[3]    # Min speed (at the aphelion) in m/s.
 
@@ -216,48 +217,53 @@ m_N = 1.02409e26    # Mass in kg.
 
 bcs = bcsFromAPm(A_N, P_N, m_N)
 
-b_N    = bcs[0]    # semi-minor axis in m.
-c_N    = bcs[1]    # linear eccentricity = center-to-focus distance, in m.
+b_N    = bcs[0]    # Semi-minor axis in m.
+c_N    = bcs[1]    # Linear eccentricity = center-to-focus distance, in m.
 sMax_N = bcs[2]    # Max speed (at the prihelion) in m/s.
 sMin_N = bcs[3]    # Min speed (at the aphelion) in m/s.
 
 #=================================================================================
 # SIMULATION PARAMETERS
 
-# A scaling factor suitable for showing orbits of the 4 inner planets.
-# (outer planets require a factor 100 times bigger)
+# A scaling factor suitable for showing orbits of the 4 inner planets
+# and made-up planets 0.7 - 1.3
+# Outer planets require a factor 10 times bigger.
 SCALING = 1000000000 # Real distances in meters will be divided by this
                      # before being given to the turtle.
 
-TIME_STEP = 1000 # seconds.
-        # Position, velocity, acceleration will be updated every TIME_STEP.
-
+# Position, velocity, acceleration will be updated every TIME_STEP.
+TIME_STEP = 1000 # seconds
+# Suitable for inner plenets. Outer planets can use a step 10 times bigger.
+# the bigger the time step, the faster the turtle moves.
+        
 #=================================================================================
 # PLANETS
 
 class Planet(object):
 
-    def __init__(self, mass, x, y, vx, vy, timeStep,
-                 name=None, color="green", pensize=3):
+    def __init__(self, name, mass, perihelionDistance, maxSpeed, timeStep,
+                 color="green"):
         """mass in kg,
-           x,y coordinates in m. The Sun is at (0,0).
-           vx, vy - velocity in m/s,
-           simulation timeStep in s,
-           pensize - of the turtle pen while drawing the orbit.
+           perihelionDistance in m.
+           maxSpeed in m/s,
+           simulation timeStep in s.
+           Assumes that the Sun is at (0,0).
+           Puts the planet/self at (perihelionDistance, 0)
+           giving it velocity (0, maxSpeed).
         """
         self._mass = mass
-        self._x = x
-        self._y = y
+        self._x = perihelionDistance
+        self._y = 0
         self._r2 = self._x*self._x + self._y*self._y # radius squared
+                   # we store radius squared 
         self._r = sqrt(self._r2) # radius = distance from Sun's center.
-        self._vx = vx # horizontal speed in m/s 
-        self._vy = vy # vertical speed in m/s
-        self._ax = -G*M_S*x/(self._r2*self._r) # horizontal acceleration m/s^2
-        self._ay = -G*M_S*y/(self._r2*self._r) # vertical acceleration m/s^2
+        self._vx = 0 # horizontal speed in m/s 
+        self._vy = maxSpeed # vertical speed in m/s
+        self._ax = -G*M_S*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
+        self._ay = -G*M_S*self._y/(self._r2*self._r) # vertical acceleration m/s^2
         self._timeStep = timeStep
         self._name = name
         self._color = color
-        self._pensize = pensize
 
     def move(self, timeStep=None):
         """Updates position, velocity, acceleration, radius
@@ -272,14 +278,11 @@ class Planet(object):
         self._r = sqrt(self._r2)
         self._vx += self._ax * timeStep
         self._vy += self._ay * timeStep
-        self._ax = -G*M_S*self._x/(self._r2*self._r) # horizontal acceleration in m / s^2
-        self._ay = -G*M_S*self._y/(self._r2*self._r) # vertical acceleration in m / s^2
+        self._ax = -G*M_S*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
+        self._ay = -G*M_S*self._y/(self._r2*self._r) # vertical acceleration m/s^2
 
-    def position(self):
-        return (self._x, self._y)
-
-    def turtlePosition(self):
-        return (self._x/SCALING, self._y/SCALING)
+    def position(self, scaling=1):
+        return (self._x/scaling, self._y/scaling)
 
     def velocity(self):
         return (self._vx, self._vy)
@@ -305,9 +308,6 @@ class Planet(object):
     def color(self):
         return(self._color)
 
-    def pensize(self):
-        return(self._pensize)
-
 #---------------------------------------------------------------------------------
 # Planets - global constants.
 
@@ -315,32 +315,29 @@ class Planet(object):
 # The starting position for a planet is (perihilionDistance, 0)
 # The starting velocity is (0, sMax),
 
-# Inner planets - rocky
-MERCURY = Planet(m_Me, P_Me, 0, 0, sMax_Me, TIME_STEP, "Mercury", "grey",      )
-VENUS   = Planet(m_V,  P_V,  0, 0, sMax_V,  TIME_STEP, "Venus"  , "gold",      )
-EARTH   = Planet(m_E,  P_E,  0, 0, sMax_E,  TIME_STEP, "Earth"  , "DeepSkyBlue")
-MARS    = Planet(m_Ma, P_Ma, 0, 0, sMax_Ma, TIME_STEP, "Mars"   , "red",       )
-
-# Outer planets - gas giants
-JUPITER = Planet(m_J,  P_J,  0, 0, sMax_J,  TIME_STEP, "Jupiter", "yellow",    )
-SATURN  = Planet(m_S,  P_S,  0, 0, sMax_S,  TIME_STEP, "Saturn" , "orange",    )
-URANUS  = Planet(m_U,  P_U,  0, 0, sMax_U,  TIME_STEP, "Uranus" , "orange",    )
-NEPTUN  = Planet(m_N,  P_N,  0, 0, sMax_N,  TIME_STEP, "Neptune", "blue",      )
+# Inner planets - rocky:
+MERCURY = Planet("Mercury", m_Me, P_Me, sMax_Me, TIME_STEP, "grey"       )
+VENUS   = Planet("Venus"  , m_V,  P_V,  sMax_V,  TIME_STEP, "gold"       )
+EARTH   = Planet("Earth"  , m_E,  P_E,  sMax_E,  TIME_STEP, "DeepSkyBlue")
+MARS    = Planet("Mars"   , m_Ma, P_Ma, sMax_Ma, TIME_STEP, "red"        )
+# Outer planets - gas giants:
+JUPITER = Planet("Jupiter", m_J,  P_J,  sMax_J,  TIME_STEP, "yellow"     )
+SATURN  = Planet("Saturn" , m_S,  P_S,  sMax_S,  TIME_STEP, "orange"     )
+URANUS  = Planet("Uranus" , m_U,  P_U,  sMax_U,  TIME_STEP, "orange"     )
+NEPTUNE = Planet("Neptune", m_N,  P_N,  sMax_N,  TIME_STEP, "blue"       )
 
 S10 = sqrt(G*(M_S+m_E)/P_E)
 # the speed of a made-up planet with the same mass and perihelion as Earth,
 # but with a circular orbit.
 
-# Made-up planets, for computational experiments
-# with the default pencolor=green
-# planet 0.7, planet 0.8, ..., planet 1.3
-PLANET07 = Planet(m_E, P_E, 0, 0, 0.7*S10, TIME_STEP, "Planet07") 
-PLANET08 = Planet(m_E, P_E, 0, 0, 0.8*S10, TIME_STEP, "Planet08")
-PLANET09 = Planet(m_E, P_E, 0, 0, 0.9*S10, TIME_STEP, "Planet09")
-PLANET10 = Planet(m_E, P_E, 0, 0,     S10, TIME_STEP, "Planet10")
-PLANET11 = Planet(m_E, P_E, 0, 0, 1.1*S10, TIME_STEP, "Planet11")
-PLANET12 = Planet(m_E, P_E, 0, 0, 1.2*S10, TIME_STEP, "Planet12")
-PLANET13 = Planet(m_E, P_E, 0, 0, 1.3*S10, TIME_STEP, "Planet13")
+# Made-up planets, for computational experiments (default pencolor=green)
+PLANET07 = Planet("Planet 0.7", m_E, P_E, 0.7*S10, TIME_STEP) 
+PLANET08 = Planet("Planet 0.8", m_E, P_E, 0.8*S10, TIME_STEP)
+PLANET09 = Planet("Planet 0.9", m_E, P_E, 0.9*S10, TIME_STEP)
+PLANET10 = Planet("Planet 1.0", m_E, P_E,     S10, TIME_STEP)
+PLANET11 = Planet("Planet 1.1", m_E, P_E, 1.1*S10, TIME_STEP)
+PLANET12 = Planet("Planet 1.2", m_E, P_E, 1.2*S10, TIME_STEP)
+PLANET13 = Planet("Planet 1.3", m_E, P_E, 1.3*S10, TIME_STEP)
 
 # Note.
 # Inner planets and made up planets above are close to the Sun
@@ -426,9 +423,9 @@ def simulate(planet: Planet):
     t = Turtle(visible=False)
     t.speed("fastest")
     t.pendown()
-    t.pensize(planet.pensize())
+    t.pensize(3)
     t.pencolor(planet.color())
-    t.teleport(*planet.turtlePosition())
+    t.teleport(*planet.position(scaling=SCALING))
 
     # The planet starts from its perihelion.
     
@@ -440,7 +437,7 @@ def simulate(planet: Planet):
             if planet.position()[1]<0: # if y<0
                 done = True
                 break
-        t.goto(*planet.turtlePosition())
+        t.goto(*planet.position(scaling=SCALING))
         if done: break
 
     # The planet is now at its aphelion.
@@ -453,7 +450,7 @@ def simulate(planet: Planet):
             if planet.position()[1]>=0: # if y>=0
                 done = True
                 break
-        t.goto(*planet.turtlePosition())
+        t.goto(*planet.position(scaling=SCALING))
         if done: break
 
     # The planet is back at the perihelion.
@@ -480,9 +477,9 @@ def simulateAndTest(planet: Planet):
     t = Turtle(visible=False)
     t.speed("fastest")
     t.pendown()
-    t.pensize(planet.pensize())
+    t.pensize(3)
     t.pencolor(planet.color())
-    t.teleport(*planet.turtlePosition())
+    t.teleport(*planet.position(scaling=SCALING))
 
     # Concerning Kepler's 1st law
     x,y = planet.position() # perihelion,
@@ -525,7 +522,7 @@ def simulateAndTest(planet: Planet):
             if y < 0:
                 done = True
                 break
-        t.goto(*planet.turtlePosition())
+        t.goto(*planet.position(scaling=SCALING))
         if done: break
 
     # The planet is now at its aphelion.
@@ -544,7 +541,7 @@ def simulateAndTest(planet: Planet):
             if y >= 0:
                 done = True
                 break
-        t.goto(*planet.turtlePosition())
+        t.goto(*planet.position(scaling=SCALING))
         if done: break
 
     # The planet is back at the perihelion.
@@ -746,3 +743,9 @@ if __name__ == "__main__": main()
 
 #=================================================================================
 
+
+#innerPlanets()
+#simulateAndTest(JUPITER)
+#simulateAndTest(SATURN)
+#simulateAndTest(URANUS)
+#simulateAndTest(NEPTUNE)
