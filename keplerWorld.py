@@ -1,24 +1,31 @@
 """
 A simple simulation of movements of planets around the Sun.
-It uses a discrete approximation of the real-world continuing
-effect of Newton's law of gravity (F=GMm/rr) on the moving planet.
+It uses a discrete approximation of the real-world continuing effect
+of the Newton's law of gravity (F=GMm/rr) on the moving planet.
 
 The calculations are done for actual planets,
 and the results are later scaled down to be displayed in turtle graphics.
 
 The simulation tests if the resulting orbits and planets' movements
-obay the Kepler laws.
+obey the Kepler laws.
 
-This provides an example of a local effects (of the law of gravity),
-having a global effect (of elliptical orbits with details specified by Kepler.
+This provides an example of local effects (of the law of gravity),
+having a global effect (of elliptical orbits with details specified by Kepler).
 
 The simulation shows planets' orbits to scale, 
 but disregards some details not relevant to Kepler's laws.
 Namely, in this simulation (unlike in reality):
 * the orbits of all planets are in the same plane, and
-* for each planet, the foci of its elliptical orbit are on the x-axis
-  with the Sun in the right focus.
+* the foci of elliptical orbits of all planets are on the same straight line.
 """
+
+# TO DO:
+# innerPlanets()
+# planets() - all
+# experiment1() - planets with masses m, 2m, 3m and the same perihelion.
+# experiment2() - plenets with the same perihelion and max speed v, 2v, 3v
+# ...
+# planets wiht the same orbtital period and diffenrent perihelions
 
 #==================================================================================
 from turtle import getscreen, Turtle
@@ -62,6 +69,7 @@ def bcsFromAPm(A,P,m):
 # white
 M_S = 1.98847e30 # Mass in kg.
 R_S = 696_000*KM # Radius in m.
+MU  = G*M_S      # Gravitational parameter with respect to the Sun
 
 #---------------------------------------------------------------------------------
 # Mercury
@@ -230,11 +238,11 @@ sMin_N = bcs[3]    # Min speed (at the aphelion) in m/s.
 # A scaling factor suitable for showing orbits of the 4 inner planets
 # and made-up planets 0.7 - 1.3
 # Outer planets require a factor 10 times bigger.
-SCALING = 1000000_000 # Real distances in meters will be divided by this
+SCALING = 1000_000_000 # Real distances in meters will be divided by this
                      # before being given to the turtle.
 
 # Position, velocity, acceleration will be updated every TIME_STEP.
-TIME_STEP = 1_000 # seconds
+TIME_STEP = 1000 # seconds
 # Suitable for inner plenets. Outer planets can use a step 10 times bigger.
 # the bigger the time step, the faster the turtle moves.
         
@@ -261,8 +269,8 @@ class Planet(object):
         self._r = sqrt(self._r2) # radius = distance from Sun's center.
         self._vx = 0 # horizontal speed in m/SEC 
         self._vy = maxSpeed # vertical speed in m/s
-        self._ax = -G*M_S*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
-        self._ay = -G*M_S*self._y/(self._r2*self._r) # vertical acceleration m/s^2
+        self._ax = -MU*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
+        self._ay = -MU*self._y/(self._r2*self._r) # vertical acceleration m/s^2
         self._timeStep = timeStep
         self._name = name
         self._color = color
@@ -280,8 +288,8 @@ class Planet(object):
         self._r = sqrt(self._r2)
         self._vx += self._ax * timeStep
         self._vy += self._ay * timeStep
-        self._ax = -G*M_S*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
-        self._ay = -G*M_S*self._y/(self._r2*self._r) # vertical acceleration m/s^2
+        self._ax = -MU*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
+        self._ay = -MU*self._y/(self._r2*self._r) # vertical acceleration m/s^2
 
     def position(self, scaleDownFactor=1):
         return (self._x/scaleDownFactor, self._y/scaleDownFactor)
@@ -309,6 +317,15 @@ class Planet(object):
 
     def color(self):
         return(self._color)
+
+    def setColor(self, color: str):
+        self._color = color
+
+    def timeStep(self):
+        return self._timeStep
+
+    def setTimeStep(self, timeStep):
+        self._timeStep = timeStep
 
 #---------------------------------------------------------------------------------
 # Planets - global constants.
@@ -357,7 +374,7 @@ def sky(skyColor="black", showSun=True):
     """
     screen = getscreen()
     screen.clear() # remove turtle image
-    screen.screensize(5000,1000)
+    screen.screensize(1000,1000)
     screen.title("Kepler's world")
     screen.bgcolor(skyColor)
     t = Turtle(visible=False)
@@ -379,7 +396,7 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
        where c is the linear eccentricity i.e. center-to-focus distance:
        c = sqrt(semiMajorAxis*semiMajorAxis - semiMinorAxis*semiMinorAxis)
        Note: make sure to create canvas before this function is called.
-       Note: the parameters are in turtle canvas units, (not in meters).
+       Note: the parameters are in turtle canvas units, not in meters.
     """
     if semiMajorAxis < semiMinorAxis:
         raise ValueError(
@@ -407,7 +424,7 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
      
 #---------------------------------------------------------------------------------
 
-def simulate(planet: Planet):
+def simulate(planet: Planet, scaleDownFactor=SCALING):
     # Just draws the orbit, does not test Kepler's laws.
     # This function is not used by the top level functions in the program.
     # It is given here as a stepping stone to understand simulateAndTest below.
@@ -427,7 +444,7 @@ def simulate(planet: Planet):
     t.pendown()
     t.pensize(3)
     t.pencolor(planet.color())
-    t.teleport(*planet.position(scaleDownFactor=SCALING))
+    t.teleport(*planet.position(scaleDownFactor))
 
     # The planet starts from its perihelion.
     
@@ -439,7 +456,7 @@ def simulate(planet: Planet):
             if planet.position()[1]<0: # if y<0
                 done = True
                 break
-        t.goto(*planet.position(scaleDownFactor=SCALING))
+        t.goto(*planet.position(scaleDownFactor))
         if done: break
 
     # The planet is now at its aphelion.
@@ -452,7 +469,7 @@ def simulate(planet: Planet):
             if planet.position()[1]>=0: # if y>=0
                 done = True
                 break
-        t.goto(*planet.position(scaleDownFactor=SCALING))
+        t.goto(*planet.position(scaleDownFactor))
         if done: break
 
     # The planet is back at the perihelion.
@@ -462,7 +479,7 @@ def simulate(planet: Planet):
 
 #-----------------------------------------------------------------------------
 
-def simulateAndTest(planet: Planet):
+def simulateAndTest(planet: Planet, scaleDownFactor=SCALING):
     """Precondition: planet position (x,y) must have x>0, y=0,
                      and velocity (vx,vy) must have vx=0, vy>0.
        So, the planet must be in the right vertex of its elliptical orbit.
@@ -481,7 +498,7 @@ def simulateAndTest(planet: Planet):
     t.pendown()
     t.pensize(3)
     t.pencolor(planet.color())
-    t.teleport(*planet.position(scaleDownFactor=SCALING))
+    t.teleport(*planet.position(scaleDownFactor))
 
     # Concerning Kepler's 1st law
     x,y = planet.position() # perihelion,
@@ -524,10 +541,12 @@ def simulateAndTest(planet: Planet):
             if y < 0:
                 done = True
                 break
-        t.goto(*planet.position(scaleDownFactor=SCALING))
+        t.goto(*planet.position(scaleDownFactor))
         if done: break
 
     # The planet is now at its aphelion.
+
+    area1= area
 
     # Lower half of the orbit:
     done = False 
@@ -543,8 +562,10 @@ def simulateAndTest(planet: Planet):
             if y >= 0:
                 done = True
                 break
-        t.goto(*planet.position(scaleDownFactor=SCALING))
+        t.goto(*planet.position(scaleDownFactor))
         if done: break
+
+        area2 = area
 
     # The planet is back at the perihelion.
 
@@ -556,17 +577,28 @@ def simulateAndTest(planet: Planet):
     # Notice that maxX is the distance from (0,0) to the perihelion.
     orbitCenter = maxX - a
     c = sqrt(a*a - b*b) # linear eccentricity = center to focus distance.
-    t.teleport((orbitCenter + c)/SCALING,0) # draw right focus
+    t.teleport((orbitCenter + c)/scaleDownFactor,0) # draw right focus
     t.dot(6, planet.color())
-    t.teleport((orbitCenter - c)/SCALING,0) # draw left focus
+    t.teleport((orbitCenter - c)/scaleDownFactor,0) # draw left focus
     t.dot(6, planet.color()) 
 
     # Concerning Kepler's 2nd law: 
     minArea = minAreaSoFar
     maxArea = maxAreaSoFar
-    kepler2discrepancy = (maxAreaSoFar - minArea) / area0
+    kepler2discrepancy = (maxArea - minArea) / area0
     kepler2discrepancyPercent = round(kepler2discrepancy*100, 2)
-    print(kepler2discrepancyPercent, "%")    
+    print(kepler2discrepancyPercent, "%")
+    avgArea = (minArea + maxArea)/2
+
+    #print()
+    #print("Area:")
+    #print(minArea)
+    #print(area0, 0) # starting area (perihelion) Why is minArea=area0 ?
+    #print(area1, 1) # aphelion
+    #print(area2, 2) # ending area (perihelion)
+    #print(avgArea)
+    #print(maxArea)
+    #print("====")
 
     # Concerning Kepler's 3rd law:
     T = TsoFar # sidereal orbital period - from the simulation.
@@ -592,7 +624,7 @@ def simulateAndTest(planet: Planet):
 #=================================================================================
 # FUNCTIONS CALLED BY main
 
-def innerPlanets():
+def innerPlanets(scaleDownFactor=SCALING):
     """A computer simulation of orbits of 4 inner planets, resulting from the
        continuing local effect of the Newton's law of gravity.
        Tests if the simulated planets obey (global) Kepler's laws 1 and 3.
@@ -617,28 +649,28 @@ def innerPlanets():
     print("\nMercury orbital period in days:")
     T = T_Me
     print(round(T/DAY,2), "- actual")
-    drawEllipse(a_Me/SCALING, b_Me/SCALING, c_Me/SCALING)
+    drawEllipse(a_Me/scaleDownFactor, b_Me/scaleDownFactor, c_Me/scaleDownFactor)
     TS = simulateAndTest(MERCURY)[3]
     print(round(abs(TS-T)*100/T, 2), "% error")
 
     print("\nVenus - orbital period in days:")
     T = T_V
     print(round(T/DAY,2), "- actual")
-    drawEllipse(a_V/SCALING, b_V/SCALING, c_V/SCALING)
+    drawEllipse(a_V/scaleDownFactor, b_V/scaleDownFactor, c_V/scaleDownFactor)
     TS = simulateAndTest(VENUS)[3]
     print(round(abs(TS-T)*100/T, 2), "% error")
 
     print("\nEarth - orbital period in days:")
     T = T_E
     print(round(T/DAY,2), "- actual")
-    drawEllipse(a_E/SCALING, b_E/SCALING, c_E/SCALING)
+    drawEllipse(a_E/scaleDownFactor, b_E/scaleDownFactor, c_E/scaleDownFactor)
     TS = simulateAndTest(EARTH)[3]
     print(round(abs(TS-T)*100/T, 2), "% error")
 
     print("\nMars - orbital period in days:")
     T = T_Ma
     print(round(T/DAY,2), "- actual")
-    drawEllipse(a_Ma/SCALING, b_Ma/SCALING, c_Ma/SCALING)
+    drawEllipse(a_Ma/scaleDownFactor, b_Ma/scaleDownFactor, c_Ma/scaleDownFactor)
     TS = simulateAndTest(MARS)[3]
     print(round(abs(TS-T)*100/T, 2), "% error")
 
@@ -678,7 +710,7 @@ def innerPlanets():
    
 #---------------------------------------------------------------------------------
 
-def testKepler(planet):
+def testKepler(planet, scaleDownFactor=SCALING):
     """Precondition: planet position (x,y) must have x>0, y=0,
                     and velocity (vx,vy) must have vx=0, vy>0.
        So, the planet must be in the right vertex of its elliptical orbit.A computer simulation of the orbit of the planet, resulting from the
@@ -706,7 +738,7 @@ def testKepler(planet):
     T = sqrt(4*pi*pi*a*a*a / mu) # orbital period in s
     print("Planet's orbital period in days:")
     print(round(T/DAY,2), "- predicted by the theory")
-    drawEllipse(a/SCALING, b/SCALING, c/SCALING) # predicted orbit
+    drawEllipse(a/scaleDownFactor, b/scaleDownFactor, c/scaleDownFactor) # predicted orbit
     TS = simulateAndTest(planet)[3] # simulation. TS - orbital period form simulation.
     print(round(TS/DAY,2), "- from the simulation")
     print( round(abs(TS-T)*100/T, 2), "% discrepancy")
@@ -745,7 +777,8 @@ if __name__ == "__main__": main()
 
 #=================================================================================
 
-
+#sky()
+#simulateAndTest(PLANET12)
 #innerPlanets()
 #simulateAndTest(JUPITER)
 #simulateAndTest(SATURN)
