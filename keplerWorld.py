@@ -74,6 +74,18 @@ MU  = G*M_S      # Gravitational parameter with respect to the Sun
 #---------------------------------------------------------------------------------
 # Mercury
 
+##Mercury = {}
+##
+##Mercury[m] = 3.3011e23,    # Mass in kg.
+##Mercury[A] = 69_820_000*KM # Aphelion distance in m.
+##Mercury[P] = 46_000_000*KM # Perihlion in m.
+##Mercury[a] = 57_910_000*KM # Semi-major axis in m.
+##Mercury[e] = 0.205630      # Eccentricity.
+##Mercury[s] = 47.36*KM/SEC  # Average orbital speed in m/s.
+##Mercury[T] = 87.9691*DAY   # Sidereal orbital period in s.
+##
+##bcs = bcsFromAPmNEW(Mercury)
+
 # grey
 m_Me = 3.3011e23     # Mass in kg.
 A_Me = 69_820_000*KM # Aphelion distance in m.
@@ -624,6 +636,16 @@ def simulateAndTest(planet: Planet, scaleDownFactor=SCALING):
 #=================================================================================
 # FUNCTIONS CALLED BY main
 
+# Under construction
+def simmulationSummary(planet: Planet):
+    print("\n")
+    print(planet.name(), "orbital period in days:")
+    T = T_Me
+    print(round(T/DAY,2), "- actual")
+    drawEllipse(a_Me/scaleDownFactor, b_Me/scaleDownFactor, c_Me/scaleDownFactor)
+    TS = simulateAndTest(MERCURY)[3]
+    print(round(abs(TS-T)*100/T, 2), "% error")
+
 def innerPlanets(scaleDownFactor=SCALING):
     """A computer simulation of orbits of 4 inner planets, resulting from the
        continuing local effect of the Newton's law of gravity.
@@ -636,11 +658,13 @@ def innerPlanets(scaleDownFactor=SCALING):
        before starting the simulation.
        Besides displaying turtle graphics, it produces output.
     """
-    print("The orbits displayed in turtle graphics are to scale.")
-    print("and planets move counter-clockwise as seen from the north pole.")
-    print("The orientation of the major axes of orbits is not modeled here:")
-    print("all ellipses are shown with the major axis on the x-axis")
-    print("and the sun in the right focus.")
+    print("""
+The orbits displayed in turtle graphics are to scale.
+and planets move counter-clockwise as seen from the north pole.
+The orientation of the major axes of orbits is not modeled here:
+all ellipses are shown with the major axis on the x-axis
+and the sun in the right focus.
+         """)
 
     sky()
     
