@@ -1,22 +1,30 @@
 """
 A simple simulation of movements of planets around the Sun.
-It uses a discrete approximation of the real-world continuing effect
+It uses a discrete approximation of the real-world continuous effect
 of the Newton's law of gravity (F=GMm/rr) on the moving planet.
 
 The calculations are done for actual planets,
-and the results are later scaled down to be displayed in turtle graphics.
+and the results are scaled down to be displayed in turtle graphics.
 
 The simulation tests if the resulting orbits and planets' movements
 obey the Kepler laws.
-
-This provides an example of local effects (of the law of gravity),
-having a global effect (of elliptical orbits with details specified by Kepler).
 
 The simulation shows planets' orbits to scale, 
 but disregards some details not relevant to Kepler's laws.
 Namely, in this simulation (unlike in reality):
 * the orbits of all planets are in the same plane, and
 * the foci of elliptical orbits of all planets are on the same straight line.
+* the priod in which the turtle completes the orbit is proportional to the
+  actutal orbital period of the planet, but the scaling facor is not the same
+  as for orbit's size.
+
+Methodology of science concepts:
+* areas of science: experimental/observational, theoretical, computational.
+* discrete simulation of a continouous process.
+* qualitative vs. quantitative statements
+  (a planet moves fastest when close to the Sun vs. Kepler's 2nd law).
+* local effects (of the law of gravity) vs.
+  global properties (elliptical orbits with details specified by Kepler).
 """
 
 # TO DO:
@@ -54,10 +62,9 @@ SEC = 1 # s
 #---------------------------------------------------------------------------------
 # Sun
 
-# white
 MS = 1.98847e30 # Mass in kg.
 RS = 696_000*KM # Radius in m.
-MU  = G*MS      # Gravitational parameter with respect to the Sun
+MU = G*MS      # Gravitational parameter with respect to the Sun
 
 #---------------------------------------------------------------------------------
 
@@ -174,7 +181,7 @@ JUPITER_DATA["perihelion"]      = 740_595_000*KM
 JUPITER_DATA["semi-major axis"] = 778_479_000*KM
 JUPITER_DATA["eccentricity"] = 0.0489
 JUPITER_DATA["avg speed"] = 13.07*KM/SEC
-JUPITER_DATA["sidereal orbital period"] = 4332.59*DAY 
+JUPITER_DATA["sidereal orbital period"] = 4_332.59*DAY 
 JUPITER_DATA["color"] = (176,127,53) # Mandalay -yellowish brown, "0xB07F35"
 JUPITER_DATA["radius"] = 69_911*KM
 
@@ -198,7 +205,7 @@ SATURN_DATA["perihelion"]      = 1_352_550_000*KM
 SATURN_DATA["semi-major axis"] = 1_433_530_000*KM
 SATURN_DATA["eccentricity"] = 0.0565
 SATURN_DATA["avg speed"] = 9.68*KM/SEC
-SATURN_DATA["sidereal orbital period"] = 10755.70*DAY 
+SATURN_DATA["sidereal orbital period"] = 10_755.70*DAY 
 SATURN_DATA["color"] = (176,143,54) # Reef Gold - greenish brown, "0xB08F36"
 SATURN_DATA["radius"] = 58_232*KM
 
@@ -222,7 +229,7 @@ URANUS_DATA["perihelion"]      = 2_735_560_000*KM
 URANUS_DATA["semi-major axis"] = 2_870_972_000*KM
 URANUS_DATA["eccentricity"] = 0.04717
 URANUS_DATA["avg speed"] = 6.80*KM/SEC
-URANUS_DATA["sidereal orbital period"] = 30,688.5*DAY
+URANUS_DATA["sidereal orbital period"] = 30_688.5*DAY
 URANUS_DATA["color"] = (85,128,170) # Air Force Blue -medium blue, "0x5580AA"
 URANUS_DATA["radius"] = 25_362*KM
 
@@ -246,7 +253,7 @@ NEPTUNE_DATA["perihelion"]      = 4_460_000_000*KM
 NEPTUNE_DATA["semi-major axis"] = 4_500_000_000*KM
 NEPTUNE_DATA["eccentricity"] = 0.008678
 NEPTUNE_DATA["avg speed"] = 5.43*KM/SEC
-NEPTUNE_DATA["sidereal orbital period"] = 60195*DAY 
+NEPTUNE_DATA["sidereal orbital period"] = 60_195*DAY 
 NEPTUNE_DATA["color"] = (54,104,150) # Lochmara - dark blue, "0x366896"
 NEPTUNE_DATA["radius"] = 24_622*KM
 
@@ -265,8 +272,8 @@ NEPTUNE_DATA["min speed"] = bcs[3] # at the aphelion
 # A scaling factor suitable for showing orbits of the 4 inner planets
 # and made-up planets 0.7 - 1.3
 # Outer planets require a factor 10 times bigger.
-SCALING = 1000_000_000 # Real distances in meters will be divided by this
-                     # before being given to the turtle.
+#SCALING = 1_000_000_000 # Real distances in meters will be divided by this
+                        # before being given to the turtle.
 
 # Position, velocity, acceleration will be updated every TIME_STEP.
 TIME_STEP = 1000 # seconds
@@ -278,23 +285,21 @@ TIME_STEP = 1000 # seconds
 
 class Planet(object):
 
-    def __init__(self, name, mass, perihelionDistance, maxSpeed, timeStep,
-                 color="green"):
-        """mass in kg,
-           perihelionDistance in m.
-           maxSpeed in m/s,
+    def __init__(self, name, mass, perihelionDistance, maxSpeed,
+                 timeStep, color="green"):
+        """mass in kg, perihelionDistance in m, maxSpeed in m/s,
            simulation timeStep in s.
-           Assumes that the Sun is at (0,0).
-           Puts the planet/self at (perihelionDistance, 0)
+           Assumes that the Sun is at (0, 0) in a coordinate system.
+           Puts the planet/self at coordinates (perihelionDistance, 0)
            giving it velocity (0, maxSpeed).
         """
         self._mass = mass
         self._x = perihelionDistance
         self._y = 0
         self._r2 = self._x*self._x + self._y*self._y # radius squared
-                   # we store radius squared 
+        # we store radius squared to avoid loosing precision while recalculating it
         self._r = sqrt(self._r2) # radius = distance from Sun's center.
-        self._vx = 0 # horizontal speed in m/SEC 
+        self._vx = 0 # horizontal speed in m/s 
         self._vy = maxSpeed # vertical speed in m/s
         self._ax = -MU*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
         self._ay = -MU*self._y/(self._r2*self._r) # vertical acceleration m/s^2
@@ -302,13 +307,15 @@ class Planet(object):
         self._name = name
         self._color = color
 
-    def move(self, timeStep=None):
+    def move(self, timeStep="the default for this planet"):
         """Updates position, velocity, acceleration, radius
            to those after timeStep.
-           If timeStep is None, uses the default value
+           timeStep is an optional parameter.
+           If timeStep is is not provided, uses the default value
            with which the Planet object was created.
         """
-        if timeStep is None: timeStep = self._timeStep
+        if timeStep == "the default for this planet":
+            timeStep = self._timeStep
         self._x += self._vx * timeStep
         self._y += self._vy * timeStep
         self._r2 = self._x*self._x + self._y*self._y
@@ -420,13 +427,11 @@ NEPTUNE = Planet("Neptune",
                  "blue"
                 )
 
-
 ME = EARTH_DATA["mass"]
 PE = EARTH_DATA["perihelion"]
 SE = EARTH_DATA["max speed"]
-S10 = sqrt(G*(MS+ME)/PE)
-# the speed of a made-up planet with the same mass and perihelion as Earth,
-# but with a circular orbit.
+S10 = sqrt(G*(MS+ME)/PE) # the speed of a made-up planet
+# with the same mass and perihelion as Earth, but with a circular orbit.
 
 # Made-up planets, for computational experiments (default pencolor=green)
 PLANET07 = Planet("Planet 0.7", ME, PE, 0.7*S10, TIME_STEP) 
@@ -438,8 +443,8 @@ PLANET12 = Planet("Planet 1.2", ME, PE, 1.2*S10, TIME_STEP)
 PLANET13 = Planet("Planet 1.3", ME, PE, 1.3*S10, TIME_STEP)
 
 # Note.
-# Inner planets and made up planets above are close to the Sun
-# and outer ones are at vast distances.
+# Inner planets and made up planets above are close to the Sun,
+# and outer ones - are at vast distances.
 # It is not practical to show them all on the same canvas.
 # Either show the inner planets together with made up planets
 # or the outer planets.
@@ -499,11 +504,11 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
         t.goto(x-leftShift,y)
 
 #sky(showSun=False) # run/uncomment this before running drawEllipse
-#drawEllipse(200,100, 0, "pink")
+#drawEllipse(200, 100, 0, "pink")
      
 #---------------------------------------------------------------------------------
 
-def simulate(planet: Planet, scaleDownFactor=SCALING):
+def simulate(planet: Planet, scaleDownFactor):
     # Just draws the orbit, does not test Kepler's laws.
     # This function is not used by the top level functions in the program.
     # It is given here as a stepping stone to understand simulateAndTest below.
@@ -558,7 +563,8 @@ def simulate(planet: Planet, scaleDownFactor=SCALING):
 
 #-----------------------------------------------------------------------------
 
-def simulateAndTest(planet: Planet, scaleDownFactor=SCALING):
+# Under construction
+def simulateAndTest(planet: Planet, scaleDownFactor):
     """Precondition: planet position (x,y) must have x>0, y=0,
                      and velocity (vx,vy) must have vx=0, vy>0.
        So, the planet must be in the right vertex of its elliptical orbit.
@@ -712,10 +718,10 @@ def simmulationSummary(planetData: dict, planet: Planet, scaleDownFactor):
     drawEllipse(planetData["semi-major axis"]/scaleDownFactor,
                 planetData["semi-minor axis"]/scaleDownFactor,
                 planetData["linear eccentricity"]/scaleDownFactor)
-    TS = simulateAndTest(planet)[3]
+    TS = simulateAndTest(planet, scaleDownFactor)[3]
     print(round(abs(TS-T)*100/T, 2), "% error")
 
-def innerPlanets(scaleDownFactor=SCALING):
+def innerPlanets():
     """A computer simulation of orbits of 4 inner planets, resulting from the
        continuing local effect of the Newton's law of gravity.
        Tests if the simulated planets obey (global) Kepler's laws 1 and 3.
@@ -732,22 +738,37 @@ The orbits displayed in turtle graphics are to scale.
 and planets move counter-clockwise as seen from the north pole.
 The orientation of the major axes of orbits is not modeled here:
 all ellipses are shown with the major axis on the x-axis
-and the sun in the right focus.
+and the Sun in the right focus.
          """)
-
+    scaleDownFactor = 1_000_000_000
     sky()
-    
     print("\nTesting Kepler's 1st and 3rd laws")  
-
     simmulationSummary(MERCURY_DATA, MERCURY, scaleDownFactor)
     simmulationSummary(VENUS_DATA, VENUS, scaleDownFactor)
     simmulationSummary(EARTH_DATA, EARTH, scaleDownFactor)
     simmulationSummary(MARS_DATA, MARS, scaleDownFactor)
 
-#innerPlanets() # uncomment this to simulate the inner planets.
+def eightPlanets():
+    scaleDownFactor = 10_000_000_000
+    sky()
+    # Default time step = 1000 s
+    simmulationSummary(MERCURY_DATA, MERCURY, scaleDownFactor)
+    simmulationSummary(VENUS_DATA, VENUS, scaleDownFactor)
+    simmulationSummary(EARTH_DATA, EARTH, scaleDownFactor)
+    simmulationSummary(MARS_DATA, MARS, scaleDownFactor)
+    JUPITER.setTimeStep(10_000)
+    simmulationSummary(JUPITER_DATA, JUPITER, scaleDownFactor)
+    SATURN.setTimeStep(10_000)
+    simmulationSummary(SATURN_DATA, SATURN, scaleDownFactor)
+    URANUS.setTimeStep(10_000)
+    simmulationSummary(URANUS_DATA, URANUS, scaleDownFactor)
+    NEPTUNE.setTimeStep(10_000)
+    simmulationSummary(NEPTUNE_DATA, NEPTUNE, scaleDownFactor)
 
 #-------
-#Output:
+#innerPlanets() # uncomment this to simulate the inner planets.
+
+# Output:
 
 # The orbits are to scale.
 # and planets move counter-clockwise as seen from the north pole.
@@ -780,7 +801,8 @@ and the sun in the right focus.
    
 #---------------------------------------------------------------------------------
 
-def testKepler(planet, scaleDownFactor=SCALING):
+# Under construction
+def testKepler(planet: Planet, scaleDownFactor = 1_000_000_000):
     """Precondition: planet position (x,y) must have x>0, y=0,
                     and velocity (vx,vy) must have vx=0, vy>0.
        So, the planet must be in the right vertex of its elliptical orbit.A computer simulation of the orbit of the planet, resulting from the
@@ -809,7 +831,7 @@ def testKepler(planet, scaleDownFactor=SCALING):
     print("Planet's orbital period in days:")
     print(round(T/DAY,2), "- predicted by the theory")
     drawEllipse(a/scaleDownFactor, b/scaleDownFactor, c/scaleDownFactor) # predicted orbit
-    TS = simulateAndTest(planet)[3] # simulation. TS - orbital period form simulation.
+    TS = simulateAndTest(planet, scaleDownFactor)[3] # simulation. TS - orbital period form simulation.
     print(round(TS/DAY,2), "- from the simulation")
     print( round(abs(TS-T)*100/T, 2), "% discrepancy")
 
@@ -818,26 +840,32 @@ def testKepler(planet, scaleDownFactor=SCALING):
 #=================================================================================
 
 def main():
-    print("Welcome to Kepler's World.")
+    print("Kepler's World")
 
     while True:
         print(""" 
 1. Inner planets: Mercury, Venus, Earth and Mars.
    For each planet, show the actual orbit, then simulate the movement.
    Print actual orbital period and that calculated in the simulation.
-   
-2. Test Kepler's laws: formulas vs. simulation.
-   Use a made-up celestial body with the same mass and perihelion as Venus
-   but with the maximal speed 1.2 times that of Venus.
 
-3. Exit.
+2. Eight planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune.
+   For each planet, show the actual orbit, then simulate the movement.
+   Print actual orbital period and that calculated in the simulation.
+   
+3. Test Kepler's laws: formulas vs. simulation.
+   Use a made-up celestial body with the same mass and perihelion as Earth
+   but with the maximal speed 1.2 times that of Earth.
+
+4. Exit.
           """)
-        choice = input("Enter your choice (1 or 2 or 3): ")
+        choice = input("Enter your choice (1 or 2 or 3 or 4): ")
         if choice == "":
             return
         if choice[0] == "1":
             innerPlanets()
         elif choice[0] == "2":
+            eightPlanets()
+        elif choice[0] == "3":
             testKepler(PLANET12)
         else:
             print("Bye")
