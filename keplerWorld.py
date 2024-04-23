@@ -267,26 +267,12 @@ NEPTUNE_DATA["max speed"] = bcs[2] # at the perihelion
 NEPTUNE_DATA["min speed"] = bcs[3] # at the aphelion
 
 #=================================================================================
-# SIMULATION PARAMETERS
-
-# A scaling factor suitable for showing orbits of the 4 inner planets
-# and made-up planets 0.7 - 1.3
-# Outer planets require a factor 10 times bigger.
-#SCALING = 1_000_000_000 # Real distances in meters will be divided by this
-                        # before being given to the turtle.
-
-# Position, velocity, acceleration will be updated every TIME_STEP.
-TIME_STEP = 1000 # seconds
-# Suitable for inner plenets. Outer planets can use a step 10 times bigger.
-# the bigger the time step, the faster the turtle moves.
-        
-#=================================================================================
 # PLANETS
 
 class Planet(object):
 
     def __init__(self, name, mass, perihelionDistance, maxSpeed,
-                 timeStep, color="green"):
+                 color="green", timeStep=1000):
         """mass in kg, perihelionDistance in m, maxSpeed in m/s,
            simulation timeStep in s.
            Assumes that the Sun is at (0, 0) in a coordinate system.
@@ -364,37 +350,34 @@ class Planet(object):
 #---------------------------------------------------------------------------------
 # Simulated planets - global constants.
 
-# The Sun is at (0,0)
-# The starting position for a planet is (perihilionDistance, 0)
-# The starting velocity is (0, sMax),
+# The Sun is at (0,0).
+# The starting position for a planet is (perihilionDistance, 0).
+# The starting velocity is (0, sMax).
+# The default time step in the simulation: 1000s.
 
 # Inner planets - rocky:
 MERCURY = Planet("Mercury",
                  MERCURY_DATA["mass"],
                  MERCURY_DATA["perihelion"],
                  MERCURY_DATA["max speed"],
-                 TIME_STEP,
                  "grey"
                 )
 VENUS   = Planet("Venus",
                  VENUS_DATA["mass"],
                  VENUS_DATA["perihelion"],
                  VENUS_DATA["max speed"],
-                 TIME_STEP,
                  "gold"
                 )
 EARTH   = Planet("Earth",
                  EARTH_DATA["mass"],
                  EARTH_DATA["perihelion"],
                  EARTH_DATA["max speed"],
-                 TIME_STEP,
                  "DeepSkyBlue"
                 )
 MARS    = Planet("Mars",
                  MARS_DATA["mass"],
                  MARS_DATA["perihelion"],
                  MARS_DATA["max speed"],
-                 TIME_STEP,
                  "red"
                 )
 # Outer planets - gas giants:
@@ -402,28 +385,24 @@ JUPITER = Planet("Jupiter",
                  JUPITER_DATA["mass"],
                  JUPITER_DATA["perihelion"],
                  JUPITER_DATA["max speed"],
-                 TIME_STEP,
                  "yellow"
                 )
 SATURN  = Planet("Saturn",
                  SATURN_DATA["mass"],
                  SATURN_DATA["perihelion"],
                  SATURN_DATA["max speed"],
-                 TIME_STEP,
                  "orange"
                 )
 URANUS  = Planet("Uranus",
                  URANUS_DATA["mass"],
                  URANUS_DATA["perihelion"],
                  URANUS_DATA["max speed"],
-                 TIME_STEP,
                  "orange"
                 )
 NEPTUNE = Planet("Neptune",
                  NEPTUNE_DATA["mass"],
                  NEPTUNE_DATA["perihelion"],
                  NEPTUNE_DATA["max speed"],
-                 TIME_STEP,
                  "blue"
                 )
 
@@ -434,13 +413,13 @@ S10 = sqrt(G*(MS+ME)/PE) # the speed of a made-up planet
 # with the same mass and perihelion as Earth, but with a circular orbit.
 
 # Made-up planets, for computational experiments (default pencolor=green)
-PLANET07 = Planet("Planet 0.7", ME, PE, 0.7*S10, TIME_STEP) 
-PLANET08 = Planet("Planet 0.8", ME, PE, 0.8*S10, TIME_STEP)
-PLANET09 = Planet("Planet 0.9", ME, PE, 0.9*S10, TIME_STEP)
-PLANET10 = Planet("Planet 1.0", ME, PE,     S10, TIME_STEP)
-PLANET11 = Planet("Planet 1.1", ME, PE, 1.1*S10, TIME_STEP)
-PLANET12 = Planet("Planet 1.2", ME, PE, 1.2*S10, TIME_STEP)
-PLANET13 = Planet("Planet 1.3", ME, PE, 1.3*S10, TIME_STEP)
+PLANET07 = Planet("Planet 0.7", ME, PE, 0.7*S10) 
+PLANET08 = Planet("Planet 0.8", ME, PE, 0.8*S10)
+PLANET09 = Planet("Planet 0.9", ME, PE, 0.9*S10)
+PLANET10 = Planet("Planet 1.0", ME, PE,     S10)
+PLANET11 = Planet("Planet 1.1", ME, PE, 1.1*S10)
+PLANET12 = Planet("Planet 1.2", ME, PE, 1.2*S10)
+PLANET13 = Planet("Planet 1.3", ME, PE, 1.3*S10)
 
 # Note.
 # Inner planets and made up planets above are close to the Sun,
@@ -520,6 +499,8 @@ def simulate(planet: Planet, scaleDownFactor):
        Every step in the simulation is done for the actual planet
        (such as Mars, with its actual mass, perihelion and actual max speed)
        and only later it is scaled down to be displayed in turtle graphics.
+       Real distances in meters will be divided by scaleDownFactor
+       before being given to the turtle.
        Note: make sure to create canvas before this function is called.
     """
     # Prepare turtle.
@@ -573,6 +554,8 @@ def simulateAndTest(planet: Planet, scaleDownFactor):
        Every step in the simulation is done for the actual planet
        (such as Mars, with its actual mass, perihelion and actual max speed)
        and only later it is scaled down to be displayed in turtle graphics.
+       Real distances in meters will be divided by scaleDownFactor
+       before being given to the turtle.
        Tests Kepler's laws ...
        Returns the orbital period in seconds, ...
        Note: make sure to create canvas before this function is called.
@@ -741,6 +724,8 @@ all ellipses are shown with the major axis on the x-axis
 and the Sun in the right focus.
          """)
     scaleDownFactor = 1_000_000_000
+    # Real distances in meters will be divided by scaleDownFactor
+    # before being given to the turtle.
     sky()
     print("\nTesting Kepler's 1st and 3rd laws")  
     simmulationSummary(MERCURY_DATA, MERCURY, scaleDownFactor)
@@ -750,6 +735,8 @@ and the Sun in the right focus.
 
 def eightPlanets():
     scaleDownFactor = 10_000_000_000
+    # Real distances in meters will be divided by scaleDownFactor
+    # before being given to the turtle.
     sky()
     # Default time step = 1000 s
     simmulationSummary(MERCURY_DATA, MERCURY, scaleDownFactor)
@@ -811,6 +798,8 @@ def testKepler(planet: Planet, scaleDownFactor = 1_000_000_000):
        Every step in the simulation is done for the actual planet
        (such as Mars, with its actual mass, perihelion and actual max speed)
        and only later it is scaled down to be displayed in turtle graphics.
+       Real distances in meters will be divided by scaleDownFactor
+       before being given to the turtle.
        This function creates its own canvas-sky with the Sun,
        and draws the predicted ellipse of the orbit with the foci,
        before starting simulation.
