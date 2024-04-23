@@ -25,7 +25,7 @@ Namely, in this simulation (unlike in reality):
 # experiment1() - planets with masses m, 2m, 3m and the same perihelion.
 # experiment2() - plenets with the same perihelion and max speed v, 2v, 3v
 # ...
-# planets wiht the same orbtital period and diffenrent perihelions
+# planets with the same orbtital period and different perihelions
 
 #==================================================================================
 from turtle import getscreen, Turtle
@@ -37,212 +37,227 @@ from math import sqrt, pi, sin, cos
 # Astronomical data in kilograms, meters, seconds.
 # From Wikipedia.
 
+# Planets'colors from:
+# astronomy.stackexchange.com/questions/14032/color-of-planets#14040
+# www.htmlcsscolor.com
+# Planet colors will appear lighter when brightly illuminated by the Sun.
+# Use color wheel to pick colors for the visuallzation:
+# www.canva.com/colors/color-wheel/
+
 #---------------------------------------------------------------------------------
 
 G = 6.67430e-11 # m^3 / (kg * s^2). Gravitational constant
-DAY = 24*60*60  #s (actual day is 86400.002 s because of a slowing rotation)
-KM = 1_000 # m
+DAY = 24*60*60 #s (actual day is 86400.002 s because of a slowing rotation)
+KM = 1000 # m
 SEC = 1 # s 
-
-#---------------------------------------------------------------------------------
-
-def bcsFromAPm(A,P,m):
-    """A - aphelion in m, P - perihelion in m, m - mass in kg."""
-    a = (A + P) / 2 # semi-major axis in m.
-    b = sqrt(A * P) # semi-minor axis in m.
-    c = (A - P) / 2 # linear eccentricity = center-to-focus distance, in m.
-    mu = G * (M_S + m) # gravitational parameter (with respect to the Sun)
-    sMax = sqrt(mu * (2/P - 1/a)) # speed at perihelion - max speed
-    sMin = sqrt(mu * (2/A - 1/a)) # speed at aphelion - min speed
-    # e = c / a; # eccentricity.
-    # T = sqrt(4 * pi * pi * a * a * a / mu) # orbital period.
-    return b, c, sMax, sMin
-    
-#print(bcsFromAPm(A_Me, P_Me, m_Me))
-#print(bcsFromAPm(A_V,  P_V,  m_V ))
-#print(bcsFromAPm(A_E,  P_E,  m_E ))
-#print(bcsFromAPm(A_Ma, P_Ma, m_Ma))
 
 #---------------------------------------------------------------------------------
 # Sun
 
 # white
-M_S = 1.98847e30 # Mass in kg.
-R_S = 696_000*KM # Radius in m.
-MU  = G*M_S      # Gravitational parameter with respect to the Sun
+MS = 1.98847e30 # Mass in kg.
+RS = 696_000*KM # Radius in m.
+MU  = G*MS      # Gravitational parameter with respect to the Sun
 
 #---------------------------------------------------------------------------------
-# Mercury
 
-##Mercury = {}
-##
-##Mercury[m] = 3.3011e23,    # Mass in kg.
-##Mercury[A] = 69_820_000*KM # Aphelion distance in m.
-##Mercury[P] = 46_000_000*KM # Perihlion in m.
-##Mercury[a] = 57_910_000*KM # Semi-major axis in m.
-##Mercury[e] = 0.205630      # Eccentricity.
-##Mercury[s] = 47.36*KM/SEC  # Average orbital speed in m/s.
-##Mercury[T] = 87.9691*DAY   # Sidereal orbital period in s.
-##
-##bcs = bcsFromAPmNEW(Mercury)
+def bcsFromAPm(A,P,m):
+    """A - aphelion in m, P - perihelion in m, m - mass in kg.
+       Returns semi-minor axis, linear eccentricity and max and min speed.
+    """
+    a = (A + P) / 2 # semi-major axis in m.
+    b = sqrt(A * P) # semi-minor axis in m.
+    c = (A - P) / 2 # linear eccentricity = center-to-focus distance, in m.
+    mu = G * (MS + m) # gravitational parameter (with respect to the Sun)
+    sMax = sqrt(mu * (2/P - 1/a)) # speed at perihelion - max speed
+    sMin = sqrt(mu * (2/A - 1/a)) # speed at aphelion - min speed
+    # e = c / a; # eccentricity.
+    # T = sqrt(4 * pi * pi * a * a * a / mu) # orbital period.
+    return (b, c, sMax, sMin)
+    
+#---------------------------------------------------------------------------------
 
-# grey
-m_Me = 3.3011e23     # Mass in kg.
-A_Me = 69_820_000*KM # Aphelion distance in m.
-P_Me = 46_000_000*KM # Perihlion in m.
-a_Me = 57_910_000*KM # Semi-major axis in m.
-e_Me = 0.205630      # Eccentricity.
-s_Me = 47.36*KM/SEC  # Average orbital speed in m/s.
-T_Me = 87.9691*DAY   # Sidereal orbital period in s.
+MERCURY_DATA = {}
+MERCURY_DATA["mass"] = 3.3011e23
+MERCURY_DATA["aphelion"]        = 69_820_000*KM 
+MERCURY_DATA["perihelion"]      = 46_000_000*KM 
+MERCURY_DATA["semi-major axis"] = 57_910_000*KM 
+MERCURY_DATA["eccentricity"] = 0.205630      
+MERCURY_DATA["avg speed"] = 47.36*KM/SEC  
+MERCURY_DATA["sidereal orbital period"] = 87.9691*DAY
+MERCURY_DATA["color"] = (26,26,26) # Nero - dark gray/black, hex: "0x1A1A1A"
+MERCURY_DATA["radius"] = 2439.7*KM
 
-bcs = bcsFromAPm(A_Me, P_Me, m_Me)
+bcs = bcsFromAPm(MERCURY_DATA["aphelion"],
+                 MERCURY_DATA["perihelion"],
+                 MERCURY_DATA["mass"])
 
-b_Me    = bcs[0]     # Semi-minor axis in m.
-c_Me    = bcs[1]     # Linear eccentricity = center-to-focus distance, in m.
-sMax_Me = bcs[2]     # Max speed (at the prihelion) in m/s.
-sMin_Me = bcs[3]     # Min speed (at the aphelion) in m/s.
+MERCURY_DATA["semi-minor axis"] = bcs[0]
+MERCURY_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
+MERCURY_DATA["max speed"] = bcs[2] # at the perihelion
+MERCURY_DATA["min speed"] = bcs[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
-# Venus
 
-# yellow/white
-m_V = 4.8675e24      # Mass in kg.
-A_V = 108_940_000*KM # Aphelion distance in m.
-P_V = 107_480_000*KM # Perihlion in m.
-a_V = 108_210_000*KM # Semi-major axis in m.
-e_V = 0.006772       # Eccentricity.
-s_V = 35.02*KM/SEC   # Average orbital speed in m/s.
-T_V = 224.701*DAY    # Sidereal orbital period in s.
+VENUS_DATA = {}
+VENUS_DATA["mass"] = 4.8675e24
+VENUS_DATA["aphelion"]        = 108_940_000*KM
+VENUS_DATA["perihelion"]      = 107_480_000*KM
+VENUS_DATA["semi-major axis"] = 108_210_000*KM
+VENUS_DATA["eccentricity"] = 0.006772   
+VENUS_DATA["avg speed"] = 35.02*KM/SEC 
+VENUS_DATA["sidereal orbital period"] = 224.701*DAY 
+VENUS_DATA["color"] = (230,230,230) # Whisper, light grey, hex: "0xE6E6E6"
+VENUS_DATA["radius"] = 6051.8*KM
 
-bcs = bcsFromAPm(A_V, P_V, m_V)
+bcs = bcsFromAPm(VENUS_DATA["aphelion"],
+                 VENUS_DATA["perihelion"],
+                 VENUS_DATA["mass"])
 
-b_V    = bcs[0]      # Semi-minor axis in m.
-c_V    = bcs[1]      # Linear eccentricity = center-to-focus distance, in m.
-sMax_V = bcs[2]      # Max speed (at the prihelion) in m/s.
-sMin_V = bcs[3]      # Min speed (at the aphelion) in m/s.
-
-#---------------------------------------------------------------------------------
-# Earth
-
-# blue
-m_E = 5.972168e24        # Mass in kg.
-A_E = 152_097_597*KM     # Aphelion distance in m.
-P_E = 147_098_450*KM     # Perihlion in m.
-a_E = 149_598_023*KM     # Semi-major axis in m.
-e_E = 0.0167086          # Eccentricity
-S_E = 29.7827*KM/SEC     # Average orbital speed in m/s.
-T_E = 365.2563630040*DAY # Sidereal orbital period in s. 
-
-bcs = bcsFromAPm(A_E, P_E, m_E)
-
-b_E    = bcs[0]          # Semi-minor axis in m.
-c_E    = bcs[1]          # Linear eccentricity = center-to-focus distance, in m.
-sMax_E = bcs[2]          # Max speed (at the prihelion) in m/s.
-sMin_E = bcs[3]          # Min speed (at the aphelion) in m/s.
+VENUS_DATA["semi-minor axis"] = bcs[0]
+VENUS_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
+VENUS_DATA["max speed"] = bcs[2] # at the perihelion
+VENUS_DATA["min speed"] = bcs[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
-# Mars
 
-# red
-m_Ma = 6.4171e23      # Mass in kg.
-A_Ma = 249_261_000*KM # Aphelion distance in m.
-P_Ma = 206_650_000*KM # Perihlion in m.
-a_Ma = 227_939_366*KM # Semi-major axis in m.
-e_Ma = 0.0934         # Eccentricity.
-s_Ma = 24.07*KM/SEC   # Average orbital speed in m/s.
-T_Ma = 686.980*DAY    # Sidereal orbital period in s.
+EARTH_DATA = {}
+EARTH_DATA["mass"] = 5.972168e24
+EARTH_DATA["aphelion"]        = 152_097_597*KM
+EARTH_DATA["perihelion"]      = 147_098_450*KM
+EARTH_DATA["semi-major axis"] = 149_598_023*KM
+EARTH_DATA["eccentricity"] = 0.0167086
+EARTH_DATA["avg speed"] = 29.7827*KM/SEC
+EARTH_DATA["sidereal orbital period"] = 365.2563630040*DAY 
+EARTH_DATA["color"] = (47,106,105) # Genoa - greenish blue, hex: "0x2F6A69"
+EARTH_DATA["radius"] = 6371*KM
 
-bcs = bcsFromAPm(A_Ma, P_Ma, m_Ma)
+bcs = bcsFromAPm(EARTH_DATA["aphelion"],
+                 EARTH_DATA["perihelion"],
+                 EARTH_DATA["mass"])
 
-b_Ma    = bcs[0]      # Semi-minor axis in m.
-c_Ma    = bcs[1]      # Linear eccentricity = center-to-focus distance, in m.
-sMax_Ma = bcs[2]      # Max speed (at the prihelion) in m/s.
-sMin_Ma = bcs[3]      # Min speed (at the aphelion) in m/s.
+EARTH_DATA["semi-minor axis"] = bcs[0]
+EARTH_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
+EARTH_DATA["max speed"] = bcs[2] # at the perihelion
+EARTH_DATA["min speed"] = bcs[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
-# Jupiter
+
+MARS_DATA = {}
+MARS_DATA["mass"] = 6.4171e23
+MARS_DATA["aphelion"]        = 249_261_000*KM
+MARS_DATA["perihelion"]      = 206_650_000*KM
+MARS_DATA["semi-major axis"] = 227_939_366*KM
+MARS_DATA["eccentricity"] = 0.0934
+MARS_DATA["avg speed"] = 24.07*KM/SEC
+MARS_DATA["sidereal orbital period"] = 686.980*DAY
+MARS_DATA["color"] = (153,61,0) # Saddle Brown -redish brown, hex: "0x993D00"
+MARS_DATA["radius"] = 3389.5*KM
+
+bcs = bcsFromAPm(MARS_DATA["aphelion"],
+                 MARS_DATA["perihelion"],
+                 MARS_DATA["mass"])
+
+MARS_DATA["semi-minor axis"] = bcs[0]
+MARS_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
+MARS_DATA["max speed"] = bcs[2] # at the perihelion
+MARS_DATA["min speed"] = bcs[3] # at the aphelion
+
+#---------------------------------------------------------------------------------
 
 # requires a bigger scaling constant in simulations!
 
-# yellow
-m_J = 1.8982e27      # Mass in kg.
-A_J = 816_363_000*KM # Aphelion distance in m.
-P_J = 740_595_000*KM # Perihlion in m.
-a_J = 778_479_000*KM # Semi-major axis in m.
-e_J = 0.0489         # Eccentricity.
-s_J = 13.07*KM/SEC   # Average orbital speed in m/s.
-T_J = 4332.59*DAY    # Sidereal orbital period in s.
+JUPITER_DATA = {}
+JUPITER_DATA["mass"] = 1.8982e27
+JUPITER_DATA["aphelion"]        = 816_363_000*KM
+JUPITER_DATA["perihelion"]      = 740_595_000*KM
+JUPITER_DATA["semi-major axis"] = 778_479_000*KM
+JUPITER_DATA["eccentricity"] = 0.0489
+JUPITER_DATA["avg speed"] = 13.07*KM/SEC
+JUPITER_DATA["sidereal orbital period"] = 4332.59*DAY 
+JUPITER_DATA["color"] = (176,127,53) # Mandalay -yellowish brown, "0xB07F35"
+JUPITER_DATA["radius"] = 69_911*KM
 
-bcs = bcsFromAPm(A_J, P_J, m_J)
+bcs = bcsFromAPm(JUPITER_DATA["aphelion"],
+                 JUPITER_DATA["perihelion"],
+                 JUPITER_DATA["mass"])
 
-b_J    = bcs[0]    # Semi-minor axis in m.
-c_J    = bcs[1]    # Linear eccentricity = center-to-focus distance, in m.
-sMax_J = bcs[2]    # Max speed (at the prihelion) in m/s.
-sMin_J = bcs[3]    # Min speed (at the aphelion) in m/s.
+JUPITER_DATA["semi-minor axis"] = bcs[0]
+JUPITER_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
+JUPITER_DATA["max speed"] = bcs[2] # at the perihelion
+JUPITER_DATA["min speed"] = bcs[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
-# Saturn
 
 # requires a bigger scaling constant in simulations!
 
-# yellow
-m_S = 5.6834e26        # Mass in kg.
-A_S = 1_514_500_000*KM # Aphelion distance in m.
-P_S = 1_352_550_000*KM # Perihlion in m.
-a_S = 1_433_530_000*KM # Semi-major axis in m.
-e_S = 0.0565           # Eccentricity.
-s_S = 9.68*KM/SEC      # Average orbital speed in m/s.
-T_S = 10755.70*DAY     # Sidereal orbital period in s. 
+SATURN_DATA = {}
+SATURN_DATA["mass"] = 5.6834e26
+SATURN_DATA["aphelion"]        = 1_514_500_000*KM
+SATURN_DATA["perihelion"]      = 1_352_550_000*KM
+SATURN_DATA["semi-major axis"] = 1_433_530_000*KM
+SATURN_DATA["eccentricity"] = 0.0565
+SATURN_DATA["avg speed"] = 9.68*KM/SEC
+SATURN_DATA["sidereal orbital period"] = 10755.70*DAY 
+SATURN_DATA["color"] = (176,143,54) # Reef Gold - greenish brown, "0xB08F36"
+SATURN_DATA["radius"] = 58_232*KM
 
+bcs = bcsFromAPm(SATURN_DATA["aphelion"],
+                 SATURN_DATA["perihelion"],
+                 SATURN_DATA["mass"])
 
-bcs = bcsFromAPm(A_S, P_S, m_S)
-
-b_S    = bcs[0]    # Semi-minor axis in m.
-c_S    = bcs[1]    # Linear eccentricity = center-to-focus distance, in m.
-sMax_S = bcs[2]    # Max speed (at the prihelion) in m/s.
-sMin_S = bcs[3]    # Min speed (at the aphelion) in m/s.
+SATURN_DATA["semi-minor axis"] = bcs[0]
+SATURN_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
+SATURN_DATA["max speed"] = bcs[2] # at the perihelion
+SATURN_DATA["min speed"] = bcs[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
-# Uranus
 
 # requires a bigger scaling constant in simulations!
 
-# white
-m_U = 8.6810e25        # Mass in kg.
-A_U = 3_006_390_000*KM # Aphelion distance in m.
-P_U = 2_735_560_000*KM # Perihlion in m.
-a_U = 2_870_972_000*KM # Semi-major axis in m.
-e_U = 0.04717          # Eccentricity.
-s_U = 6.80*KM/SEC      # Average orbital speed in m/s.
-T_U = 30,688.5*DAY     # Sidereal orbital period in s.
+URANUS_DATA = {}
+URANUS_DATA["mass"] = 8.6810e25
+URANUS_DATA["aphelion"]        = 3_006_390_000*KM
+URANUS_DATA["perihelion"]      = 2_735_560_000*KM
+URANUS_DATA["semi-major axis"] = 2_870_972_000*KM
+URANUS_DATA["eccentricity"] = 0.04717
+URANUS_DATA["avg speed"] = 6.80*KM/SEC
+URANUS_DATA["sidereal orbital period"] = 30,688.5*DAY
+URANUS_DATA["color"] = (85,128,170) # Air Force Blue -medium blue, "0x5580AA"
+URANUS_DATA["radius"] = 25_362*KM
 
-bcs = bcsFromAPm(A_U, P_U, m_U)
+bcs = bcsFromAPm(URANUS_DATA["aphelion"],
+                 URANUS_DATA["perihelion"],
+                 URANUS_DATA["mass"])
 
-b_U    = bcs[0]        # Semi-minor axis in m.
-c_U    = bcs[1]        # Linear eccentricity = center-to-focus distance, in m.
-sMax_U = bcs[2]        # Max speed (at the prihelion) in m/s.
-sMin_U = bcs[3]        # Min speed (at the aphelion) in m/s.
+URANUS_DATA["semi-minor axis"] = bcs[0]
+URANUS_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
+URANUS_DATA["max speed"] = bcs[2] # at the perihelion
+URANUS_DATA["min speed"] = bcs[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
-# Neptune
 
 # requires a bigger scaling constant in simulations!
 
-# blue
-m_N = 1.02409e26       # Mass in kg.
-A_N = 4_540_000_000*KM # Aphelion distance in m.
-P_N = 4_460_000_000*KM # Perihlion in m.
-a_N = 4_500_000_000*KM # Semi-major axis in m.
-e_N = 0.008678         # Eccentricity.
-s_N = 5.43*KM/SEC      # Average orbital speed in m/s.
-T_N = 60195*DAY        # Sidereal orbital period in s.
+NEPTUNE_DATA = {}
+NEPTUNE_DATA["mass"] = 1.02409e26
+NEPTUNE_DATA["aphelion"]        = 4_540_000_000*KM
+NEPTUNE_DATA["perihelion"]      = 4_460_000_000*KM
+NEPTUNE_DATA["semi-major axis"] = 4_500_000_000*KM
+NEPTUNE_DATA["eccentricity"] = 0.008678
+NEPTUNE_DATA["avg speed"] = 5.43*KM/SEC
+NEPTUNE_DATA["sidereal orbital period"] = 60195*DAY 
+NEPTUNE_DATA["color"] = (54,104,150) # Lochmara - dark blue, "0x366896"
+NEPTUNE_DATA["radius"] = 24_622*KM
 
-bcs = bcsFromAPm(A_N, P_N, m_N)
+bcs = bcsFromAPm(NEPTUNE_DATA["aphelion"],
+                 NEPTUNE_DATA["perihelion"],
+                 NEPTUNE_DATA["mass"])
 
-b_N    = bcs[0]    # Semi-minor axis in m.
-c_N    = bcs[1]    # Linear eccentricity = center-to-focus distance, in m.
-sMax_N = bcs[2]    # Max speed (at the prihelion) in m/s.
-sMin_N = bcs[3]    # Min speed (at the aphelion) in m/s.
+NEPTUNE_DATA["semi-minor axis"] = bcs[0]
+NEPTUNE_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
+NEPTUNE_DATA["max speed"] = bcs[2] # at the perihelion
+NEPTUNE_DATA["min speed"] = bcs[3] # at the aphelion
 
 #=================================================================================
 # SIMULATION PARAMETERS
@@ -340,35 +355,87 @@ class Planet(object):
         self._timeStep = timeStep
 
 #---------------------------------------------------------------------------------
-# Planets - global constants.
+# Simulated planets - global constants.
 
 # The Sun is at (0,0)
 # The starting position for a planet is (perihilionDistance, 0)
 # The starting velocity is (0, sMax),
 
 # Inner planets - rocky:
-MERCURY = Planet("Mercury", m_Me, P_Me, sMax_Me, TIME_STEP, "grey"       )
-VENUS   = Planet("Venus"  , m_V,  P_V,  sMax_V,  TIME_STEP, "gold"       )
-EARTH   = Planet("Earth"  , m_E,  P_E,  sMax_E,  TIME_STEP, "DeepSkyBlue")
-MARS    = Planet("Mars"   , m_Ma, P_Ma, sMax_Ma, TIME_STEP, "red"        )
+MERCURY = Planet("Mercury",
+                 MERCURY_DATA["mass"],
+                 MERCURY_DATA["perihelion"],
+                 MERCURY_DATA["max speed"],
+                 TIME_STEP,
+                 "grey"
+                )
+VENUS   = Planet("Venus",
+                 VENUS_DATA["mass"],
+                 VENUS_DATA["perihelion"],
+                 VENUS_DATA["max speed"],
+                 TIME_STEP,
+                 "gold"
+                )
+EARTH   = Planet("Earth",
+                 EARTH_DATA["mass"],
+                 EARTH_DATA["perihelion"],
+                 EARTH_DATA["max speed"],
+                 TIME_STEP,
+                 "DeepSkyBlue"
+                )
+MARS    = Planet("Mars",
+                 MARS_DATA["mass"],
+                 MARS_DATA["perihelion"],
+                 MARS_DATA["max speed"],
+                 TIME_STEP,
+                 "red"
+                )
 # Outer planets - gas giants:
-JUPITER = Planet("Jupiter", m_J,  P_J,  sMax_J,  TIME_STEP, "yellow"     )
-SATURN  = Planet("Saturn" , m_S,  P_S,  sMax_S,  TIME_STEP, "orange"     )
-URANUS  = Planet("Uranus" , m_U,  P_U,  sMax_U,  TIME_STEP, "orange"     )
-NEPTUNE = Planet("Neptune", m_N,  P_N,  sMax_N,  TIME_STEP, "blue"       )
+JUPITER = Planet("Jupiter",
+                 JUPITER_DATA["mass"],
+                 JUPITER_DATA["perihelion"],
+                 JUPITER_DATA["max speed"],
+                 TIME_STEP,
+                 "yellow"
+                )
+SATURN  = Planet("Saturn",
+                 SATURN_DATA["mass"],
+                 SATURN_DATA["perihelion"],
+                 SATURN_DATA["max speed"],
+                 TIME_STEP,
+                 "orange"
+                )
+URANUS  = Planet("Uranus",
+                 URANUS_DATA["mass"],
+                 URANUS_DATA["perihelion"],
+                 URANUS_DATA["max speed"],
+                 TIME_STEP,
+                 "orange"
+                )
+NEPTUNE = Planet("Neptune",
+                 NEPTUNE_DATA["mass"],
+                 NEPTUNE_DATA["perihelion"],
+                 NEPTUNE_DATA["max speed"],
+                 TIME_STEP,
+                 "blue"
+                )
 
-S10 = sqrt(G*(M_S+m_E)/P_E)
+
+ME = EARTH_DATA["mass"]
+PE = EARTH_DATA["perihelion"]
+SE = EARTH_DATA["max speed"]
+S10 = sqrt(G*(MS+ME)/PE)
 # the speed of a made-up planet with the same mass and perihelion as Earth,
 # but with a circular orbit.
 
 # Made-up planets, for computational experiments (default pencolor=green)
-PLANET07 = Planet("Planet 0.7", m_E, P_E, 0.7*S10, TIME_STEP) 
-PLANET08 = Planet("Planet 0.8", m_E, P_E, 0.8*S10, TIME_STEP)
-PLANET09 = Planet("Planet 0.9", m_E, P_E, 0.9*S10, TIME_STEP)
-PLANET10 = Planet("Planet 1.0", m_E, P_E,     S10, TIME_STEP)
-PLANET11 = Planet("Planet 1.1", m_E, P_E, 1.1*S10, TIME_STEP)
-PLANET12 = Planet("Planet 1.2", m_E, P_E, 1.2*S10, TIME_STEP)
-PLANET13 = Planet("Planet 1.3", m_E, P_E, 1.3*S10, TIME_STEP)
+PLANET07 = Planet("Planet 0.7", ME, PE, 0.7*S10, TIME_STEP) 
+PLANET08 = Planet("Planet 0.8", ME, PE, 0.8*S10, TIME_STEP)
+PLANET09 = Planet("Planet 0.9", ME, PE, 0.9*S10, TIME_STEP)
+PLANET10 = Planet("Planet 1.0", ME, PE,     S10, TIME_STEP)
+PLANET11 = Planet("Planet 1.1", ME, PE, 1.1*S10, TIME_STEP)
+PLANET12 = Planet("Planet 1.2", ME, PE, 1.2*S10, TIME_STEP)
+PLANET13 = Planet("Planet 1.3", ME, PE, 1.3*S10, TIME_STEP)
 
 # Note.
 # Inner planets and made up planets above are close to the Sun
@@ -618,7 +685,7 @@ def simulateAndTest(planet: Planet, scaleDownFactor=SCALING):
     #print("Kepler3:")
     lhs = T*T/(a*a*a)
     #print(lhs)
-    rhs = 4*pi*pi / (G*(M_S+planet._mass))
+    rhs = 4*pi*pi / (G*(MS+planet._mass))
     #print(rhs)    
     #print(abs((lhs-rhs)/rhs))
     #print(round(abs((lhs-rhs)/rhs)*100,2), "%")
@@ -637,13 +704,15 @@ def simulateAndTest(planet: Planet, scaleDownFactor=SCALING):
 # FUNCTIONS CALLED BY main
 
 # Under construction
-def simmulationSummary(planet: Planet):
+def simmulationSummary(planetData: dict, planet: Planet, scaleDownFactor):
     print("\n")
     print(planet.name(), "orbital period in days:")
-    T = T_Me
+    T = planetData["sidereal orbital period"]
     print(round(T/DAY,2), "- actual")
-    drawEllipse(a_Me/scaleDownFactor, b_Me/scaleDownFactor, c_Me/scaleDownFactor)
-    TS = simulateAndTest(MERCURY)[3]
+    drawEllipse(planetData["semi-major axis"]/scaleDownFactor,
+                planetData["semi-minor axis"]/scaleDownFactor,
+                planetData["linear eccentricity"]/scaleDownFactor)
+    TS = simulateAndTest(planet)[3]
     print(round(abs(TS-T)*100/T, 2), "% error")
 
 def innerPlanets(scaleDownFactor=SCALING):
@@ -670,33 +739,10 @@ and the sun in the right focus.
     
     print("\nTesting Kepler's 1st and 3rd laws")  
 
-    print("\nMercury orbital period in days:")
-    T = T_Me
-    print(round(T/DAY,2), "- actual")
-    drawEllipse(a_Me/scaleDownFactor, b_Me/scaleDownFactor, c_Me/scaleDownFactor)
-    TS = simulateAndTest(MERCURY)[3]
-    print(round(abs(TS-T)*100/T, 2), "% error")
-
-    print("\nVenus - orbital period in days:")
-    T = T_V
-    print(round(T/DAY,2), "- actual")
-    drawEllipse(a_V/scaleDownFactor, b_V/scaleDownFactor, c_V/scaleDownFactor)
-    TS = simulateAndTest(VENUS)[3]
-    print(round(abs(TS-T)*100/T, 2), "% error")
-
-    print("\nEarth - orbital period in days:")
-    T = T_E
-    print(round(T/DAY,2), "- actual")
-    drawEllipse(a_E/scaleDownFactor, b_E/scaleDownFactor, c_E/scaleDownFactor)
-    TS = simulateAndTest(EARTH)[3]
-    print(round(abs(TS-T)*100/T, 2), "% error")
-
-    print("\nMars - orbital period in days:")
-    T = T_Ma
-    print(round(T/DAY,2), "- actual")
-    drawEllipse(a_Ma/scaleDownFactor, b_Ma/scaleDownFactor, c_Ma/scaleDownFactor)
-    TS = simulateAndTest(MARS)[3]
-    print(round(abs(TS-T)*100/T, 2), "% error")
+    simmulationSummary(MERCURY_DATA, MERCURY, scaleDownFactor)
+    simmulationSummary(VENUS_DATA, VENUS, scaleDownFactor)
+    simmulationSummary(EARTH_DATA, EARTH, scaleDownFactor)
+    simmulationSummary(MARS_DATA, MARS, scaleDownFactor)
 
 #innerPlanets() # uncomment this to simulate the inner planets.
 
@@ -754,7 +800,7 @@ def testKepler(planet, scaleDownFactor=SCALING):
     m = planet.mass()  # mass
     vmax = planet.velocity()[1] # maximal speed (at Perihelion)
     P = planet.position()[0]  # Perihelion distance (shortest distance from Sun)
-    mu = G*(M_S+m) # gravitational parameter
+    mu = G*(MS+m) # gravitational parameter
     a = P*mu / (2*mu-P*vmax*vmax) # semi-major axis:
     c = a - P # the linear eccentricity, i.e. center-to-focus distance
     A = a + c # Aphelion distance (biggest distance from the Sun)
