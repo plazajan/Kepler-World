@@ -704,7 +704,7 @@ def simmulationSummary(planetData: dict, planet: Planet, scaleDownFactor):
     TS = simulateAndTest(planet, scaleDownFactor)[3]
     print(round(abs(TS-T)*100/T, 2), "% error")
 
-def innerPlanets():
+def planets(n: int = 4):
     """A computer simulation of orbits of 4 inner planets, resulting from the
        continuing local effect of the Newton's law of gravity.
        Tests if the simulated planets obey (global) Kepler's laws 1 and 3.
@@ -723,35 +723,51 @@ The orientation of the major axes of orbits is not modeled here:
 all ellipses are shown with the major axis on the x-axis
 and the Sun in the right focus.
          """)
-    scaleDownFactor = 1_000_000_000
-    # Real distances in meters will be divided by scaleDownFactor
-    # before being given to the turtle.
-    sky()
-    print("\nTesting Kepler's 1st and 3rd laws")  
-    simmulationSummary(MERCURY_DATA, MERCURY, scaleDownFactor)
-    simmulationSummary(VENUS_DATA, VENUS, scaleDownFactor)
-    simmulationSummary(EARTH_DATA, EARTH, scaleDownFactor)
-    simmulationSummary(MARS_DATA, MARS, scaleDownFactor)
+    
+    if n>=9:
+        print(
+"""There are only 8 known planets in the Solar System.
+Pluto is the biggest known dwarf planet
+and the biggest known trans-Neptunian object.
+It is bigger than all the asteroids in the belt between Mars and Jupiter,
+but smaller than the Moon. 
+This simulation does not inclue Pluto.""")
 
-def eightPlanets():
-    scaleDownFactor = 10_000_000_000
+    if n <= 5:
+        scaleDownFactor =  1_000_000_000
+    else:
+        scaleDownFactor = 10_000_000_000
     # Real distances in meters will be divided by scaleDownFactor
     # before being given to the turtle.
+    
     sky()
+    
+    print("\nTesting Kepler's 1st and 3rd laws")
+    
     # Default time step = 1000 s
-    simmulationSummary(MERCURY_DATA, MERCURY, scaleDownFactor)
-    simmulationSummary(VENUS_DATA, VENUS, scaleDownFactor)
-    simmulationSummary(EARTH_DATA, EARTH, scaleDownFactor)
-    simmulationSummary(MARS_DATA, MARS, scaleDownFactor)
-    JUPITER.setTimeStep(10_000)
-    simmulationSummary(JUPITER_DATA, JUPITER, scaleDownFactor)
-    SATURN.setTimeStep(10_000)
-    simmulationSummary(SATURN_DATA, SATURN, scaleDownFactor)
-    URANUS.setTimeStep(10_000)
-    simmulationSummary(URANUS_DATA, URANUS, scaleDownFactor)
-    NEPTUNE.setTimeStep(10_000)
-    simmulationSummary(NEPTUNE_DATA, NEPTUNE, scaleDownFactor)
-
+    if n>=1:
+        simmulationSummary(MERCURY_DATA, MERCURY, scaleDownFactor)
+    if n>=2:
+        simmulationSummary(VENUS_DATA, VENUS, scaleDownFactor)
+    if n>=3:
+        simmulationSummary(EARTH_DATA, EARTH, scaleDownFactor)
+    if n>=4:
+        simmulationSummary(MARS_DATA, MARS, scaleDownFactor)
+    if n==5:
+        simmulationSummary(JUPITER_DATA, JUPITER, scaleDownFactor)
+    if n>5:
+        JUPITER.setTimeStep(10_000)
+        simmulationSummary(JUPITER_DATA, JUPITER, scaleDownFactor)
+    if n>=6:
+        SATURN.setTimeStep(10_000)
+        simmulationSummary(SATURN_DATA, SATURN, scaleDownFactor)
+    if n>=7:
+        URANUS.setTimeStep(10_000)
+        simmulationSummary(URANUS_DATA, URANUS, scaleDownFactor)
+    if n>=8:
+        NEPTUNE.setTimeStep(10_000)
+        simmulationSummary(NEPTUNE_DATA, NEPTUNE, scaleDownFactor)
+    
 #-------
 #innerPlanets() # uncomment this to simulate the inner planets.
 
@@ -851,9 +867,9 @@ def main():
         if choice == "":
             return
         if choice[0] == "1":
-            innerPlanets()
+            planets(4) # The 4 inner planets.
         elif choice[0] == "2":
-            eightPlanets()
+            planets(8) # All 8 planets.
         elif choice[0] == "3":
             testKepler(PLANET12)
         else:
