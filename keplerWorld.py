@@ -32,6 +32,7 @@ A slideshow is also available: Discovering the Mechanics of the Solar System.
 """
 
 # TO DO:
+# Add Pluto and Halley's Comet
 # innerPlanets()
 # planets() - all
 # experiment1() - planets with masses m, 2m, 3m and the same perihelion.
