@@ -36,6 +36,7 @@ Methodology of science concepts:
 # planets with the same orbtital period and different perihelions
 
 #==================================================================================
+
 from turtle import getscreen, Turtle
 from math import sqrt, pi, sin, cos
 
@@ -44,13 +45,6 @@ from math import sqrt, pi, sin, cos
 
 # Astronomical data in kilograms, meters, seconds.
 # From Wikipedia.
-
-# Planets'colors from:
-# astronomy.stackexchange.com/questions/14032/color-of-planets#14040
-# www.htmlcsscolor.com
-# Planet colors will appear lighter when brightly illuminated by the Sun.
-# Use color wheel to pick colors for the visuallzation:
-# www.canva.com/colors/color-wheel/
 
 #---------------------------------------------------------------------------------
 
@@ -92,7 +86,6 @@ MERCURY_DATA["semi-major axis"] = 57_910_000*KM
 MERCURY_DATA["eccentricity"] = 0.205630      
 MERCURY_DATA["avg speed"] = 47.36*KM/SEC  
 MERCURY_DATA["sidereal orbital period"] = 87.9691*DAY
-MERCURY_DATA["color"] = (26,26,26) # Nero - dark gray/black, hex: "0x1A1A1A"
 MERCURY_DATA["radius"] = 2439.7*KM
 
 bcs = bcsFromAPm(MERCURY_DATA["aphelion"],
@@ -114,7 +107,6 @@ VENUS_DATA["semi-major axis"] = 108_210_000*KM
 VENUS_DATA["eccentricity"] = 0.006772   
 VENUS_DATA["avg speed"] = 35.02*KM/SEC 
 VENUS_DATA["sidereal orbital period"] = 224.701*DAY 
-VENUS_DATA["color"] = (230,230,230) # Whisper, light grey, hex: "0xE6E6E6"
 VENUS_DATA["radius"] = 6051.8*KM
 
 bcs = bcsFromAPm(VENUS_DATA["aphelion"],
@@ -136,7 +128,6 @@ EARTH_DATA["semi-major axis"] = 149_598_023*KM
 EARTH_DATA["eccentricity"] = 0.0167086
 EARTH_DATA["avg speed"] = 29.7827*KM/SEC
 EARTH_DATA["sidereal orbital period"] = 365.2563630040*DAY 
-EARTH_DATA["color"] = (47,106,105) # Genoa - greenish blue, hex: "0x2F6A69"
 EARTH_DATA["radius"] = 6371*KM
 
 bcs = bcsFromAPm(EARTH_DATA["aphelion"],
@@ -158,7 +149,6 @@ MARS_DATA["semi-major axis"] = 227_939_366*KM
 MARS_DATA["eccentricity"] = 0.0934
 MARS_DATA["avg speed"] = 24.07*KM/SEC
 MARS_DATA["sidereal orbital period"] = 686.980*DAY
-MARS_DATA["color"] = (153,61,0) # Saddle Brown -redish brown, hex: "0x993D00"
 MARS_DATA["radius"] = 3389.5*KM
 
 bcs = bcsFromAPm(MARS_DATA["aphelion"],
@@ -206,7 +196,6 @@ SATURN_DATA["semi-major axis"] = 1_433_530_000*KM
 SATURN_DATA["eccentricity"] = 0.0565
 SATURN_DATA["avg speed"] = 9.68*KM/SEC
 SATURN_DATA["sidereal orbital period"] = 10_755.70*DAY 
-SATURN_DATA["color"] = (176,143,54) # Reef Gold - greenish brown, "0xB08F36"
 SATURN_DATA["radius"] = 58_232*KM
 
 bcs = bcsFromAPm(SATURN_DATA["aphelion"],
@@ -230,7 +219,6 @@ URANUS_DATA["semi-major axis"] = 2_870_972_000*KM
 URANUS_DATA["eccentricity"] = 0.04717
 URANUS_DATA["avg speed"] = 6.80*KM/SEC
 URANUS_DATA["sidereal orbital period"] = 30_688.5*DAY
-URANUS_DATA["color"] = (85,128,170) # Air Force Blue -medium blue, "0x5580AA"
 URANUS_DATA["radius"] = 25_362*KM
 
 bcs = bcsFromAPm(URANUS_DATA["aphelion"],
@@ -254,7 +242,6 @@ NEPTUNE_DATA["semi-major axis"] = 4_500_000_000*KM
 NEPTUNE_DATA["eccentricity"] = 0.008678
 NEPTUNE_DATA["avg speed"] = 5.43*KM/SEC
 NEPTUNE_DATA["sidereal orbital period"] = 60_195*DAY 
-NEPTUNE_DATA["color"] = (54,104,150) # Lochmara - dark blue, "0x366896"
 NEPTUNE_DATA["radius"] = 24_622*KM
 
 bcs = bcsFromAPm(NEPTUNE_DATA["aphelion"],
@@ -272,7 +259,7 @@ NEPTUNE_DATA["min speed"] = bcs[3] # at the aphelion
 class Planet(object):
 
     def __init__(self, name, mass, perihelionDistance, maxSpeed,
-                 color="green", timeStep=1000):
+                 color="green", timeStep : int = 1000):
         """mass in kg, perihelionDistance in m, maxSpeed in m/s,
            simulation timeStep in s.
            Assumes that the Sun is at (0, 0) in a coordinate system.
@@ -311,7 +298,7 @@ class Planet(object):
         self._ax = -MU*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
         self._ay = -MU*self._y/(self._r2*self._r) # vertical acceleration m/s^2
 
-    def position(self, scaleDownFactor=1):
+    def position(self, scaleDownFactor: int = 1):
         return (self._x/scaleDownFactor, self._y/scaleDownFactor)
 
     def velocity(self):
@@ -338,13 +325,13 @@ class Planet(object):
     def color(self):
         return(self._color)
 
-    def setColor(self, color: str):
+    def setColor(self, color: str): 
         self._color = color
 
     def timeStep(self):
         return self._timeStep
 
-    def setTimeStep(self, timeStep):
+    def setTimeStep(self, timeStep : int):
         self._timeStep = timeStep
 
 #---------------------------------------------------------------------------------
@@ -366,13 +353,13 @@ VENUS   = Planet("Venus",
                  VENUS_DATA["mass"],
                  VENUS_DATA["perihelion"],
                  VENUS_DATA["max speed"],
-                 "gold"
+                 "white"
                 )
 EARTH   = Planet("Earth",
                  EARTH_DATA["mass"],
                  EARTH_DATA["perihelion"],
                  EARTH_DATA["max speed"],
-                 "DeepSkyBlue"
+                 "turquoise"
                 )
 MARS    = Planet("Mars",
                  MARS_DATA["mass"],
@@ -385,25 +372,25 @@ JUPITER = Planet("Jupiter",
                  JUPITER_DATA["mass"],
                  JUPITER_DATA["perihelion"],
                  JUPITER_DATA["max speed"],
-                 "yellow"
+                 "orange"
                 )
 SATURN  = Planet("Saturn",
                  SATURN_DATA["mass"],
                  SATURN_DATA["perihelion"],
                  SATURN_DATA["max speed"],
-                 "orange"
+                 "gold"
                 )
 URANUS  = Planet("Uranus",
                  URANUS_DATA["mass"],
                  URANUS_DATA["perihelion"],
                  URANUS_DATA["max speed"],
-                 "orange"
+                 "lightBlue1"
                 )
 NEPTUNE = Planet("Neptune",
                  NEPTUNE_DATA["mass"],
                  NEPTUNE_DATA["perihelion"],
                  NEPTUNE_DATA["max speed"],
-                 "blue"
+                 "lightBlue2"
                 )
 
 ME = EARTH_DATA["mass"]
