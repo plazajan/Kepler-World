@@ -6,6 +6,8 @@ for the purpose of studying Kepler's laws
 and how they emerge from Newton's law of gravity.
 Designed for high school students or lower level undergraduate students.
 
+Movements of the eight planets are simulated, as well as some celestial bodes
+made up for the purpose of experiments.
 The simulation uses a discrete approximation of the real-world continuous effect
 of the Newton's law of gravity (F = GMm/(r^2) on the moving body.
 The calculations are done for actual celestial body,
