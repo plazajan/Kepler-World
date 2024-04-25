@@ -1,4 +1,4 @@
-# Python-Kepler-s-World
+Kepler's World
 
 A simple simulation of movements of planets around the Sun.
 Uses a discrete approximation of the real-world continuous
