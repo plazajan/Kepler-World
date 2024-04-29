@@ -52,14 +52,18 @@ from math import sqrt, pi, sin, cos
 # ASTRONOMICAL DATA FROM OBSERVATIONS AND CALCULATIONS 
 
 # Astronomical data in kilograms, meters, seconds.
-# From Wikipedia.
+# From Wikipedia
+# or JPL-NASA: https://ssd.jpl.nasa.gov
+# Orbit viewer: https://ssd.jpl.nasa.gov/tools/orbit_viewer.html
 
 #---------------------------------------------------------------------------------
 
 G = 6.67430e-11 # m^3 / (kg * s^2). Gravitational constant
-DAY = 24*60*60 #s (actual day is 86400.002 s because of a slowing rotation)
 KM = 1000 # m
-SEC = 1 # s 
+AU = 149_597_870_700 #m, Astronomical Unit = about the avg Earth-Sun distance
+SEC = 1 # s
+DAY = 24*60*60 #s (actual day is 86400.002 s because of a slowing rotation)
+YR = 365.25*DAY # Julian year, used in astronomy
 
 #---------------------------------------------------------------------------------
 # Sun
@@ -260,6 +264,55 @@ NEPTUNE_DATA["semi-minor axis"] = bcs[0]
 NEPTUNE_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
 NEPTUNE_DATA["max speed"] = bcs[2] # at the perihelion
 NEPTUNE_DATA["min speed"] = bcs[3] # at the aphelion
+
+#---------------------------------------------------------------------------------
+
+# requires a bigger scaling constant in simulations!
+
+PLUTO_DATA = {}
+PLUTO_DATA["mass"] = 1.303e22
+PLUTO_DATA["aphelion"]        = 7_375_930_000*KM
+PLUTO_DATA["perihelion"]      = 4_436_820_000*KM
+PLUTO_DATA["semi-major axis"] = 5_906_380_000*KM
+PLUTO_DATA["eccentricity"] = 0.2488
+PLUTO_DATA["avg speed"] = 4.743*KM/SEC
+PLUTO_DATA["sidereal orbital period"] = 90_560*DAY 
+PLUTO_DATA["radius"] = 1_188.3*KM
+
+bcs = bcsFromAPm(PLUTO_DATA["aphelion"],
+                 PLUTO_DATA["perihelion"],
+                 PLUTO_DATA["mass"])
+
+PLUTO_DATA["semi-minor axis"] = bcs[0]
+PLUTO_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
+PLUTO_DATA["max speed"] = bcs[2] # at the perihelion
+PLUTO_DATA["min speed"] = bcs[3] # at the aphelion
+
+#---------------------------------------------------------------------------------
+
+# requires a bigger scaling constant in simulations!
+
+# Halley's Comet, unlike the planets, moves clockwise around the Sun
+# when viewed form the north pole.
+
+HALLEY_COMET_DATA = {}
+HALLEY_COMET_DATA["mass"] = 2.2e14
+HALLEY_COMET_DATA["aphelion"]        = 35.14*AU
+HALLEY_COMET_DATA["perihelion"]      =  0.59278*AU
+HALLEY_COMET_DATA["semi-major axis"] = 17.737*AU
+HALLEY_COMET_DATA["eccentricity"] = 0.96658 
+# HALLEY_COMET_DATA["avg speed"] = 
+HALLEY_COMET_DATA["sidereal orbital period"] =  74.7*YR
+HALLEY_COMET_DATA["radius"] = 5.5*KM
+
+bcs = bcsFromAPm(HALLEY_COMET_DATA["aphelion"],
+                 HALLEY_COMET_DATA["perihelion"],
+                 HALLEY_COMET_DATA["mass"])
+
+HALLEY_COMET_DATA["semi-minor axis"] = bcs[0]
+HALLEY_COMET_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
+HALLEY_COMET_DATA["max speed"] = bcs[2] # at the perihelion
+HALLEY_COMET_DATA["min speed"] = bcs[3] # at the aphelion
 
 #=================================================================================
 # PLANETS
@@ -714,20 +767,10 @@ def planets(n: int = 4):
     print("""
 The orbits displayed in turtle graphics are to scale.
 and planets move counter-clockwise as seen from the north pole.
-The orientation of the major axes of orbits is not modeled here:
-all ellipses are shown with the major axis on the x-axis
-and the Sun in the right focus.
+Other characteristics of the orbits are not modelled here -
+all ellipses are shown in the same plane with the major axis on the x-axis
+and perturbations due to gravitational influence of other planets is not shown.
          """)
-    
-    if n>=9:
-        print(
-"""There are only 8 known planets in the Solar System.
-Pluto is the biggest known dwarf planet
-and the biggest known trans-Neptunian object.
-It is bigger than all the asteroids in the belt between Mars and Jupiter,
-but smaller than the Moon. 
-This simulation does not inclue Pluto.""")
-
     if n <= 5:
         scaleDownFactor =  1_000_000_000
     else:
@@ -736,6 +779,15 @@ This simulation does not inclue Pluto.""")
     # before being given to the turtle.
     
     sky()
+
+    if n>=9:
+        print(
+"""There are only 8 known planets in the Solar System.
+Pluto is the biggest known dwarf planet
+and the biggest known trans-Neptunian object.
+It is bigger than all the asteroids in the belt between Mars and Jupiter,
+but smaller than the Moon. This simulation does not include Pluto."""
+             )
     
     print("\nTesting Kepler's 1st and 3rd laws")
     
@@ -762,7 +814,7 @@ This simulation does not inclue Pluto.""")
     if n>=8:
         NEPTUNE.setTimeStep(10_000)
         simmulationSummary(NEPTUNE_DATA, NEPTUNE, scaleDownFactor)
-    
+
 #-------
 #innerPlanets() # uncomment this to simulate the inner planets.
 
@@ -842,26 +894,28 @@ def testKepler(planet: Planet, scaleDownFactor = 1_000_000_000):
 def main():
     print("Kepler's World")
 
-    while True:
-        print(""" 
-1. Inner planets: Mercury, Venus, Earth and Mars.
-   For each planet, show the actual orbit, then simulate the movement.
-   Print actual orbital period and that calculated in the simulation.
+    print("""
+This program shows the orbit predicted by a formula,
+then simulates the celestial body's movement and tests Kepler's laws.
+In the case of actual celestial bodies
+it also compares the simulated orbit to the data from astronomical tables."""
+          )
 
-2. Eight planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune.
-   For each planet, show the actual orbit, then simulate the movement.
-   Print actual orbital period and that calculated in the simulation.
+    while True:
+        print("""
+1. Inner planets: Mercury, Venus, Earth and Mars.
    
-3. Test Kepler's laws: formulas vs. simulation.
-   Use a made-up celestial body with the same mass and perihelion as Earth
-   but with the maximal speed 1.2 times that of Earth.
+2. Eight planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune.
+   
+3. A made-up celestial body with the same mass and perihelion as Earth
+   but with the maximal speed 20% bigger than Earth.
 
 4. Exit.
           """)
-        choice = input("Enter your choice (1 or 2 or 3 or 4): ")
+        choice = input("Enter your choice (1-5): ")
         if choice == "":
             return
-        if choice[0] == "1":
+        if   choice[0] == "1":
             planets(4) # The 4 inner planets.
         elif choice[0] == "2":
             planets(8) # All 8 planets.
