@@ -57,6 +57,7 @@ from math import sqrt, pi, sin, cos
 # Orbit viewer: https://ssd.jpl.nasa.gov/tools/orbit_viewer.html
 
 #---------------------------------------------------------------------------------
+# Physical constants
 
 G = 6.67430e-11 # m^3 / (kg * s^2). Gravitational constant
 KM = 1000 # m
@@ -636,6 +637,10 @@ def simulateAndTest(planet: Planet, scaleDownFactor):
     # If the difference between minArea and maxArea is small,
     # Kepler's 3rd law will be confirmed.
 
+    areaScaleDownFactor = scaleDownFactor*vy
+    # area/areaScaleDownFactor ~ radius/scaleDownFactor
+    # so we can graph the value of area as th planet moves.
+
     # Concerning Kepler's 3rd law
     TsoFar = 0 # sidereal orbital period in seconds.
 
@@ -726,6 +731,9 @@ def simulateAndTest(planet: Planet, scaleDownFactor):
     #print(rhs)    
     #print(abs((lhs-rhs)/rhs))
     #print(round(abs((lhs-rhs)/rhs)*100,2), "%")
+
+    #print(area0/areaScaleDownFactor)
+    #print(area1/areaScaleDownFactor)
     
     return a,b,kepler2discrepancyPercent,T
 
@@ -912,7 +920,7 @@ it also compares the simulated orbit to the data from astronomical tables."""
 
 4. Exit.
           """)
-        choice = input("Enter your choice (1-5): ")
+        choice = input("Enter your choice (1-4): ")
         if choice == "":
             return
         if   choice[0] == "1":
