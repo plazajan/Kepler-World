@@ -74,7 +74,7 @@ and the center at (-c,0), where a,b,c are given.
 
 Exercise
 A parametric equation of elipse with semi-major axis a and semi-minor axis b
-and the center at (f2,0), where f2 is the right focus f2, 
+and the center at (f2,0), where f2 is the right focus, 
 everything calculated from a, b.
 
 ----------------------------------------------------------------------------------
@@ -198,6 +198,7 @@ The maximum speed of a planet (at the perihelion)
 v^2 = G(M+m)(2/r - 1/a)
 so, 
 vmax = G(M+m)(2/P - 1/a) where P = perihelion distance
+
 solve for a:
 a = PG(M+m) / (2G(M+m)-P*v^2)
 
