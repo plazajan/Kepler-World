@@ -27,12 +27,12 @@ Concepts of the methodology of science:
 * **Units of measurement** 
   and **dimensional analysis:** units of the gravitational constant G.
 * **Discrete** simulation of a **continuous** process.
-* **Approximation.**
+* **Approximation** and **approximation error**.
 * **Recurrent/periodic process** - for instance planet's movement around the Sun.
 * **Qualitative** vs. **quantitative** statements
   ("a planet moves fastest when close to the Sun" vs. Kepler's 2nd law).
 * **Local** effects (of the law of gravity) vs.
-  **global** properties (elliptical orbits with Kepler's characteristics).
+  **global** properties (of orbits described by Kepler's laws).
 * **Visualization** vs. **simulation**.
 * **Emergence** (of Kepler's laws from Newton's laws) or
   **reduction** of (Kepler's laws to Newton's laws).
