@@ -36,6 +36,7 @@ but disregards some details not relevant to Kepler's laws.
 Namely, in this simulation (unlike in reality):
 * the orbits of all planets are in the same plane, and
 * the foci of elliptical orbits of all planets are on the same straight line.
+
 The period in which the turtle completes the orbit is proportional to the
 actual orbital period of the planet, but the scaling factor is not the same
 as for the orbit's size.
