@@ -27,7 +27,7 @@ as for the orbit's size.
 
 A slideshow is also available: Discovering the Mechanics of the Solar System.
 
-These matrials can be used as a basis for a dicussion of topics in
+These matrials can be used as a basis for a dicussion of concepts of
 methodology of science, as outlined in README.md.
 """
 
