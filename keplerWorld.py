@@ -11,7 +11,7 @@ some celestial bodes made up for the purpose of experiments.
 The simulation uses a discrete approximation of the real-world continuous effect
 of the Newton's law of gravity (F = GMm/(r^2) on the moving body,
 taking into account only that body and the Sun (the "two-body problem").
-The calculations are done for actual celestial body,
+The calculations are done for the actual celestial body,
 and the results are scaled down to be visualized in turtle graphics.
 The simulation tests if the resulting orbits and bodies' movements obey
 Kepler's laws.
@@ -23,7 +23,10 @@ Concepts of the methodology of science:
   (a planet moves fastest when close to the Sun vs. Kepler's 2nd law).
 * Local effects (of the law of gravity) vs.
   global properties (elliptical orbits with Kepler's characteristics).
-* Visualization vs. simulation. 
+* Visualization vs. simulation.
+* Emergence (of Kepler's laws from Newton's laws) or
+  reduction of (Kepler's laws to Newton's laws).
+  Note: they have been proved mathematically by Newton, using calculus.
 
 The visualization shows orbits to scale, 
 but disregards some details not relevant to Kepler's laws.
