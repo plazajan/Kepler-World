@@ -17,7 +17,7 @@ Kepler's laws.
 
 Concepts of the methodology of science:
 * Branches of natural science: 
-  **physics, chemistry, biology, earth and atmospheric science.**
+  **physics, chemistry, biology, Earth and atmospheric science.**
 * **Natural science** vs. **mathematics and logic**
 * Methods of science: 
   **experimental/observational, theoretical/mathematical, computational.**
