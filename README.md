@@ -21,7 +21,9 @@ Concepts of the methodology of science:
 * **Natural science** vs. **mathematics and logic**
 * Methods of science: 
   **experimental/observational, theoretical/mathematical, computational.**
+* **Empirical evidence.**
 * **Laws of science** include Newton's laws and Kepler's laws.
+* The **scientific method.**
 * **Units of measurement** 
   and **dimensional analysis:** units of the gravitational constant G.
 * **Discrete** simulation of a **continuous** process.
