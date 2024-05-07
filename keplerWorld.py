@@ -16,18 +16,6 @@ and the results are scaled down to be visualized in turtle graphics.
 The simulation tests if the resulting orbits and bodies' movements obey
 Kepler's laws.
 
-Concepts of the methodology of science:
-* Areas of science: experimental/observational, theoretical, computational.
-* Discrete simulation of a continuous process.
-* Qualitative vs. quantitative statements
-  (a planet moves fastest when close to the Sun vs. Kepler's 2nd law).
-* Local effects (of the law of gravity) vs.
-  global properties (elliptical orbits with Kepler's characteristics).
-* Visualization vs. simulation.
-* Emergence (of Kepler's laws from Newton's laws) or
-  reduction of (Kepler's laws to Newton's laws).
-  Note: they have been proved mathematically by Newton, using calculus.
-
 The visualization shows orbits to scale, 
 but disregards some details not relevant to Kepler's laws.
 Namely, in this simulation (unlike in reality):
@@ -38,6 +26,9 @@ actual orbital period of the planet, but the scaling factor is not the same
 as for the orbit's size.
 
 A slideshow is also available: Discovering the Mechanics of the Solar System.
+
+These matrials can be used as a basis for a dicussion of topics in
+methodology of science, as outlined in README.md.
 """
 
 # TO DO:
