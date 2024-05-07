@@ -19,14 +19,15 @@ Concepts of the methodology of science:
 * Branches of natural science: 
   **physics, chemistry, biology, Earth and atmospheric science.**
 * **Natural science** vs. **mathematics and logic**
+* **Empirical evidence.**
 * Methods of science: 
   **experimental/observational, theoretical/mathematical, computational.**
-* **Empirical evidence.**
 * **Laws of science** include Newton's laws and Kepler's laws.
 * The **scientific method.**
 * **Units of measurement** 
   and **dimensional analysis:** units of the gravitational constant G.
 * **Discrete** simulation of a **continuous** process.
+* **Approximation.**
 * **Recurrent/periodic process** - for instance planet's movement around the Sun.
 * **Qualitative** vs. **quantitative** statements
   ("a planet moves fastest when close to the Sun" vs. Kepler's 2nd law).
