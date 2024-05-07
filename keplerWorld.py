@@ -289,6 +289,12 @@ PLUTO_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
 PLUTO_DATA["max speed"] = bcs[2] # at the perihelion
 PLUTO_DATA["min speed"] = bcs[3] # at the aphelion
 
+# While the planets' orbits are close to the ecliptic,
+# Pluto's orbit has a significant inclination.
+# This program shows orbits on a single plane. 
+# Showing the planets and Pluto's orbits on the same plane would be
+# greatly inaccurate and lead to misconceptions, for instance
+# the visualization would wshow that Pluto's orbit intersects Uranus' orbit.
 #---------------------------------------------------------------------------------
 
 # requires a bigger scaling constant in simulations!
@@ -314,6 +320,9 @@ HALLEY_COMET_DATA["semi-minor axis"] = bcs[0]
 HALLEY_COMET_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
 HALLEY_COMET_DATA["max speed"] = bcs[2] # at the perihelion
 HALLEY_COMET_DATA["min speed"] = bcs[3] # at the aphelion
+
+# Halley's comet has a significant inclination with respect to the excliptic.
+# and is also far from the plane of Pluto's orbit.
 
 #=================================================================================
 # PLANETS
@@ -473,9 +482,6 @@ PLANET13 = Planet("Planet 1.3", ME, PE, 1.3*S10)
 # Note.
 # Inner planets and made up planets above are close to the Sun,
 # and outer ones - are at vast distances.
-# It is not practical to show them all on the same canvas.
-# Either show the inner planets together with made up planets
-# or the outer planets.
 
 #=================================================================================
 # AUXILIARY FUNCTIONS
@@ -536,7 +542,7 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
      
 #---------------------------------------------------------------------------------
 
-def simulate(planet: Planet, scaleDownFactor):
+def simulate(planet: Planet, scaleDownFactor =  1_000_000_000):
     # Just draws the orbit, does not test Kepler's laws.
     # This function is not used by the top level functions in the program.
     # It is given here as a stepping stone to understand simulateAndTest below.
@@ -616,6 +622,14 @@ def simulateAndTest(planet: Planet, scaleDownFactor):
     t.pensize(3)
     t.pencolor(planet.color())
     t.teleport(*planet.position(scaleDownFactor))
+
+    t2 = Turtle(visible=False)
+    t2.speed("fastest")
+    t2.pendown()
+    t2.pensize(1)
+    t2.pencolor(planet.color())
+    #t2.teleport(*planet.position(scaleDownFactor))
+    # this will draw a graph showing area. 
 
     # Concerning Kepler's 1st law
     x,y = planet.position() # perihelion,
