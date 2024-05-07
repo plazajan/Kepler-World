@@ -18,12 +18,16 @@ Kepler's laws.
 Concepts of the methodology of science:
 * Branches of natural science: 
   **physics, chemistry, biology, earth and atmospheric science.**
-* **Natural science** vs. **mathematics**
-* Areas of science: **experimental/observational, theoretical, computational.**
+* **Natural science** vs. **mathematics and logic**
+* Methods of science: 
+  **experimental/observational, theoretical/mathematical, computational.**
 * **Laws of science** include Newtpn's laws and Kepler's laws.
+* **Units of measurement** 
+  and **dimensional analysis:** units of the gravitational constant G.
 * **Discrete** simulation of a **continuous** process.
+* **Recurrent/periodic process** - for instance planet's movement around the Sun.
 * **Qualitative** vs. **quantitative** statements
-  (a planet moves fastest when close to the Sun vs. Kepler's 2nd law).
+  ("a planet moves fastest when close to the Sun" vs. Kepler's 2nd law).
 * **Local** effects (of the law of gravity) vs.
   **global** properties (elliptical orbits with Kepler's characteristics).
 * **Visualization** vs. **simulation**.
