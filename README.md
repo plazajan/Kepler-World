@@ -1,7 +1,7 @@
 Kepler's World
 
-A simple simulation of movements of celestial bodies around the Sun
-for the purpose of studying Kepler's laws 
+A simple simulation (in Python) of movements of celestial bodies 
+around the Sun for the purpose of studying Kepler's laws 
 and how they emerge from Newton's law of gravity.
 Designed for high school students or lower level undergraduate students.
 
@@ -16,16 +16,20 @@ The simulation tests if the resulting orbits and bodies' movements obey
 Kepler's laws.
 
 Concepts of the methodology of science:
-* Areas of science: experimental/observational, theoretical, computational.
-* Discrete simulation of a continuous process.
-* Qualitative vs. quantitative statements
+* Branches of natural science: 
+  **physics, chemistry, biology, earth and atmospheric science.**
+* **Natural science** vs. **mathematics**
+* Areas of science: **experimental/observational, theoretical, computational.**
+* **Laws of science** include Newtpn's laws and Kepler's laws.
+* **Discrete** simulation of a **continuous** process.
+* **Qualitative** vs. **quantitative** statements
   (a planet moves fastest when close to the Sun vs. Kepler's 2nd law).
-* Local effects (of the law of gravity) vs.
-  global properties (elliptical orbits with Kepler's characteristics).
-* Visualization vs. simulation.
-* Emergence (of Kepler's laws from Newton's laws) or
-  reduction of (Kepler's laws to Newton's laws).
-  Note: they have been proved mathematically by Newton, using calculus.
+* **Local** effects (of the law of gravity) vs.
+  **global** properties (elliptical orbits with Kepler's characteristics).
+* **Visualization** vs. **simulation**.
+* **Emergence** (of Kepler's laws from Newton's laws) or
+  **reduction** of (Kepler's laws to Newton's laws).
+  Note: Newton gave a **(mathematical) proof**, using calculus.
 
 The visualization shows orbits to scale, 
 but disregards some details not relevant to Kepler's laws.
