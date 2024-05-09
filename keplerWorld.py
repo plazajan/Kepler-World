@@ -16,7 +16,7 @@ and the results are scaled down to be visualized in turtle graphics.
 The simulation tests if the resulting orbits and bodies' movements obey
 Kepler's laws.
 
-The visualization shows orbits to scale, 
+The visualization shows orbits to scale,
 but disregards some details not relevant to Kepler's laws.
 Namely, in this simulation (unlike in reality):
 * the orbits of all planets are in the same plane, and
@@ -32,9 +32,6 @@ methodology of science, as outlined in README.md.
 """
 
 # TO DO:
-# Add Pluto and Halley's Comet
-# innerPlanets()
-# planets() - all
 # experiment1() - planets with masses m, 2m, 3m and the same perihelion.
 # experiment2() - plenets with the same perihelion and max speed v, 2v, 3v
 # ...
@@ -527,8 +524,9 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
     t.teleport(-c-leftShift,0) # right focus
     t.dot(6, focusColor) 
     t.teleport(semiMajorAxis-leftShift,0) # left vertex of the ellipse
-    for i in range(100+1):
-        angle = 2*pi*(i/100)
+    n = 200
+    for i in range(n+1):
+        angle = 2*pi*(i/n)
         x = semiMajorAxis*cos(angle)
         y = semiMinorAxis*sin(angle)
         t.goto(x-leftShift,y)
@@ -611,7 +609,7 @@ def simulateAndTest(planet: Planet, scaleDownFactor):
        Returns the orbital period in seconds, ...
        Note: make sure to create canvas before this function is called.
     """
-    # Prepare turtle
+    # Prepare turtle t to draw an orbit
     t = Turtle(visible=False)
     t.speed("fastest")
     t.pendown()
@@ -619,13 +617,13 @@ def simulateAndTest(planet: Planet, scaleDownFactor):
     t.pencolor(planet.color())
     t.teleport(*planet.position(scaleDownFactor))
 
+    # Prepare turtle t2 to draw a graph of area speed. 
     t2 = Turtle(visible=False)
     t2.speed("fastest")
     t2.pendown()
     t2.pensize(1)
     t2.pencolor(planet.color())
-    #t2.teleport(*planet.position(scaleDownFactor))
-    # this will draw a graph showing area. 
+    
 
     # Concerning Kepler's 1st law
     x,y = planet.position() # perihelion,
@@ -637,19 +635,23 @@ def simulateAndTest(planet: Planet, scaleDownFactor):
 
     # Concerning Kepler's 2nd law
     vx,vy = planet.velocity()
+
+    areaScaleDownFactor = scaleDownFactor*vy
+    # area/areaScaleDownFactor ~ radius/scaleDownFactor
+    
     area0 = x*vy-y*vx # The determinant of the matrix of column vectors r,v =
+                      # = vector cross product  r x v.
                       # = area of the parallelogram spanned by vectors r,v =
                       # = twice the area of a triangle spanned by vectors r,v.
-                      # = vector cross product  r x v.
+                      # = twice the area speed in (m^2)/s - area swept per sec.
                       # Notice that angular momentum is  r x mv.
+
+    #t2.teleport(x/scaleDownFactor, area0/areaScaleDownFactor/2)
+
     minAreaSoFar = area0
     maxAreaSoFar = area0
     # If the difference between minArea and maxArea is small,
     # Kepler's 3rd law will be confirmed.
-
-    areaScaleDownFactor = scaleDownFactor*vy
-    # area/areaScaleDownFactor ~ radius/scaleDownFactor
-    # so we can graph the value of area as th planet moves.
 
     # Concerning Kepler's 3rd law
     TsoFar = 0 # sidereal orbital period in seconds.
@@ -673,6 +675,7 @@ def simulateAndTest(planet: Planet, scaleDownFactor):
                 done = True
                 break
         t.goto(*planet.position(scaleDownFactor))
+        #t2.goto(x/scaleDownFactor, area/areaScaleDownFactor/2)
         if done: break
 
     # The planet is now at its aphelion.
@@ -771,7 +774,7 @@ def simmulationSummary(planetData: dict, planet: Planet, scaleDownFactor):
     print(round(abs(TS-T)*100/T, 2), "% error")
 
 def planets(n: int = 4):
-    """A computer simulation of orbits of 4 inner planets, resulting from the
+    """A computer simulation of orbits of n planets, resulting from the
        continuing local effect of the Newton's law of gravity.
        Tests if the simulated planets obey (global) Kepler's laws 1 and 3.
        Every step in the simulation is done for the actual planet
