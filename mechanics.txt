@@ -132,6 +132,32 @@ ay = -G*M*y/(r^3)
 Centripetal force - the force that makes the body to follow a curved path
 F = ma = mv^2/r
 
+- - - - - - - - - - - - - - - - - - - 
+  x
+----> ^
+     /|
+  r / | y
+   /  | 
+Sun   |
+
+r = (x,y)
+
+r-hat = (x/r, y/r)  -- unit vector in the direction of r
+
+F = Ma                              -- vector equation
+
+F = (GMm / r^2)                     -- scalar equation
+F = (GMm / r^2) * (- r-hat)         -- vector equation
+
+ma = - (GMm / r^2) * r-hat          -- vector equation
+a  = - (GM  / r^2) * r-hat          -- vector equation
+ax = - (GM  / r^2) * x/r = -GMx/r^3 -- scalar equation
+ay =                       -GMy/r^3 -- scalar equation
+
+In simulation:
+vx := vx + ax*t                     -- scalar equation
+vy := vy + ay*t                     -- scalar equation
+
 ----------------------------------------------------------------------------------
 Planetary motion (celestial mechanics)
 
@@ -168,8 +194,6 @@ Keplers 2nd law: the planet moves at such a speed that:
     
     Vis Viva Equation: v^2 = G(M+m)(2/r - 1/a)
 
-------
-
 Keplers 3rd law:
 
     T^2 / a^3 = const
@@ -178,7 +202,7 @@ Keplers 3rd law:
     P^2 = a^3
 
     T^2 / a^3 = 4 pi^2 / (G(M+m)) 
-    i.e. T = 2 pi sqrt(a^3 / (G(M+m) )
+    i.e. T = 2 pi sqrt( a^3 / (G(M+m) )
     (If using G in m^3 / (kg * s^2), make sure to use m,s,kg everywhere.)
     
 In the case of circular orbits this can be easily derived from:
@@ -195,12 +219,24 @@ Celestial Mechanics calculations
 ----------------------------------------------------------------------------
 The maximum speed of a planet (at the perihelion)
 
-v^2 = G(M+m)(2/r - 1/a)
-so, 
-vmax = G(M+m)(2/P - 1/a) where P = perihelion distance
+Vis Viva Eq: v^2 = G(M+m)(2/r - 1/a) 
 
-solve for a:
-a = PG(M+m) / (2G(M+m)-P*v^2)
+So, 
+vmax = sqrt( G(M+m)(2/P - 1/a) )   where P = perihelion distance
+
+- - - - - - - - - - - - - - - - - - - - - -
+Orbit's parameters from mass, perihelion and vmax.
+
+solve the equation above for a:
+a = PG(M+m) / (2G(M+m)-P*vmax^2)
+
+c = a - P # the linear eccentricity, i.e. center-to-focus distance
+
+A = a + c # Aphelion distance (biggest distance from the Sun)
+
+b = sqrt(A*P)  # semi-minor axis
+    
+T = sqrt( 4*pi*pi*a*a*a / (G(M+m)) ) # orbital period in s
 
 ----------------------------------------------------------------------------
 Mass of the Sun
