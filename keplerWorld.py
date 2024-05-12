@@ -95,14 +95,14 @@ MERCURY_DATA["avg speed"] = 47.36*KM/SEC
 MERCURY_DATA["orbital period"] = 87.9691*DAY # sidereal
 MERCURY_DATA["radius"] = 2439.7*KM
 
-bcs = bcsFromAPm(MERCURY_DATA["aphelion"],
+BCS = bcsFromAPm(MERCURY_DATA["aphelion"],
                  MERCURY_DATA["perihelion"],
                  MERCURY_DATA["mass"])
 
-MERCURY_DATA["semi-minor axis"] = bcs[0]
-MERCURY_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
-MERCURY_DATA["max speed"] = bcs[2] # at the perihelion
-MERCURY_DATA["min speed"] = bcs[3] # at the aphelion
+MERCURY_DATA["semi-minor axis"] = BCS[0]
+MERCURY_DATA["linear eccentricity"] = BCS[1] # center-to-focus distance
+MERCURY_DATA["max speed"] = BCS[2] # at the perihelion
+MERCURY_DATA["min speed"] = BCS[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
 
@@ -116,14 +116,14 @@ VENUS_DATA["avg speed"] = 35.02*KM/SEC
 VENUS_DATA["orbital period"] = 224.701*DAY # sidereal
 VENUS_DATA["radius"] = 6051.8*KM
 
-bcs = bcsFromAPm(VENUS_DATA["aphelion"],
+BCS = bcsFromAPm(VENUS_DATA["aphelion"],
                  VENUS_DATA["perihelion"],
                  VENUS_DATA["mass"])
 
-VENUS_DATA["semi-minor axis"] = bcs[0]
-VENUS_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
-VENUS_DATA["max speed"] = bcs[2] # at the perihelion
-VENUS_DATA["min speed"] = bcs[3] # at the aphelion
+VENUS_DATA["semi-minor axis"] = BCS[0]
+VENUS_DATA["linear eccentricity"] = BCS[1] # center-to-focus distance
+VENUS_DATA["max speed"] = BCS[2] # at the perihelion
+VENUS_DATA["min speed"] = BCS[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
 
@@ -137,14 +137,14 @@ EARTH_DATA["avg speed"] = 29.7827*KM/SEC
 EARTH_DATA["orbital period"] = 365.2563630040*DAY # sidereal
 EARTH_DATA["radius"] = 6371*KM
 
-bcs = bcsFromAPm(EARTH_DATA["aphelion"],
+BCS = bcsFromAPm(EARTH_DATA["aphelion"],
                  EARTH_DATA["perihelion"],
                  EARTH_DATA["mass"])
 
-EARTH_DATA["semi-minor axis"] = bcs[0]
-EARTH_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
-EARTH_DATA["max speed"] = bcs[2] # at the perihelion
-EARTH_DATA["min speed"] = bcs[3] # at the aphelion
+EARTH_DATA["semi-minor axis"] = BCS[0]
+EARTH_DATA["linear eccentricity"] = BCS[1] # center-to-focus distance
+EARTH_DATA["max speed"] = BCS[2] # at the perihelion
+EARTH_DATA["min speed"] = BCS[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
 
@@ -158,14 +158,14 @@ MARS_DATA["avg speed"] = 24.07*KM/SEC
 MARS_DATA["orbital period"] = 686.980*DAY # sidereal
 MARS_DATA["radius"] = 3389.5*KM
 
-bcs = bcsFromAPm(MARS_DATA["aphelion"],
+BCS = bcsFromAPm(MARS_DATA["aphelion"],
                  MARS_DATA["perihelion"],
                  MARS_DATA["mass"])
 
-MARS_DATA["semi-minor axis"] = bcs[0]
-MARS_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
-MARS_DATA["max speed"] = bcs[2] # at the perihelion
-MARS_DATA["min speed"] = bcs[3] # at the aphelion
+MARS_DATA["semi-minor axis"] = BCS[0]
+MARS_DATA["linear eccentricity"] = BCS[1] # center-to-focus distance
+MARS_DATA["max speed"] = BCS[2] # at the perihelion
+MARS_DATA["min speed"] = BCS[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
 
@@ -179,14 +179,14 @@ JUPITER_DATA["avg speed"] = 13.07*KM/SEC
 JUPITER_DATA["orbital period"] = 4_332.59*DAY # sidereal
 JUPITER_DATA["radius"] = 69_911*KM
 
-bcs = bcsFromAPm(JUPITER_DATA["aphelion"],
+BCS = bcsFromAPm(JUPITER_DATA["aphelion"],
                  JUPITER_DATA["perihelion"],
                  JUPITER_DATA["mass"])
 
-JUPITER_DATA["semi-minor axis"] = bcs[0]
-JUPITER_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
-JUPITER_DATA["max speed"] = bcs[2] # at the perihelion
-JUPITER_DATA["min speed"] = bcs[3] # at the aphelion
+JUPITER_DATA["semi-minor axis"] = BCS[0]
+JUPITER_DATA["linear eccentricity"] = BCS[1] # center-to-focus distance
+JUPITER_DATA["max speed"] = BCS[2] # at the perihelion
+JUPITER_DATA["min speed"] = BCS[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
 
@@ -200,14 +200,14 @@ SATURN_DATA["avg speed"] = 9.68*KM/SEC
 SATURN_DATA["orbital period"] = 10_755.70*DAY # sidereal 
 SATURN_DATA["radius"] = 58_232*KM
 
-bcs = bcsFromAPm(SATURN_DATA["aphelion"],
+BCS = bcsFromAPm(SATURN_DATA["aphelion"],
                  SATURN_DATA["perihelion"],
                  SATURN_DATA["mass"])
 
-SATURN_DATA["semi-minor axis"] = bcs[0]
-SATURN_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
-SATURN_DATA["max speed"] = bcs[2] # at the perihelion
-SATURN_DATA["min speed"] = bcs[3] # at the aphelion
+SATURN_DATA["semi-minor axis"] = BCS[0]
+SATURN_DATA["linear eccentricity"] = BCS[1] # center-to-focus distance
+SATURN_DATA["max speed"] = BCS[2] # at the perihelion
+SATURN_DATA["min speed"] = BCS[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
 
@@ -221,14 +221,14 @@ URANUS_DATA["avg speed"] = 6.80*KM/SEC
 URANUS_DATA["orbital period"] = 30_688.5*DAY # sidereal 
 URANUS_DATA["radius"] = 25_362*KM
 
-bcs = bcsFromAPm(URANUS_DATA["aphelion"],
+BCS = bcsFromAPm(URANUS_DATA["aphelion"],
                  URANUS_DATA["perihelion"],
                  URANUS_DATA["mass"])
 
-URANUS_DATA["semi-minor axis"] = bcs[0]
-URANUS_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
-URANUS_DATA["max speed"] = bcs[2] # at the perihelion
-URANUS_DATA["min speed"] = bcs[3] # at the aphelion
+URANUS_DATA["semi-minor axis"] = BCS[0]
+URANUS_DATA["linear eccentricity"] = BCS[1] # center-to-focus distance
+URANUS_DATA["max speed"] = BCS[2] # at the perihelion
+URANUS_DATA["min speed"] = BCS[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
 
@@ -242,23 +242,23 @@ NEPTUNE_DATA["avg speed"] = 5.43*KM/SEC
 NEPTUNE_DATA["orbital period"] = 60_195*DAY # sidereal 
 NEPTUNE_DATA["radius"] = 24_622*KM
 
-bcs = bcsFromAPm(NEPTUNE_DATA["aphelion"],
+BCS = bcsFromAPm(NEPTUNE_DATA["aphelion"],
                  NEPTUNE_DATA["perihelion"],
                  NEPTUNE_DATA["mass"])
 
-NEPTUNE_DATA["semi-minor axis"] = bcs[0]
-NEPTUNE_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
-NEPTUNE_DATA["max speed"] = bcs[2] # at the perihelion
-NEPTUNE_DATA["min speed"] = bcs[3] # at the aphelion
+NEPTUNE_DATA["semi-minor axis"] = BCS[0]
+NEPTUNE_DATA["linear eccentricity"] = BCS[1] # center-to-focus distance
+NEPTUNE_DATA["max speed"] = BCS[2] # at the perihelion
+NEPTUNE_DATA["min speed"] = BCS[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
 
-# Compare area speeds of the closest and farthest planet
+# Compare sweepSpeed speeds of the closest and farthest planet
 #print(NEPTUNE_DATA["perihelion"]*NEPTUNE_DATA["max speed"]/
 #      MERCURY_DATA["perihelion"]/MERCURY_DATA["max speed"])
 # 9.01
 
-# Compare area speeds of the Mercury and Mars
+# Compare sweepSpeed speeds of the Mercury and Mars
 #print(MARS_DATA["perihelion"]*MARS_DATA["max speed"]/
 #      MERCURY_DATA["perihelion"]/MERCURY_DATA["max speed"])
 # 2.02
@@ -289,14 +289,14 @@ PLUTO_DATA["avg speed"] = 4.743*KM/SEC
 PLUTO_DATA["orbital period"] = 90_560*DAY # sidereal
 PLUTO_DATA["radius"] = 1_188.3*KM
 
-bcs = bcsFromAPm(PLUTO_DATA["aphelion"],
+BCS = bcsFromAPm(PLUTO_DATA["aphelion"],
                  PLUTO_DATA["perihelion"],
                  PLUTO_DATA["mass"])
 
-PLUTO_DATA["semi-minor axis"] = bcs[0]
-PLUTO_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
-PLUTO_DATA["max speed"] = bcs[2] # at the perihelion
-PLUTO_DATA["min speed"] = bcs[3] # at the aphelion
+PLUTO_DATA["semi-minor axis"] = BCS[0]
+PLUTO_DATA["linear eccentricity"] = BCS[1] # center-to-focus distance
+PLUTO_DATA["max speed"] = BCS[2] # at the perihelion
+PLUTO_DATA["min speed"] = BCS[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
 # Halley comet's data is not used in the current version of the program.
@@ -317,14 +317,16 @@ HALLEY_COMET_DATA["eccentricity"] = 0.96658
 HALLEY_COMET_DATA["orbital period"] =  74.7*YR # sidereal
 HALLEY_COMET_DATA["radius"] = 5.5*KM
 
-bcs = bcsFromAPm(HALLEY_COMET_DATA["aphelion"],
+BCS = bcsFromAPm(HALLEY_COMET_DATA["aphelion"],
                  HALLEY_COMET_DATA["perihelion"],
                  HALLEY_COMET_DATA["mass"])
 
-HALLEY_COMET_DATA["semi-minor axis"] = bcs[0]
-HALLEY_COMET_DATA["linear eccentricity"] = bcs[1] # center-to-focus distance
-HALLEY_COMET_DATA["max speed"] = bcs[2] # at the perihelion
-HALLEY_COMET_DATA["min speed"] = bcs[3] # at the aphelion
+HALLEY_COMET_DATA["semi-minor axis"] = BCS[0]
+HALLEY_COMET_DATA["linear eccentricity"] = BCS[1] # center-to-focus distance
+HALLEY_COMET_DATA["max speed"] = BCS[2] # at the perihelion
+HALLEY_COMET_DATA["min speed"] = BCS[3] # at the aphelion
+
+del BCS
 
 #=================================================================================
 # PLANETS
@@ -454,7 +456,6 @@ NEPTUNE = SimulatedPlanet("Neptune",
 
 ME = EARTH_DATA["mass"]
 PE = EARTH_DATA["perihelion"]
-SE = EARTH_DATA["max speed"]
 S1_0 = sqrt(G*(MS+ME)/PE) # the speed of a made-up planet
 # with the same mass and perihelion as Earth, but with a circular orbit.
 
@@ -466,6 +467,10 @@ PLANET1_0 = SimulatedPlanet("Planet 1.0", ME, PE,     S1_0)
 PLANET1_1 = SimulatedPlanet("Planet 1.1", ME, PE, 1.1*S1_0)
 PLANET1_2 = SimulatedPlanet("Planet 1.2", ME, PE, 1.2*S1_0)
 PLANET1_3 = SimulatedPlanet("Planet 1.3", ME, PE, 1.3*S1_0)
+
+del ME
+del PE
+del S1_0
 
 # Note.
 # The inner planets and the made-up planets above are close to the Sun,
@@ -553,7 +558,7 @@ def simulate(planet: SimulatedPlanet, scaleDownFactor =  1_000_000_000):
     turtle.pensize(3)
     turtle.pencolor(planet.color())
 
-    x,y = planet.position() # the right vertex of the elliptical orbit
+    (x,y) = planet.position() # the right vertex of the elliptical orbit
     turtle.teleport(x/scaleDownFactor, y/scaleDownFactor)
 
     # The planet starts from its perihelion.
@@ -563,8 +568,8 @@ def simulate(planet: SimulatedPlanet, scaleDownFactor =  1_000_000_000):
     while True: 
         for j in range(100): # update turtle every 100 moves
             planet.move()
-            x,y = planet.position()
-            if y < 0:
+            (x,y) = planet.position()
+            if y <= 0:
                 done = True
                 break
         turtle.goto(x/scaleDownFactor, y/scaleDownFactor)
@@ -577,7 +582,7 @@ def simulate(planet: SimulatedPlanet, scaleDownFactor =  1_000_000_000):
     while True: 
         for j in range(100): # update turtle every 100 moves
             planet.move()
-            x,y = planet.position()
+            (x,y) = planet.position()
             if y >= 0:
                 done = True
                 break
@@ -594,14 +599,11 @@ def simulate(planet: SimulatedPlanet, scaleDownFactor =  1_000_000_000):
 # Under construction
 def simulateAndTest(planet: SimulatedPlanet,
                     scaleDownFactor,
-                    areaSpeedGraphStartX=None, areaSpeedScaleDownFactor=None):
-    # The area spanned by r and v will be graphed for every t from 0 to T
+                    sweepSpeedGraphStartX=None, sweepSpeedScaleDownFactor=None):
+    # The sweepSpeed is half the area spanned by r and v;
+    # it will be graphed for every t from 0 to T
     # where T is the orbital period.
     # If the line in the graph is horizontal, it will confirm Kepler's 2nd law.
-    # The line will start at turtle coordinates x1,y1,
-    # where x1 is 
-    # where y1 is 1/2 of the perihelion distance.
-    # It will end at x2,y2 s.t. x2-x1=scaleDownFactor/10_000_000.
     
     """Precondition: planet position (x,y) must have x>0, y=0,
                      and velocity (vx,vy) must have vx=0, vy>0.
@@ -624,7 +626,7 @@ def simulateAndTest(planet: SimulatedPlanet,
     turtle.pensize(3)
     turtle.pencolor(planet.color())
     
-    # Prepare turtle t2 to draw a graph of area speed. 
+    # Prepare turtle t2 to draw a graph of sweepSpeed speed. 
     turtle2 = Turtle(visible=False)
     turtle2.speed("fastest")
     turtle2.pendown()
@@ -632,32 +634,34 @@ def simulateAndTest(planet: SimulatedPlanet,
     turtle2.pencolor(planet.color())
 
     # Concerning Kepler's 1st law
-    x,y = planet.position() # the right vertex of the elliptical orbit
+    (x,y) = planet.position() # the right vertex of the elliptical orbit
     turtle.teleport(x/scaleDownFactor, y/scaleDownFactor)
-    perihelion = x # shortest distance from Sun
-    maxX = x # perihelion distance from the Sun (Sun is at (0,0))
-    minXsoFar = maxX # will be used to find the semi-major and -minor axis.
-    maxYsoFar = y    # will be used to find the semi-major and -minor axis.
+    perihelion = x # shortest distance from Sun (Sun is at (0,0))
+    maxX = x  
+    minXsoFar = x # will be used to find the semi-major and semi-minor axes.
+    maxYsoFar = y # will be used to find the semi-major and semi-minor axes.
 
     # Concerning Kepler's 2nd law
-    vx,vy = planet.velocity()
+    (vx,vy) = planet.velocity()
     vmax = vy # maximum speed on the orbit.
 
-    #areaScaleDownFactor = scaleDownFactor*vy
-    # area/areaScaleDownFactor ~ radius/scaleDownFactor
+    #sweepSpeedScaleDownFactor = scaleDownFactor*vy
+    # sweepSpeed/sweepSpeedScaleDownFactor ~ radius/scaleDownFactor
 
-    area0 = x*vy-y*vx # The determinant of the matrix of column vectors r,v =
-                      # = vector cross product  r x v.
-                      # = area of the parallelogram spanned by vectors r,v =
-                      # = twice the area of a triangle spanned by vectors r,v.
-                      # = twice the area speed in (m^2)/s - area swept per sec.
-                      # Notice that angular momentum is  r x mv.
+    sweepSpeed0 = (x*vy-y*vx)/2
+    # x*vy-y*vx is the determinant of matrix of column vectors r,v =
+    # = vector cross product  r x v
+    # = the area of the parallelogram spanned by vectors r,v =
+    # = twice the area of a triangle spanned by vectors r,v.
+    # = twice the sweep speed in (m^2)/s (area swept per second).
+    # Notice that the angular momentum is  r x mv.
 
-    #t2.teleport(areaSpeedGraphStartX, area0/areaSpeedScaleDownFactor)
+    #turtle2.teleport(sweepSweepGraphStartX,
+    #                 sweepSpeed0/sweepSpeedScaleDownFactor)
 
-    minAreaSoFar = area0
-    maxAreaSoFar = area0
-    # If the difference between minArea and maxArea is small,
+    minSweepSpeedSoFar = sweepSpeed0
+    maxSweepSpeedSoFar = sweepSpeed0
+    # If the difference between minSweepSpeed and maxSweepSpeed is small,
     # Kepler's 3rd law will be confirmed.
 
     # Concerning Kepler's 3rd law
@@ -666,9 +670,9 @@ def simulateAndTest(planet: SimulatedPlanet,
     mu = G*(MS+planet.mass()) # gravitational parameter
     a = perihelion*mu / (2*mu-perihelion*vmax*vmax) # semi-major axis:
     c = a - perihelion # the linear eccentricity, i.e. center-to-focus distance
-    aphelion = a + c # Aphelion distance (biggest distance from the Sun)
-    b = sqrt(aphelion*perihelion)  # semi-minor axis
-    t = 2*pi*sqrt(a*a*a/mu) # orbital period in s
+    aphelion = a + c # predicted aphelion distance
+    b = sqrt(aphelion*perihelion)  # predicted semi-minor axis
+    t = 2*pi*sqrt(a*a*a/mu) # predicted orbital period in s
     
     # The planet starts from its perihelion.
 
@@ -678,23 +682,23 @@ def simulateAndTest(planet: SimulatedPlanet,
         for j in range(100): # update turtle every 100 moves
             planet.move()
             tSoFar += planet.timeStep() # update T
-            x, y = planet.position() # update minX, maxY
+            (x,y) = planet.position() # update minX, maxY
             if x < minXsoFar: minXsoFar = x 
             if y > maxYsoFar: maxYsoFar = y
-            vx, vy = planet.velocity() # update minArea, maxArea
-            area = x*vy-y*vx
-            if area < minAreaSoFar: minAreaSoFar = area 
-            if area > maxAreaSoFar: maxAreaSoFar = area
-            if y < 0:
+            (vx,vy) = planet.velocity() # update minSweepSpeed, maxSweepSpeed
+            sweepSpeed = (x*vy-y*vx)/2
+            if sweepSpeed < minSweepSpeedSoFar: minSweepSpeedSoFar = sweepSpeed 
+            if sweepSpeed > maxSweepSpeedSoFar: maxSweepSpeedSoFar = sweepSpeed
+            if y <= 0:
                 done = True
                 break
         turtle.goto(x/scaleDownFactor, y/scaleDownFactor)
-        #t2.goto(x/scaleDownFactor, area/areaSpeedScaleDownFactor)
+        #t2.goto(x/scaleDownFactor, sweepSpeed/sweepSpeedScaleDownFactor)
         if done: break
 
     # The planet is now at its aphelion (or a little past)
 
-    area1= area
+    sweepSpeed1 = sweepSpeed
 
     # Lower half of the orbit:
     done = False 
@@ -702,18 +706,18 @@ def simulateAndTest(planet: SimulatedPlanet,
         for j in range(100): # update turtle every 100 moves
             planet.move()
             tSoFar += planet.timeStep() # update T
-            x,y = planet.position()
-            vx,vy = planet.velocity() # update minArea, maxArea
-            area = x*vy-y*vx
-            if area < minAreaSoFar: minAreaSoFar = area 
-            if area > maxAreaSoFar: maxAreaSoFar = area
+            (x,y) = planet.position()
+            (vx,vy) = planet.velocity() # update minSweepSpeed, maxSweepSpeed
+            sweepSpeed = (x*vy-y*vx)/2
+            if sweepSpeed < minSweepSpeedSoFar: minSweepSpeedSoFar = sweepSpeed 
+            if sweepSpeed > maxSweepSpeedSoFar: maxSweepSpeedSoFar = sweepSpeed
             if y >= 0:
                 done = True
                 break
         turtle.goto(x/scaleDownFactor, y/scaleDownFactor)
         if done: break
 
-        area2 = area
+        sweepSpeed2 = sweepSpeed
 
     # The planet is back at the perihelion (or a little past)
 
@@ -731,21 +735,22 @@ def simulateAndTest(planet: SimulatedPlanet,
     turtle.dot(6, planet.color()) 
 
     # Concerning Kepler's 2nd law: 
-    minArea = minAreaSoFar
-    maxArea = maxAreaSoFar
-    kepler2discrepancy = (maxArea - minArea) / area0
+    minSweepSpeed = minSweepSpeedSoFar
+    maxSweepSpeed = maxSweepSpeedSoFar
+    kepler2discrepancy = (maxSweepSpeed - minSweepSpeed) / sweepSpeed0
     kepler2discrepancyPercent = round(kepler2discrepancy*100, 2)
     print(kepler2discrepancyPercent, "%")
-    avgArea = (minArea + maxArea)/2
+    avgSweepSpeed = (minSweepSpeed + maxSweepSpeed)/2
 
     #print()
-    #print("Area:")
-    #print(minArea)
-    #print(area0, 0) # starting area (perihelion) Why is minArea=area0 ?
-    #print(area1, 1) # aphelion
-    #print(area2, 2) # ending area (perihelion)
-    #print(avgArea)
-    #print(maxArea)
+    #print("SweepSpeed:")
+    #print(minSweepSpeed)
+    #print(sweepSpeed0, 0) # starting sweepSpeed (perihelion)
+                           # Why is minSweepSpeed=sweepSpeed0 ?
+    #print(sweepSpeed1, 1) # aphelion
+    #print(sweepSpeed2, 2) # ending sweepSpeed (perihelion)
+    #print(avgSweepSpeed)
+    #print(maxSweepSpeed)
     #print("====")
 
     # Concerning Kepler's 3rd law:
@@ -759,19 +764,19 @@ def simulateAndTest(planet: SimulatedPlanet,
     #print(abs((lhs-rhs)/rhs))
     #print(round(abs((lhs-rhs)/rhs)*100,2), "%")
 
-    #print(area0/areaScaleDownFactor)
-    #print(area1/areaScaleDownFactor)
+    #print(sweepSpeed0/sweepSpeedScaleDownFactor)
+    #print(sweepSpeed1/sweepSpeedScaleDownFactor)
     
     return a,b,kepler2discrepancyPercent,t
 
 #sky() # run/uncomment this before running simulateAndTest!    
-#simulateAndTest(PLANET1_3)
-#simulateAndTest(PLANET1_2)
-#simulateAndTest(PLANET1_1)
-#simulateAndTest(PLANET1_0)
-#simulateAndTest(PLANET0_9)
-#simulateAndTest(PLANET0_8)
-#simulateAndTest(PLANET0_7)
+#simulateAndTest(PLANET1_3, 1_000_000_000)
+#simulateAndTest(PLANET1_2, 1_000_000_000)
+#simulateAndTest(PLANET1_1, 1_000_000_000)
+#simulateAndTest(PLANET1_0, 1_000_000_000)
+#simulateAndTest(PLANET0_9, 1_000_000_000)
+#simulateAndTest(PLANET0_8, 1_000_000_000)
+#simulateAndTest(PLANET0_7, 1_000_000_000)
 
 #=================================================================================
 # FUNCTIONS CALLED BY main
