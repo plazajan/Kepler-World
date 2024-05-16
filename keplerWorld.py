@@ -40,7 +40,7 @@ methodology of science, as outlined in README.md.
 #==================================================================================
 
 from turtle import getscreen, Turtle
-from math import sqrt, pi, sin, cos, log10
+from math import sqrt, pi, sin, cos
 
 #==================================================================================
 # ASTRONOMICAL DATA FROM OBSERVATIONS AND CALCULATIONS 
@@ -63,9 +63,9 @@ YR = 365.25*DAY # Julian year, used in astronomy
 #---------------------------------------------------------------------------------
 # Sun
 
-MS = 1.98847e30 # Mass in kg.
-RS = 696_000*KM # Radius in m.
-MU = G*MS       # Gravitational parameter with respect to the Sun only.
+MASS_SUN = 1.98847e30   # Mass in kg.
+RADIUS_SUN = 696_000*KM # Radius in m - NOT USED
+MU = G*MASS_SUN         # Gravitational parameter with respect to the Sun only.
 
 #---------------------------------------------------------------------------------
 
@@ -76,7 +76,7 @@ def bcsFromAPm(aphelion, perihelion, m):
     a = (aphelion + perihelion) / 2 # semi-major axis in m.
     b = sqrt(aphelion * perihelion) # semi-minor axis in m.
     c = (aphelion - perihelion) / 2 # linear eccentricity = center-to-focus distance, in m.
-    mu = G * (MS + m) # gravitational parameter (with respect to the Sun)
+    mu = G * (MASS_SUN + m) # gravitational parameter (with respect to the Sun)
     sMax = sqrt(mu * (2/perihelion - 1/a)) # speed at perihelion - max speed
     sMin = sqrt(mu * (2/aphelion - 1/a)) # speed at aphelion - min speed
     # e = c / a; # eccentricity.
@@ -270,14 +270,14 @@ NEPTUNE_DATA["min speed"] = BCS[3] # at the aphelion
 # 4.02
 
 #---------------------------------------------------------------------------------
-# Pluto's data is not used in the current version of the program.
+# Pluto's data is not used in the current veRADIUS_SUNion of the program.
 
 # While the planets' orbits are close to the ecliptic,
 # Pluto's orbit has a significant inclination.
 # This program shows the orbits on the same plane. 
 # Showing the planets and Plutothis way would be
 # greatly inaccurate and lead to misconceptions, for instance
-# the visualization would show that Pluto's orbit intersects Uranus' orbit.
+# the visualization would show that Pluto's orbit inteRADIUS_SUNects Uranus' orbit.
 
 PLUTO_DATA = {}
 PLUTO_DATA["mass"] = 1.303e22
@@ -299,7 +299,7 @@ PLUTO_DATA["max speed"] = BCS[2] # at the perihelion
 PLUTO_DATA["min speed"] = BCS[3] # at the aphelion
 
 #---------------------------------------------------------------------------------
-# Halley comet's data is not used in the current version of the program.
+# Halley comet's data is not used in the current veRADIUS_SUNion of the program.
 
 # Halley's comet has a significant inclination with respect to the excliptic.
 # and significant inclination to the plane of Pluto's orbit.
@@ -326,6 +326,8 @@ HALLEY_COMET_DATA["linear eccentricity"] = BCS[1] # center-to-focus distance
 HALLEY_COMET_DATA["max speed"] = BCS[2] # at the perihelion
 HALLEY_COMET_DATA["min speed"] = BCS[3] # at the aphelion
 
+#---------------------------------------------------------------------------------
+
 del BCS
 
 #=================================================================================
@@ -341,19 +343,25 @@ class SimulatedPlanet(object):
            Puts the planet/self at coordinates (perihelionDistance, 0)
            giving it velocity (0, maxSpeed).
         """
+        self._name = name
         self._mass = mass
-        self._x = perihelionDistance
+        self._perihelion = perihelionDistance
+        self._maxSpeed = maxSpeed
+        self._color = color
+        self._timeStep = timeStep
+        self.reset()
+                
+    def reset(self):
+        """Return the planet to the perihelion giving it its maximum speed."""
+        self._x = self._perihelion
         self._y = 0
         self._r2 = self._x*self._x + self._y*self._y # radius squared
         # we store radius squared to avoid loosing precision while recalculating it
         self._r = sqrt(self._r2) # radius = distance from Sun's center.
         self._vx = 0 # horizontal speed in m/s 
-        self._vy = maxSpeed # vertical speed in m/s
+        self._vy = self._maxSpeed # vertical speed in m/s
         self._ax = -MU*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
         self._ay = -MU*self._y/(self._r2*self._r) # vertical acceleration m/s^2
-        self._timeStep = timeStep
-        self._name = name
-        self._color = color
 
     def move(self, timeStep="the default for this planet"):
         """Updates position, velocity, acceleration, radius
@@ -373,23 +381,25 @@ class SimulatedPlanet(object):
         self._ax = -MU*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
         self._ay = -MU*self._y/(self._r2*self._r) # vertical acceleration m/s^2
 
-    def position(self): return (self._x, self._y)
-
-    def velocity(self): return (self._vx, self._vy)
-
-    def acceleration(self): return (self._ax, self._ay)
+    def name(self): return(self._name)
 
     def mass(self): return self._mass
+
+    def perihelion(self): return self._perihelion
+
+    def maxSpeed(self): return self._maxSpeed
+
+    def color(self): return(self._color)
+
+    def position(self): return (self._x, self._y)
 
     def radius(self): return self._r
 
     def radiusSquared(self): return self._r2
 
-    def name(self): return(self._name)
+    def velocity(self): return (self._vx, self._vy)
 
-    def color(self): return(self._color)
-
-    def setColor(self, color: str): self._color = color
+    def acceleration(self): return (self._ax, self._ay)
 
     def timeStep(self): return self._timeStep
 
@@ -456,7 +466,7 @@ NEPTUNE = SimulatedPlanet("Neptune",
 
 ME = EARTH_DATA["mass"]
 PE = EARTH_DATA["perihelion"]
-S1_0 = sqrt(G*(MS+ME)/PE) # the speed of a made-up planet
+S1_0 = sqrt(G*(MASS_SUN + ME) / PE) # the speed of a made-up planet
 # with the same mass and perihelion as Earth, but with a circular orbit.
 
 # Made-up planets, for computational experiments (default pencolor=green)
@@ -485,12 +495,12 @@ def sky(skyColor="black", showSun=True):
     """
     screen = getscreen()
     screen.clear() # remove turtle image
-    screen.screensize(1000,1000)
+    screen.screensize(2000,900)
     screen.title("Kepler's world")
     screen.bgcolor(skyColor)
     if showSun:
         turtle = Turtle(visible=False)
-        turtle.dot(10, "white") # SUN at (0,0) and is white.
+        turtle.dot(10, "white") # SUN is at (0,0) and is white.
         print("The Sun is not to scale; it is shown much bigger.")
 
 #sky()
@@ -498,7 +508,7 @@ def sky(skyColor="black", showSun=True):
 #---------------------------------------------------------------------------------
    
 def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
-                color="white", focusColor="white"):
+                color="pink"):
     """Draws an ellipse centered at (-leftShift,0) and shows the foci;
        the foci are on the x-axis.
        For an ellipse centered at (0,0) use leftShift=0.
@@ -506,7 +516,7 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
        where c is the linear eccentricity i.e. center-to-focus distance:
        c = sqrt(semiMajorAxis*semiMajorAxis - semiMinorAxis*semiMinorAxis)
        Note: make sure to create canvas before this function is called.
-       Note: the parameters are in turtle canvas units, not in meters.
+       Note: the parameteRADIUS_SUN are in turtle canvas units, not in meteRADIUS_SUN.
     """
     if semiMajorAxis < semiMinorAxis:
         raise ValueError(
@@ -519,11 +529,11 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
     c = sqrt(semiMajorAxis*semiMajorAxis - semiMinorAxis*semiMinorAxis)
     # c is the linear eccentricity, i.e. center-to-focus distance.
     turtle.teleport(c-leftShift,0) # left focus
-    turtle.dot(6, focusColor) 
+    turtle.dot(6, color) 
     turtle.teleport(-c-leftShift,0) # right focus
-    turtle.dot(6, focusColor) 
+    turtle.dot(6, color) 
     turtle.teleport(semiMajorAxis-leftShift,0) # left vertex of the ellipse
-    n = 200
+    n = 500
     for i in range(n+1):
         angle = 2*pi*(i/n)
         x = semiMajorAxis*cos(angle)
@@ -532,13 +542,62 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
 
 #sky(showSun=False) # run/uncomment this before running drawEllipse
 #drawEllipse(200, 100, 0, "pink")
-     
+
+
 #---------------------------------------------------------------------------------
 
-def simulate(planet: SimulatedPlanet, scaleDownFactor =  1_000_000_000):
+def predictByTheory(planet: SimulatedPlanet, displayParameters: dict):
+
+    orbitScaleDownFactor = displayParameters["orbitScaleDownFactor"]
+    graphStartX = displayParameters["graphStartX"]
+    sweepSpeedScaleDownFactor = displayParameters["sweepSpeedScaleDownFactor"]
+    timeScaleDownFactor = displayParameters["timeScaleDownFactor"]
+    
+##    t = planetData["orbital period"]
+##    a = planetData["semi-major axis"]
+##    b = planetData["semi-minor axis"]
+##    c = planetData["linear eccentricity"]
+##    vmax = planetData["max speed"]
+##    perihelion = planetData["perihelion"]
+    
+    mu = G*(MASS_SUN+planet.mass()) # gravitational parameter
+    perihelion = planet.perihelion()
+    vmax = planet.maxSpeed()
+    a = perihelion*mu / (2*mu-perihelion*vmax*vmax) # semi-major axis:
+    c = a - perihelion # the linear eccentricity, i.e. center-to-focus distance
+    aphelion = a + c # predicted aphelion distance
+    b = sqrt(aphelion*perihelion)  # predicted semi-minor axis
+    t = 2*pi*sqrt(a*a*a/mu) # predicted orbital period in s
+    sweepSpeed0 = perihelion * vmax / 2
+
+    drawEllipse(a/orbitScaleDownFactor, b/orbitScaleDownFactor,
+                c/orbitScaleDownFactor)
+
+    turtle2 = Turtle(visible=False)
+    turtle2.speed("fastest")
+    turtle2.pendown()
+    turtle2.pensize(1)
+    turtle2.pencolor("pink")
+
+    turtle2.teleport(graphStartX,
+                     sweepSpeed0 / sweepSpeedScaleDownFactor)
+    turtle2.speed(3)
+
+    # draw a pink hirizontal line with a blunt end 
+    turtle2.goto(graphStartX+t/timeScaleDownFactor,
+                     sweepSpeed0 /sweepSpeedScaleDownFactor)
+    turtle2.left(90)
+    turtle2.forward(3)
+    turtle2.back(6)
+
+#sky(showSun=False) # run/uncomment this before running predictByTheory
+
+#---------------------------------------------------------------------------------
+
+def simulate(planet: SimulatedPlanet):
     # Just draws the orbit, does not test Kepler's laws.
     # This function is not used by the top level functions in the program.
-    # It is given here as a stepping stone to understand simulateAndTest below.
+    # It is given here as a stepping stone to undeRADIUS_SUNtand simulateAndTest below.
     """Precondition: planet position (x,y) must have x>0, y=0,
                      and velocity (vx,vy) must have vx=0, vy>0.
        So, the planet must be in the right vertex of its elliptical orbit.
@@ -547,7 +606,7 @@ def simulate(planet: SimulatedPlanet, scaleDownFactor =  1_000_000_000):
        Every step in the simulation is done for the actual planet
        (such as Mars, with its actual mass, perihelion and actual max speed)
        and only later it is scaled down to be displayed in turtle graphics.
-       Real distances in meters will be divided by scaleDownFactor
+       Real distances in meteRADIUS_SUN will be divided by orbitScaleDownFactor
        before being given to the turtle.
        Note: make sure to create canvas before this function is called.
     """
@@ -555,11 +614,13 @@ def simulate(planet: SimulatedPlanet, scaleDownFactor =  1_000_000_000):
     turtle = Turtle(visible=False)
     turtle.speed("fastest")
     turtle.pendown()
-    turtle.pensize(3)
+    turtle.pensize(1)
     turtle.pencolor(planet.color())
 
+    orbitScaleDownFactor =  1_000_000_000
+
     (x,y) = planet.position() # the right vertex of the elliptical orbit
-    turtle.teleport(x/scaleDownFactor, y/scaleDownFactor)
+    turtle.teleport(x/orbitScaleDownFactor, y/orbitScaleDownFactor)
 
     # The planet starts from its perihelion.
     
@@ -572,7 +633,7 @@ def simulate(planet: SimulatedPlanet, scaleDownFactor =  1_000_000_000):
             if y <= 0:
                 done = True
                 break
-        turtle.goto(x/scaleDownFactor, y/scaleDownFactor)
+        turtle.goto(x/orbitScaleDownFactor, y/orbitScaleDownFactor)
         if done: break
 
     # The planet is now at its aphelion (or a little past)
@@ -586,7 +647,7 @@ def simulate(planet: SimulatedPlanet, scaleDownFactor =  1_000_000_000):
             if y >= 0:
                 done = True
                 break
-        turtle.goto(x/scaleDownFactor, y/scaleDownFactor)
+        turtle.goto(x/orbitScaleDownFactor, y/orbitScaleDownFactor)
         if done: break
 
     # The planet is back at the perihelion (or a little past)
@@ -597,9 +658,7 @@ def simulate(planet: SimulatedPlanet, scaleDownFactor =  1_000_000_000):
 #-----------------------------------------------------------------------------
 
 # Under construction
-def simulateAndTest(planet: SimulatedPlanet,
-                    scaleDownFactor,
-                    sweepSpeedGraphStartX=None, sweepSpeedScaleDownFactor=None):
+def simulateAndTest(planet: SimulatedPlanet, displayParameters):
     # The sweepSpeed is half the area spanned by r and v;
     # it will be graphed for every t from 0 to T
     # where T is the orbital period.
@@ -613,29 +672,36 @@ def simulateAndTest(planet: SimulatedPlanet,
        Every step in the simulation is done for the actual planet
        (such as Mars, with its actual mass, perihelion and actual max speed)
        and only later it is scaled down to be displayed in turtle graphics.
-       Real distances in meters will be divided by scaleDownFactor
+       Real distances in meteRADIUS_SUN will be divided by orbitScaleDownFactor
        before being given to the turtle.
        Tests Kepler's laws ...
        Returns the orbital period in seconds, ...
        Note: make sure to create canvas before this function is called.
     """
-    # Prepare turtle t to draw an orbit
+    # Prepare turtle to draw an orbit
     turtle = Turtle(visible=False)
     turtle.speed("fastest")
     turtle.pendown()
-    turtle.pensize(3)
+    turtle.pensize(3) # change to 1 to see the error
     turtle.pencolor(planet.color())
     
-    # Prepare turtle t2 to draw a graph of sweepSpeed speed. 
+    # Prepare turtle2 to draw a graph of sweepSpeed. 
     turtle2 = Turtle(visible=False)
     turtle2.speed("fastest")
     turtle2.pendown()
     turtle2.pensize(1)
     turtle2.pencolor(planet.color())
+    
+    orbitScaleDownFactor = displayParameters["orbitScaleDownFactor"]
+    graphStartX = displayParameters["graphStartX"]
+    sweepSpeedScaleDownFactor = displayParameters["sweepSpeedScaleDownFactor"]
+    timeScaleDownFactor = displayParameters["timeScaleDownFactor"]
+
+    # JUPITER.setTimeStep(10_000)
 
     # Concerning Kepler's 1st law
     (x,y) = planet.position() # the right vertex of the elliptical orbit
-    turtle.teleport(x/scaleDownFactor, y/scaleDownFactor)
+    turtle.teleport(x/orbitScaleDownFactor, y/orbitScaleDownFactor)
     perihelion = x # shortest distance from Sun (Sun is at (0,0))
     maxX = x  
     minXsoFar = x # will be used to find the semi-major and semi-minor axes.
@@ -645,19 +711,16 @@ def simulateAndTest(planet: SimulatedPlanet,
     (vx,vy) = planet.velocity()
     vmax = vy # maximum speed on the orbit.
 
-    #sweepSpeedScaleDownFactor = scaleDownFactor*vy
-    # sweepSpeed/sweepSpeedScaleDownFactor ~ radius/scaleDownFactor
+    #sweepSpeedScaleDownFactor = orbitScaleDownFactor*vy
+    # sweepSpeed/sweepSpeedScaleDownFactor ~ radius/orbitScaleDownFactor
 
     sweepSpeed0 = (x*vy-y*vx)/2
-    # x*vy-y*vx is the determinant of matrix of column vectors r,v =
+    # x*vy-y*vx is the determinant of matrix of column vectoRADIUS_SUN r,v =
     # = vector cross product  r x v
-    # = the area of the parallelogram spanned by vectors r,v =
-    # = twice the area of a triangle spanned by vectors r,v.
+    # = the area of the parallelogram spanned by vectoRADIUS_SUN r,v =
+    # = twice the area of a triangle spanned by vectoRADIUS_SUN r,v.
     # = twice the sweep speed in (m^2)/s (area swept per second).
     # Notice that the angular momentum is  r x mv.
-
-    #turtle2.teleport(sweepSweepGraphStartX,
-    #                 sweepSpeed0/sweepSpeedScaleDownFactor)
 
     minSweepSpeedSoFar = sweepSpeed0
     maxSweepSpeedSoFar = sweepSpeed0
@@ -667,19 +730,16 @@ def simulateAndTest(planet: SimulatedPlanet,
     # Concerning Kepler's 3rd law
     tSoFar = 0 # simulated orbital period, in seconds.
 
-    mu = G*(MS+planet.mass()) # gravitational parameter
-    a = perihelion*mu / (2*mu-perihelion*vmax*vmax) # semi-major axis:
-    c = a - perihelion # the linear eccentricity, i.e. center-to-focus distance
-    aphelion = a + c # predicted aphelion distance
-    b = sqrt(aphelion*perihelion)  # predicted semi-minor axis
-    t = 2*pi*sqrt(a*a*a/mu) # predicted orbital period in s
+    turtle2.teleport(graphStartX,
+                     sweepSpeed0/sweepSpeedScaleDownFactor)
     
     # The planet starts from its perihelion.
 
     # Upper half of the orbit:
-    done = False 
+    done = False
+    planet.setTimeStep(10)
     while True: 
-        for j in range(100): # update turtle every 100 moves
+        for j in range(10000): # update turtle every 100 moves
             planet.move()
             tSoFar += planet.timeStep() # update T
             (x,y) = planet.position() # update minX, maxY
@@ -692,8 +752,10 @@ def simulateAndTest(planet: SimulatedPlanet,
             if y <= 0:
                 done = True
                 break
-        turtle.goto(x/scaleDownFactor, y/scaleDownFactor)
-        #t2.goto(x/scaleDownFactor, sweepSpeed/sweepSpeedScaleDownFactor)
+        turtle.goto(x/orbitScaleDownFactor, y/orbitScaleDownFactor)
+        turtle2.goto(graphStartX+tSoFar/timeScaleDownFactor,
+                     sweepSpeed/sweepSpeedScaleDownFactor)
+        #t2.goto(x/orbitScaleDownFactor, sweepSpeed/sweepSpeedScaleDownFactor)
         if done: break
 
     # The planet is now at its aphelion (or a little past)
@@ -703,7 +765,7 @@ def simulateAndTest(planet: SimulatedPlanet,
     # Lower half of the orbit:
     done = False 
     while True: 
-        for j in range(100): # update turtle every 100 moves
+        for j in range(10000): # update turtle every 100 moves
             planet.move()
             tSoFar += planet.timeStep() # update T
             (x,y) = planet.position()
@@ -714,10 +776,16 @@ def simulateAndTest(planet: SimulatedPlanet,
             if y >= 0:
                 done = True
                 break
-        turtle.goto(x/scaleDownFactor, y/scaleDownFactor)
+        turtle.goto(x/orbitScaleDownFactor, y/orbitScaleDownFactor)
+        turtle2.goto(graphStartX+tSoFar/timeScaleDownFactor,
+                     sweepSpeed/sweepSpeedScaleDownFactor)
         if done: break
 
-        sweepSpeed2 = sweepSpeed
+    turtle2.left(90)
+    turtle2.forward(3)
+    turtle2.back(6)
+
+    sweepSpeed2 = sweepSpeed
 
     # The planet is back at the perihelion (or a little past)
 
@@ -729,9 +797,9 @@ def simulateAndTest(planet: SimulatedPlanet,
     # Notice that maxX is the distance from (0,0) to the perihelion.
     orbitCenter = maxX - a
     c = sqrt(a*a - b*b) # linear eccentricity = center to focus distance.
-    turtle.teleport((orbitCenter + c)/scaleDownFactor,0) # draw right focus
+    turtle.teleport((orbitCenter + c)/orbitScaleDownFactor,0) # draw right focus
     turtle.dot(6, planet.color())
-    turtle.teleport((orbitCenter - c)/scaleDownFactor,0) # draw left focus
+    turtle.teleport((orbitCenter - c)/orbitScaleDownFactor,0) # draw left focus
     turtle.dot(6, planet.color()) 
 
     # Concerning Kepler's 2nd law: 
@@ -757,9 +825,9 @@ def simulateAndTest(planet: SimulatedPlanet,
     t = tSoFar # sidereal orbital period - from the simulation.
     # T^2 / a^2 = 4*pi^2 / G(M+m) - does the simulation support this?
     #print("Kepler3:")
-    lhs = t*t/(a*a*a)
+    lhs = t * t / (a * a * a)
     #print(lhs)
-    rhs = 4*pi*pi / (G*(MS+planet._mass))
+    rhs = 4 * pi * pi / (G*(MASS_SUN + planet._mass))
     #print(rhs)    
     #print(abs((lhs-rhs)/rhs))
     #print(round(abs((lhs-rhs)/rhs)*100,2), "%")
@@ -767,7 +835,7 @@ def simulateAndTest(planet: SimulatedPlanet,
     #print(sweepSpeed0/sweepSpeedScaleDownFactor)
     #print(sweepSpeed1/sweepSpeedScaleDownFactor)
     
-    return a,b,kepler2discrepancyPercent,t
+    return a, b, kepler2discrepancyPercent, t
 
 #sky() # run/uncomment this before running simulateAndTest!    
 #simulateAndTest(PLANET1_3, 1_000_000_000)
@@ -781,19 +849,59 @@ def simulateAndTest(planet: SimulatedPlanet,
 #=================================================================================
 # FUNCTIONS CALLED BY main
 
-# Under construction
-def simmulationSummary(planetData: dict, planet: SimulatedPlanet, scaleDownFactor):
+def simmulationSummary(planetData: dict, planet: SimulatedPlanet,
+                       displayParameters):
+
     print("\n")
     print(planet.name(), "orbital period in days:")
+
+    orbitScaleDownFactor = displayParameters["orbitScaleDownFactor"]
+    graphStartX = displayParameters["graphStartX"]
+    sweepSpeedScaleDownFactor = displayParameters["sweepSpeedScaleDownFactor"]
+    timeScaleDownFactor = displayParameters["timeScaleDownFactor"]
+    
     t = planetData["orbital period"]
+    a = planetData["semi-major axis"]
+    b = planetData["semi-minor axis"]
+    c = planetData["linear eccentricity"]
+    vmax = planetData["max speed"]
+    perihelion = planetData["perihelion"]
+
+    sweepSpeed0 = perihelion * vmax / 2
+    
     print(round(t/DAY,2), "- actual")
-    drawEllipse(planetData["semi-major axis"]/scaleDownFactor,
-                planetData["semi-minor axis"]/scaleDownFactor,
-                planetData["linear eccentricity"]/scaleDownFactor)
-    ts = simulateAndTest(planet, scaleDownFactor)[3]
+    
+    predictByTheory(planet, displayParameters)
+
+    #mu = G*(MASS_SUN+planet.mass()) # gravitational parameter
+    #a = perihelion*mu / (2*mu-perihelion*vmax*vmax) # semi-major axis:
+    #c = a - perihelion # the linear eccentricity, i.e. center-to-focus distance
+    #aphelion = a + c # predicted aphelion distance
+    #b = sqrt(aphelion*perihelion)  # predicted semi-minor axis
+    #t = 2*pi*sqrt(a*a*a/mu) # predicted orbital period in s
+
+    turtle2 = Turtle(visible=False)
+    turtle2.speed("fastest")
+    turtle2.pendown()
+    turtle2.pensize(1)
+    turtle2.pencolor("pink")
+
+    turtle2.teleport(graphStartX,
+                     sweepSpeed0 / sweepSpeedScaleDownFactor)
+    turtle2.speed(5)
+
+    # draw a pink hirizontal line with a blunt end 
+    turtle2.goto(graphStartX+t/timeScaleDownFactor,
+                     sweepSpeed0 /sweepSpeedScaleDownFactor)
+    turtle2.left(90)
+    turtle2.forward(3)
+    turtle2.back(6)
+    
+    ts = simulateAndTest(planet, displayParameters)[3]
     print(round(abs(ts-t)*100/t, 2), "% error")
 
-def planets(n: int = 4):
+
+def planets(n: int, displayParameters):
     """A computer simulation of orbits of n planets, resulting from the
        continuing local effect of the Newton's law of gravity.
        Tests if the simulated planets obey (global) Kepler's laws 1 and 3.
@@ -812,12 +920,11 @@ Other characteristics of the orbits are not modelled here -
 all ellipses are shown in the same plane with the major axis on the x-axis
 and perturbations due to gravitational influence of other planets is not shown.
          """)
-    if n <= 5:
-        scaleDownFactor =  1_000_000_000
-    else:
-        scaleDownFactor = 10_000_000_000
-    # Real distances in meters will be divided by scaleDownFactor
-    # before being given to the turtle.
+    
+    orbitScaleDownFactor = displayParameters["orbitScaleDownFactor"]
+    graphStartX = displayParameters["graphStartX"]
+    sweepSpeedScaleDownFactor = displayParameters["sweepSpeedScaleDownFactor"]
+    timeScaleDownFactor = displayParameters["timeScaleDownFactor"]
     
     sky()
 
@@ -834,30 +941,24 @@ but smaller than the Moon. This simulation does not include Pluto."""
     
     # Default time step = 1000 s
     if n>=1:
-        simmulationSummary(MERCURY_DATA, MERCURY, scaleDownFactor)
+        simmulationSummary(MERCURY_DATA, MERCURY, displayParameters)
     if n>=2:
-        simmulationSummary(VENUS_DATA, VENUS, scaleDownFactor)
+        simmulationSummary(VENUS_DATA, VENUS, displayParameters)
     if n>=3:
-        simmulationSummary(EARTH_DATA, EARTH, scaleDownFactor)
+        simmulationSummary(EARTH_DATA, EARTH, displayParameters)
     if n>=4:
-        simmulationSummary(MARS_DATA, MARS, scaleDownFactor)
-    if n==5:
-        simmulationSummary(JUPITER_DATA, JUPITER, scaleDownFactor)
-    if n>5:
-        JUPITER.setTimeStep(10_000)
-        simmulationSummary(JUPITER_DATA, JUPITER, scaleDownFactor)
+        simmulationSummary(MARS_DATA, MARS, displayParameters)
+    if n>=5:
+        simmulationSummary(JUPITER_DATA, JUPITER, displayParameters)
     if n>=6:
-        SATURN.setTimeStep(10_000)
-        simmulationSummary(SATURN_DATA, SATURN, scaleDownFactor)
+        simmulationSummary(SATURN_DATA, SATURN, displayParameters)
     if n>=7:
-        URANUS.setTimeStep(10_000)
-        simmulationSummary(URANUS_DATA, URANUS, scaleDownFactor)
+        simmulationSummary(URANUS_DATA, URANUS, displayParameters)
     if n>=8:
-        NEPTUNE.setTimeStep(10_000)
-        simmulationSummary(NEPTUNE_DATA, NEPTUNE, scaleDownFactor)
+        simmulationSummary(NEPTUNE_DATA, NEPTUNE, displayParameters)
 
 #-------
-#innerSimulatedPlanets() # uncomment this to simulate the inner planets.
+#inneRADIUS_SUNimulatedPlanets() # uncomment this to simulate the inner planets.
 
 # Output:
 
@@ -893,7 +994,7 @@ but smaller than the Moon. This simulation does not include Pluto."""
 #---------------------------------------------------------------------------------
 
 # Under construction
-def testKepler(planet: SimulatedPlanet, scaleDownFactor = 1_000_000_000):
+def testKepler(planet: SimulatedPlanet, displayParameters):
     """Precondition: planet position (x,y) must have x>0, y=0,
                     and velocity (vx,vy) must have vx=0, vy>0.
        So, the planet must be in the right vertex of its elliptical orbit.A computer simulation of the orbit of the planet, resulting from the
@@ -902,20 +1003,26 @@ def testKepler(planet: SimulatedPlanet, scaleDownFactor = 1_000_000_000):
        Every step in the simulation is done for the actual planet
        (such as Mars, with its actual mass, perihelion and actual max speed)
        and only later it is scaled down to be displayed in turtle graphics.
-       Real distances in meters will be divided by scaleDownFactor
+       Real distances in meteRADIUS_SUN will be divided by orbitScaleDownFactor
        before being given to the turtle.
        This function creates its own canvas-sky with the Sun,
        and draws the predicted ellipse of the orbit with the foci,
        before starting simulation.
        It produces output, besides displaying turtle graphics.
     """
+    
+    orbitScaleDownFactor = displayParameters["orbitScaleDownFactor"]
+    graphStartX = displayParameters["graphStartX"]
+    sweepSpeedScaleDownFactor = displayParameters["sweepSpeedScaleDownFactor"]
+    timeScaleDownFactor = displayParameters["timeScaleDownFactor"]
+    
     print("The orbit displayed in turtle graphics is to scale.")
     sky()
     print("\nTesting Kepler's 1st and 3rd laws")
     m = planet.mass()  # mass
     vmax = planet.velocity()[1] # maximal speed (at Perihelion)
     perihelion = planet.position()[0]  # shortest distance from Sun
-    mu = G*(MS+m) # gravitational parameter
+    mu = G*(MASS_SUN+m) # gravitational parameter
     a = perihelion*mu / (2*mu-perihelion*vmax*vmax) # semi-major axis:
     c = a - perihelion # the linear eccentricity, i.e. center-to-focus distance
     aphelion = a + c # Aphelion distance (biggest distance from the Sun)
@@ -923,8 +1030,9 @@ def testKepler(planet: SimulatedPlanet, scaleDownFactor = 1_000_000_000):
     t = sqrt(4*pi*pi*a*a*a / mu) # orbital period in s
     print("Planet's orbital period in days:")
     print(round(t/DAY,2), "- predicted by the theory")
-    drawEllipse(a/scaleDownFactor, b/scaleDownFactor, c/scaleDownFactor) # predicted orbit
-    ts = simulateAndTest(planet, scaleDownFactor)[3] # simulation. TS - orbital period form simulation.
+    predictByTheory(planet, displayParameters)
+    #drawEllipse(a/orbitScaleDownFactor, b/orbitScaleDownFactor, c/orbitScaleDownFactor) # predicted orbit
+    ts = simulateAndTest(planet, displayParameters)[3] # simulation. TS - orbital period form simulation.
     print(round(ts/DAY,2), "- from the simulation")
     print( round(abs(ts-t)*100/t, 2), "% discrepancy")
 
@@ -942,26 +1050,33 @@ In the case of actual celestial bodies
 it also compares the simulated orbit to the data from astronomical tables."""
           )
 
+    displayParameters = {
+        "orbitScaleDownFactor" : 1_000_000_000,
+        "graphStartX" : 200,
+        "sweepSpeedScaleDownFactor" : 10_000_000_000_000,
+        "timeScaleDownFactor" : 100_000
+    }
+
     while True:
         print("""
 1. Inner planets: Mercury, Venus, Earth and Mars.
    
-2. Eight planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune.
-   
-3. A made-up celestial body with the same mass and perihelion as Earth
+2. A made-up celestial body with the same mass and perihelion as Earth
    but with the maximal speed 20% bigger than Earth.
 
-4. Exit.
+3. Exit.
           """)
-        choice = input("Enter your choice (1-4): ")
+#2. Eight planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune.
+
+        choice = input("Enter your choice (1-3): ")
         if choice == "":
             return
-        if   choice[0] == "1":
-            planets(4) # The 4 inner planets.
-        elif choice[0] == "2":
-            planets(8) # All 8 planets.
-        elif choice[0] == "3":
-            testKepler(PLANET1_2)
+        if   choice[0] == '1':
+            planets(4, displayParameters) # The 4 inner planets.
+        #elif choice[0] == '2':
+        #    planets(8, displayParameters) # All 8 planets.
+        elif choice[0] == '2':
+            testKepler(PLANET1_2, displayParameters)
         else:
             print("Bye")
             return
