@@ -753,7 +753,10 @@ def simulateAndTest(planet: SimulatedPlanet, displayParameters):
                 done = True
                 break
         turtle.goto(x/orbitScaleDownFactor, y/orbitScaleDownFactor)
-        turtle2.goto(graphStartX+tSoFar/timeScaleDownFactor,
+        turtle2    turtle2.left(90)
+    turtle2.forward(3)
+    turtle2.back(6)
+.goto(graphStartX+tSoFar/timeScaleDownFactor,
                      sweepSpeed/sweepSpeedScaleDownFactor)
         #t2.goto(x/orbitScaleDownFactor, sweepSpeed/sweepSpeedScaleDownFactor)
         if done: break
