@@ -36,23 +36,21 @@ class SimulatedPlanet(object):
         self._ax = -MU*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
         self._ay = -MU*self._y/(self._r2*self._r) # vertical acceleration m/s^2
 
-    def move(self, timeStep="the default for this planet"):
+    def move(self):
         """Updates position, velocity, acceleration, radius
            to those after timeStep.
            timeStep is an optional parameter.
            If timeStep is is not provided, uses the default value
            with which the SimulatedPlanet object was created.
         """
-        if timeStep == "the default for this planet":
-            timeStep = self._timeStep
-        self._x += self._vx * timeStep
-        self._y += self._vy * timeStep
-        self._r2 = self._x*self._x + self._y*self._y
+        self._x += self._vx * self._timeStep
+        self._y += self._vy * self._timeStep
+        self._r2 = self._x * self._x + self._y * self._y
         self._r = sqrt(self._r2)
-        self._vx += self._ax * timeStep
-        self._vy += self._ay * timeStep
-        self._ax = -MU*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
-        self._ay = -MU*self._y/(self._r2*self._r) # vertical acceleration m/s^2
+        self._vx += self._ax * self._timeStep
+        self._vy += self._ay * self._timeStep
+        self._ax = -MU * self._x / (self._r2 * self._r) # horiz acceleration
+        self._ay = -MU * self._y / (self._r2 * self._r) # vertical acceleration
 
     def name(self): return(self._name)
 
@@ -139,7 +137,7 @@ NEPTUNE = SimulatedPlanet("Neptune",
 
 ME = EARTH_DATA["mass"]
 PE = EARTH_DATA["perihelion"]
-S1_0 = sqrt(G*(MASS_SUN + ME) / PE) # the speed of a made-up planet
+S1_0 = sqrt(G * (MASS_SUN + ME) / PE) # the speed of a made-up planet
 # with the same mass and perihelion as Earth, but with a circular orbit.
 
 # Made-up planets, for computational experiments (default pencolor=green)

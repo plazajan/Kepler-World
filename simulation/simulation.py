@@ -64,48 +64,55 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
 #---------------------------------------------------------------------------------
 
 def predictByTheory(planet: SimulatedPlanet, displayParameters: dict):
-
+    """Extracts perihelion and maxSpeed from planet,
+       prdicts and draws its orbit; predicts the orbital period,
+       predicts that sweepSpeed is constant,
+       draws a graph of such a constant function depending on time
+       for times 0 to the orbital period.
+    """
     orbitScaleDownFactor = displayParameters["orbitScaleDownFactor"]
     graphStartX = displayParameters["graphStartX"]
     sweepSpeedScaleDownFactor = displayParameters["sweepSpeedScaleDownFactor"]
     timeScaleDownFactor = displayParameters["timeScaleDownFactor"]
-    
-##    t = planetData["orbital period"]
-##    a = planetData["semi-major axis"]
-##    b = planetData["semi-minor axis"]
-##    c = planetData["linear eccentricity"]
-##    vmax = planetData["max speed"]
-##    perihelion = planetData["perihelion"]
-    
-    mu = G*(MASS_SUN+planet.mass()) # gravitational parameter
+
     perihelion = planet.perihelion()
     vmax = planet.maxSpeed()
-    a = perihelion*mu / (2*mu-perihelion*vmax*vmax) # semi-major axis:
+    mu = G * (MASS_SUN + planet.mass()) # gravitational parameter
+    a = perihelion * mu / (2 * mu-perihelion * vmax * vmax) # semi-major axis:
     c = a - perihelion # the linear eccentricity, i.e. center-to-focus distance
     aphelion = a + c # predicted aphelion distance
-    b = sqrt(aphelion*perihelion)  # predicted semi-minor axis
-    t = 2*pi*sqrt(a*a*a/mu) # predicted orbital period in s
+    b = sqrt(aphelion * perihelion)  # predicted semi-minor axis
+    t = 2 * pi * sqrt(a * a * a / mu) # predicted orbital period in s
     sweepSpeed0 = perihelion * vmax / 2
 
     drawEllipse(a/orbitScaleDownFactor, b/orbitScaleDownFactor,
                 c/orbitScaleDownFactor)
 
-    turtle2 = Turtle(visible=False)
-    turtle2.speed("fastest")
-    turtle2.pendown()
-    turtle2.pensize(1)
-    turtle2.pencolor("pink")
+    # Draw a horizontal segment of length proportional to the orbital period
+    # at a hight propostional to sweepSpeed0.
+    
+    turtle = Turtle(visible=False)
+    turtle.speed("fastest")
+    turtle.pendown()
+    turtle.pensize(1)
+    turtle.speed(3)
+    turtle.pencolor("pink")
+    
+    turtle.teleport(graphStartX, sweepSpeed0 / sweepSpeedScaleDownFactor)
 
-    turtle2.teleport(graphStartX,
-                     sweepSpeed0 / sweepSpeedScaleDownFactor)
-    turtle2.speed(3)
-
-    # draw a pink hirizontal line with a blunt end 
-    turtle2.goto(graphStartX+t/timeScaleDownFactor,
-                     sweepSpeed0 /sweepSpeedScaleDownFactor)
-    turtle2.left(90)
-    turtle2.forward(3)
-    turtle2.back(6)
+    # left end:
+    turtle.left(90)
+    turtle.forward(3)
+    turtle.back(6)
+    turtle.forward(3)
+    turtle.right(90)
+    # horizontal line:
+    turtle.goto(graphStartX + t / timeScaleDownFactor,
+                sweepSpeed0 / sweepSpeedScaleDownFactor)
+    # right end:
+    turtle.left(90)
+    turtle.forward(3)
+    turtle.back(6)
 
 #sky(showSun=False) # run/uncomment this before running predictByTheory
 
@@ -249,6 +256,13 @@ def simulateAndTest(planet: SimulatedPlanet, displayParameters):
 
     turtle2.teleport(graphStartX,
                      sweepSpeed0/sweepSpeedScaleDownFactor)
+    
+    # left end:
+    turtle2.left(90)
+    turtle2.forward(3)
+    turtle2.back(6)
+    turtle2.forward(3)
+    turtle2.right(90)
     
     # The planet starts from its perihelion.
 

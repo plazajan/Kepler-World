@@ -32,7 +32,7 @@ def simmulationSummary(planetData: dict, planet: SimulatedPlanet,
     #a = perihelion*mu / (2*mu-perihelion*vmax*vmax) # semi-major axis:
     #c = a - perihelion # the linear eccentricity, i.e. center-to-focus distance
     #aphelion = a + c # predicted aphelion distance
-    #b = sqrt(aphelion*perihelion)  # predicted semi-minor axis
+    #b = sqrt(aphelion*perihelion)  # predicted se1mi-minor axis
     #t = 2*pi*sqrt(a*a*a/mu) # predicted orbital period in s
 
     turtle2 = Turtle(visible=False)
