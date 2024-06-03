@@ -141,13 +141,13 @@ S1_0 = sqrt(G * (MASS_SUN + ME) / PE) # the speed of a made-up planet
 # with the same mass and perihelion as Earth, but with a circular orbit.
 
 # Made-up planets, for computational experiments (default pencolor=green)
-PLANET0_7 = SimulatedPlanet("Planet 0.7", ME, PE, 0.7*S1_0) 
-PLANET0_8 = SimulatedPlanet("Planet 0.8", ME, PE, 0.8*S1_0)
-PLANET0_9 = SimulatedPlanet("Planet 0.9", ME, PE, 0.9*S1_0)
-PLANET1_0 = SimulatedPlanet("Planet 1.0", ME, PE,     S1_0)
-PLANET1_1 = SimulatedPlanet("Planet 1.1", ME, PE, 1.1*S1_0)
-PLANET1_2 = SimulatedPlanet("Planet 1.2", ME, PE, 1.2*S1_0)
-PLANET1_3 = SimulatedPlanet("Planet 1.3", ME, PE, 1.3*S1_0)
+PLANET0_7 = SimulatedPlanet("Made-up planet 0.7", ME, PE, 0.7*S1_0) 
+PLANET0_8 = SimulatedPlanet("Made-up planet 0.8", ME, PE, 0.8*S1_0)
+PLANET0_9 = SimulatedPlanet("Made-up planet 0.9", ME, PE, 0.9*S1_0)
+PLANET1_0 = SimulatedPlanet("Made-up planet 1.0", ME, PE,     S1_0)
+PLANET1_1 = SimulatedPlanet("Made-up planet 1.1", ME, PE, 1.1*S1_0)
+PLANET1_2 = SimulatedPlanet("Made-up planet 1.2", ME, PE, 1.2*S1_0)
+PLANET1_3 = SimulatedPlanet("Made-up planet 1.3", ME, PE, 1.3*S1_0)
 
 del ME
 del PE
