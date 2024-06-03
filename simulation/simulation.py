@@ -12,7 +12,7 @@ def sky(skyColor="black", showSun=True):
     """
     screen = getscreen()
     screen.clear() # remove turtle image
-    screen.screensize(2000,900)
+    screen.screensize(2100,950)
     screen.title("Kepler's world")
     screen.bgcolor(skyColor)
     if showSun:
@@ -169,7 +169,7 @@ def simulate(planet: SimulatedPlanet):
     # UPPER PART OF THE ORBIT:
     done = False
     while True: 
-        for j in range(100): # update turtle every 100 moves
+        for j in range(10_000): # update turtle every 100 moves
             planet.move()
             (x,y) = planet.position()
             if y <= 0:
@@ -183,7 +183,7 @@ def simulate(planet: SimulatedPlanet):
     # LOWER PART OF THE ORBIT:
     done = False
     while True: 
-        for j in range(100): # update turtle every 100 moves
+        for j in range(10_000): # update turtle every 100 moves
             planet.move()
             (x,y) = planet.position()
             if y >= 0:
@@ -280,9 +280,8 @@ def simulateAndTest(planet: SimulatedPlanet, displayParameters):
 
     # UPPER PART OF THE ORBIT:
     done = False
-    planet.setTimeStep(10)
     while True: 
-        for j in range(10000): # update turtle every 100 moves
+        for j in range(10_000): # update turtle every 10_000 moves
             planet.move()
             time += planet.timeStep() # update T
             (x,y) = planet.position() # update minX, maxY
@@ -307,7 +306,7 @@ def simulateAndTest(planet: SimulatedPlanet, displayParameters):
     # LOWER PART OF THE ORBIT:
     done = False 
     while True: 
-        for j in range(10000): # update turtle every 100 moves
+        for j in range(10_000): # update turtle every 10_000 moves
             planet.move()
             time += planet.timeStep() # update T
             (x,y) = planet.position()

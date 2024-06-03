@@ -17,6 +17,9 @@ def simmulationSummary(planetTableData: dict, planet: SimulatedPlanet,
     print()
     print("-" * 79)
     print(planet.name())
+    print()
+    print("Simulation time step =", planet.timeStep(), "seconds.")
+    print()
     
     # Data from astronomical tables (observed and calculated)
     a0 = planetTableData["semi-major axis"]
@@ -40,33 +43,33 @@ def simmulationSummary(planetTableData: dict, planet: SimulatedPlanet,
     v2 = simulationResults["speed at aphelion"]
 
     print()
-    print("Semi-major axis, in km:")
+    print("Semi-major axis, rounded, in km:")
     print(round(a0/KM), "- from astronomical tables,")
     print(round(a1/KM), "- predicted using theory,",
           round(abs(a1-a0)*100/a0, 3), "% relative error,")
     print(round(a2/KM), "- from simulation,",
           round(abs(a2-a0)*100/a0, 3), "% relative error.")
     print()
-    print("Semi-minor axis, in km:")
+    print("Semi-minor axis, rounded, in km:")
     print(round(b0/KM), "- from astronomical tables,")
     print(round(b1/KM), "- predicted using theory,",
           round(abs(b1-b0)*100/b0, 3), "% relative error,")
     print(round(b2/KM), "- from simulation,",
           round(abs(b2-b0)*100/b0, 3), "% relative error.")
     print()
-    print("Orbital period, in days:")
+    print("Orbital period, rounded, in days:")
     print(round(t0/DAY), "- from astronomical tables,")
     print(round(t1/DAY), "- predicted using theory,",
           round(abs(t1-t0)*100/t0, 3), "% relative error,")
     print(round(t2/DAY), "- from simulation,",
           round(abs(t2-t0)*100/t0, 3), "% relative error.")
     print()
-    print("Speed at the aphelion, in km/s:")
+    print("Speed at the aphelion, rounded, in km/s:")
     print(round(v1/(KM/SEC)), "- predicted using theory,")
     print(round(v2/(KM/SEC)), "- from simulation,",
           round(abs(v2-v1)*100/v1, 3), "% relative error.")
     print()
-    print("Area sweep speed, in (km^2)/s:")
+    print("Area sweep speed, rounded, in (km^2)/s:")
     print(round(sweepSpeed0/(KM*KM/SEC)), "- a constant value by the theory,")
     print(round(sweepSpeedRelativeError2*100, 3),
           "% relative error in the simulation.")
@@ -85,13 +88,17 @@ def planets(n: int, displayParameters):
        before starting the simulation.
        Besides displaying turtle graphics, it produces output.
     """
+
+    print("-" * 79)
     print(
 """The orbits displayed in turtle graphics are to scale,
 and planets move counter-clockwise as seen from the north pole.
 The Sun is not to scale; it is shown much bigger.
 Other characteristics of the orbits are not modeled here -
-all ellipses are shown in the same plane with the major axis on the x-axis, and
-perturbations due to gravitational influence of other planets are not shown."""
+all ellipses are shown in the same plane, with the major axis on the x-axis, and
+perturbations due to gravitational influence of other planets are not shown.
+The times in which the turtle completes the drawings of the orbits 
+are not proportional to the planets' orbital periods."""
          )
     
     orbitScaleDownFactor = displayParameters["orbitScaleDownFactor"]
@@ -110,13 +117,12 @@ It is bigger than all the asteroids in the belt between Mars and Jupiter,
 but smaller than the Moon. This simulation does not include Pluto."""
              )
     
-    # Default time step = 1000 s
     if n>=1:
         simmulationSummary(MERCURY_DATA, MERCURY, displayParameters)
     if n>=2:
         simmulationSummary(VENUS_DATA, VENUS, displayParameters)
     if n>=3:
-        simmulationSummary(EARTH_DATA, EARTH, displayParameters)
+        simmulationSummary(EARTH_DATA, EARTH, displayParameters)   
     if n>=4:
         simmulationSummary(MARS_DATA, MARS, displayParameters)
     if n>=5:
@@ -159,6 +165,9 @@ def testKepler(planet: SimulatedPlanet, displayParameters):
     print()
     print("-" * 79)
     print(planet.name())
+    print()
+    print("Simulation time step =", planet.timeStep(), "seconds.")
+    print()
         
     # Predict orbit using theory
     predictedOrbit = predictByTheory(planet, displayParameters)
@@ -177,27 +186,27 @@ def testKepler(planet: SimulatedPlanet, displayParameters):
     v2 = simulationResults["speed at aphelion"]
 
     print()
-    print("Semi-major axis, in km:")
+    print("Semi-major axis, rounded, in km:")
     print(round(a1/KM), "- predicted using theory,")
     print(round(a2/KM), "- from simulation,",
           round(abs(a2-a1)*100/a1, 3), "% relative error.")
     print()
-    print("Semi-minor axis, in km:")
+    print("Semi-minor axis, rounded, in km:")
     print(round(b1/KM), "- predicted using theory,")
     print(round(b2/KM), "- from simulation,",
           round(abs(b2-b1)*100/b1, 3), "% relative error.")
     print()
-    print("Orbital period, in days:")
+    print("Orbital period, rounded, in days:")
     print(round(t1/DAY), "- predicted using theory,")
     print(round(t2/DAY), "- from simulation,",
           round(abs(t2-t1)*100/t1, 3), "% relative error.")
     print()
-    print("Speed at the aphelion, in km/s:")
+    print("Speed at the aphelion, rounded, in km/s:")
     print(round(v1/(KM/SEC)), "- predicted using theory,")
     print(round(v2/(KM/SEC)), "- from simulation,",
           round(abs(v2-v1)*100/v1, 3), "% relative error.")
     print()
-    print("Area sweep speed, in (km^2)/s:")
+    print("Area sweep speed, rounded, in (km^2)/s:")
     print(round(sweepSpeed1/(KM*KM/SEC)), "- a constant value by the theory,")
     print(round(sweepSpeedRelativeError2*100, 3),
           "% relative error in the simulation.")
@@ -210,46 +219,50 @@ def main():
     print("Kepler's World")
 
     print("""
-This program simulates planet movement and tests Kepler's laws.
+This program simulates planetary motion to demostrate and test Kepler's laws.
 
-The program draws in pink the elliptical orbit with the ellipses' foci
-predicted by Kepler's laws,
+The program draws in pink the elliptical orbit with the foci
+as predicted by Kepler's laws,
 then it simulates the planet movement based on Newton's laws
 and draws the scaled down path of the planet,
 after which it calculates and draws the foci.
 If the two graphs coincide, this confirms Kepler's 1st law:
-Every planet's orbit is an ellipse with the Sun in one focus.
+every planet's orbit is an ellipse with the Sun in one focus.
 
-The 2nd law says that the planet sweeps equal areas in equal amounts of time.
+The 2nd law says that the line from the Sun to the planet
+sweeps equal areas in equal amounts of time.
 This is equivalent to having a constant area sweep speed.
 The 3rd law says that the square of the orbital period is proportional to
 the cube of the semi-major axis of the elliptical orbit
 (and the constant of proportionality is known).
 The program tests these laws as well.
-First it draws in pink a graph showing the prediction from Kepler's laws 
+It draws in pink a graph showing the prediction from Kepler's laws 
 of how the sweep speed depends on time,
 for times from 0 to the predicted orbital period
--- this graph is (a segment of) a straight horizontal line.
-Then, during the simulation, it graphs scaled down sweep speed
+-- this graph is a segment of a straight horizontal line.
+Then, during the simulation, it graphs the sweep speed
 from the beginning to the end of a complete orbital period.
 If the two graphs coincide, this confirms Kepler's 2nd and 3rd laws.
 
 The program also prints information concerning the error of the simulation;
 notice that the scaled down graphs concerning Kepler's 2nd and 3rd laws
 coincide perfectly only because of limited resolution of computer screens,
-while in reality there exists an error of the simulation.
-
-In the case of actual celestial bodies
-it also compares the simulated orbit to the data from astronomical tables
-(which result form obeservations and theory, but are not purely observational.)
+while in reality there exists an error.
 """
 )
 
-    displayParameters = {
+    displayParameters4 = {
         "orbitScaleDownFactor" : 1_000_000_000,
         "graphStartX" : 200,
         "sweepSpeedScaleDownFactor" : 10_000_000_000_000,
         "timeScaleDownFactor" : 100_000
+    }
+
+    displayParameters8 = {
+        "orbitScaleDownFactor" : 10_000_000_000,
+        "graphStartX" : 500,
+        "sweepSpeedScaleDownFactor" : 100_000_000_000_000,
+        "timeScaleDownFactor" : 10_000_000
     }
 
     while True:
@@ -257,24 +270,23 @@ it also compares the simulated orbit to the data from astronomical tables
         print("""
 1. Inner planets: Mercury, Venus, Earth and Mars.
 
-2. A made-up celestial body with the same mass and perihelion as Earth
+2. Eight planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune.
+
+3. A made-up celestial body with the same mass and perihelion as Earth
    but with the maximal speed 20% bigger than Earth.
 
-3. Exit.
+4. Exit.
           """)
-
-# add this menu option:
-#2. Eight planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune.
 
         choice = input("Enter your choice (1-3): ")
         if choice == "":
             return
         if   choice[0] == '1':
-            planets(4, displayParameters) # The 4 inner planets.
-        #elif choice[0] == '2':
-        #    planets(8, displayParameters) # All 8 planets.
+            planets(4, displayParameters4) # The 4 inner planets.
         elif choice[0] == '2':
-            testKepler(PLANET1_2, displayParameters)
+            planets(8, displayParameters8) # All 8 planets.
+        elif choice[0] == '3':
+            testKepler(PLANET1_2, displayParameters4)
         else:
             print("Bye")
             return

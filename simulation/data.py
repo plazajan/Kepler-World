@@ -21,9 +21,6 @@ but disregards some details not relevant to Kepler's laws.
 Namely, in this simulation (unlike in reality):
 * the orbits of all planets are in the same plane, and
 * the foci of elliptical orbits of all planets are on the same straight line.
-The period in which the turtle completes the orbit is proportional to the
-actual orbital period of the planet, but the scaling factor is not the same
-as for the orbit's size.
 
 A slideshow is also available: Discovering the Mechanics of the Solar System.
 
@@ -34,8 +31,8 @@ methodology of science, as outlined in README.md.
 # TO DO:
 # experiment1() - planets with masses m, 2m, 3m and the same perihelion.
 # experiment2() - plenets with the same perihelion and max speed v, 2v, 3v
-# ...
 # planets with the same orbtital period and different perihelions
+# ...
 
 #==================================================================================
 

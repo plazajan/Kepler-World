@@ -9,7 +9,9 @@ from data import *
 class SimulatedPlanet(object):
 
     def __init__(self, name, mass, perihelionDistance, maxSpeed,
-                 color="green", timeStep : int = 1000):
+                 color="green"
+                 # , timeStep=1000
+                 ):
         """mass in kg, perihelionDistance in m, maxSpeed in m/s,
            simulation timeStep in s.
            Assumes that the Sun is at (0, 0) in a coordinate system.
@@ -21,9 +23,9 @@ class SimulatedPlanet(object):
         self._perihelion = perihelionDistance
         self._maxSpeed = maxSpeed
         self._color = color
-        self._timeStep = timeStep
+        #self._timeStep = timeStep
         self.reset()
-                
+
     def reset(self):
         """Return the planet to the perihelion giving it its maximum speed."""
         self._x = self._perihelion
@@ -35,6 +37,12 @@ class SimulatedPlanet(object):
         self._vy = self._maxSpeed # vertical speed in m/s
         self._ax = -MU*self._x/(self._r2*self._r) # horizontal acceleration m/s^2
         self._ay = -MU*self._y/(self._r2*self._r) # vertical acceleration m/s^2
+        mu = G * (MASS_SUN + self._mass) # gravitational parameter incl. planet      
+        a = self._perihelion * mu / (
+            2 * mu - self._perihelion * self._maxSpeed * self._maxSpeed) 
+        t = 2 * pi * sqrt(a * a * a / mu) # predicted orbital period in s
+        self._timeStep = round(sqrt(t/100_000)) # seconds
+        
 
     def move(self):
         """Updates position, velocity, acceleration, radius
@@ -73,8 +81,6 @@ class SimulatedPlanet(object):
     def acceleration(self): return (self._ax, self._ay)
 
     def timeStep(self): return self._timeStep
-
-    def setTimeStep(self, timeStep : int): self._timeStep = timeStep
 
 #---------------------------------------------------------------------------------
 # Simulated planets - global constants.
