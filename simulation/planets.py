@@ -42,7 +42,6 @@ class SimulatedPlanet(object):
             2 * mu - self._perihelion * self._maxSpeed * self._maxSpeed) 
         t = 2 * pi * sqrt(a * a * a / mu) # predicted orbital period in s
         self._timeStep = round(sqrt(t/100_000)) # seconds
-        
 
     def move(self):
         """Updates position, velocity, acceleration, radius

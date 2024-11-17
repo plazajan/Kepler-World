@@ -219,7 +219,7 @@ def main():
     print("Kepler's World")
 
     print("""
-This program simulates planetary motion to demostrate and test Kepler's laws.
+This program simulates planetary motion to demonstrate and test Kepler's laws.
 
 The program draws in pink the elliptical orbit with the foci
 as predicted by Kepler's laws,
@@ -231,7 +231,7 @@ every planet's orbit is an ellipse with the Sun in one focus.
 
 The 2nd law says that the line from the Sun to the planet
 sweeps equal areas in equal amounts of time.
-This is equivalent to having a constant area sweep speed.
+This is equivalent to having a constant area-sweep speed.
 The 3rd law says that the square of the orbital period is proportional to
 the cube of the semi-major axis of the elliptical orbit
 (and the constant of proportionality is known).

@@ -142,7 +142,7 @@ def simulate(planet: SimulatedPlanet):
     """Precondition: planet position (x,y) must have x>0, y=0,
                      and velocity (vx,vy) must have vx=0, vy>0.
        So, the planet must be in the apsis (perihelion or aphelion)
-       and it is moving up & counter-clockwise.
+       and moving up / counter-clockwise.
        This function calculates the orbit resulting from the continuing local
        effect of the Newton's law of gravity, assuming the Sun is at (0,0).
        Every step in the simulation is done for the actual planet
@@ -161,6 +161,7 @@ def simulate(planet: SimulatedPlanet):
 
     orbitScaleDownFactor =  1_000_000_000 # suitable for inner planets
 
+    planet.reset()
     (x,y) = planet.position() # the right vertex of the elliptical orbit
     turtle.teleport(x/orbitScaleDownFactor, y/orbitScaleDownFactor)
 
@@ -169,7 +170,7 @@ def simulate(planet: SimulatedPlanet):
     # UPPER PART OF THE ORBIT:
     done = False
     while True: 
-        for j in range(10_000): # update turtle every 100 moves
+        for j in range(10_000): # update turtle every 10_000 moves
             planet.move()
             (x,y) = planet.position()
             if y <= 0:
@@ -183,7 +184,7 @@ def simulate(planet: SimulatedPlanet):
     # LOWER PART OF THE ORBIT:
     done = False
     while True: 
-        for j in range(10_000): # update turtle every 100 moves
+        for j in range(10_000): # update turtle every 10_000 moves
             planet.move()
             (x,y) = planet.position()
             if y >= 0:
@@ -232,7 +233,7 @@ def simulateAndTest(planet: SimulatedPlanet, displayParameters):
     sweepSpeedScaleDownFactor = displayParameters["sweepSpeedScaleDownFactor"]
     timeScaleDownFactor = displayParameters["timeScaleDownFactor"]
 
-    # JUPITER.setTimeStep(10_000)
+    planet.reset()
 
     # Concerning Kepler's 1st law
     (x,y) = planet.position() # the right vertex of the elliptical orbit
