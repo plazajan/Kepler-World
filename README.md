@@ -1,8 +1,11 @@
 Kepler's World
 
+See abstract.pdf and coursePlanning.txt for info on using these course 
+materials in the classroom.
+
 A simple simulation (in Python) of movements of celestial bodies 
-around the Sun for the purpose of studying Kepler's laws 
-and how they emerge from Newton's law of gravity.
+around the Sun - a computaitonal experiment for the purpose of 
+studying Kepler's laws and how they emerge from Newton's law of gravity.
 Designed for high school students or lower level undergraduate students.
 
 Movements of the eight planets are simulated, as well as movements of
@@ -40,9 +43,8 @@ Concepts of the methodology of science:
 * **Local** effects (of the law of gravity) vs.
   **global** properties (of orbits described by Kepler's laws).
 * **Visualization** vs. **simulation**.
-* **Emergence** (of Kepler's laws from Newton's laws) or
-  **reduction** of (Kepler's laws to Newton's laws).
-  Note: Newton gave a **(mathematical) proof**, using calculus.
+* Note: Newton gave a **(mathematical) proof**, using calculus
+  deriving Kepler's laws from base laws of motion and gravity.
 
 The visualization shows orbits to scale, 
 but disregards some details not relevant to Kepler's laws.
