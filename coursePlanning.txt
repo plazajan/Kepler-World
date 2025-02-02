@@ -1,0 +1,46 @@
+
+RESOURCES
+
+simulation -- a folder with a Python program in 4 files.
+
+starrySky.pdf -- intro to Astronomy and history of discoveries.
+
+science.pdf -- contains these parts: Mathematics, Physics, 
+               Computational Experiment, Methodology of Science
+
+==========================================================================
+
+ACTIVITIES
+
+up to 1 hour - ASTRONOMY: concepts of ecliptic, perihelion, aphelion, 
+               Kepler laws, vis-viva equation and orbital period equations
+               -- these are covered by the slideshow StarrySky.pdf
+               together with the history of early discoveries.
+               COMPUTATIONAL EXPERIMENT: running Kepler's World.
+               
+up to 1 hour - MATHEMATICS: ellipse equation, locus of equal sums from foci, 
+               parameters of an ellipse,
+               calculating ... from ...
+               
+up to 1 hour - PHYSICS: adding velocities as vectors, Newton's 2nd law F=ma.
+
+up to 1 hour - PHYSICS/MATHEMATICS (optional, for more advanced students,
+               but without using calculus): derivation of vis viva equation:
+               https://en.wikipedia.org/wiki/Vis-viva_equation
+
+up to 1 hour - PROGRAMMING (optional): code walk through of Kepler's World.
+               
+up to 1 hour - PROGRAMMING (optional): students modify the code of Kepler's 
+               World
+               a) include Pluto and/or Halley's comet
+               b) Simulate an orbit under an (incorrect) variant of the law of
+                  universal gravitation F = G(M+m)/r, 
+                  where the exponent at r is 1 instead of 2.
+                  Then, make the exponent 3.
+               
+up to 2 hours - METHODOLOGY OF SCIENCE.
+
+Note: for more advanced students familiar with calculus, the instructor can 
+      provide mathematical derivation of Kepler's laws from Newton's laws.
+
+==========================================================================
