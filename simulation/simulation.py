@@ -6,7 +6,7 @@ from planets import *
 #=================================================================================
 # AUXILIARY FUNCTIONS
 
-def sky(skyColor="black", showSun=True):
+def sky(skyColor="white", showSun=True):
     """Create black canvas with the white Sun at (0,0).
        The Sun size is not to scale; it is shown much bigger."
     """
@@ -17,14 +17,14 @@ def sky(skyColor="black", showSun=True):
     screen.bgcolor(skyColor)
     if showSun:
         turtle = Turtle(visible=False)
-        turtle.dot(10, "white") # The Sun is at (0,0) and is white.
+        turtle.dot(10, "black") # The Sun is at (0,0) and is black.
 
 #sky()
 
 #---------------------------------------------------------------------------------
    
 def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
-                color="pink"):
+                color="GreenYellow"):
     """Draws an ellipse centered at (-leftShift,0) and shows the foci;
        the foci are on the x-axis.
        For an ellipse centered at (0,0) use leftShift=0.
@@ -60,13 +60,13 @@ def drawEllipse(semiMajorAxis, semiMinorAxis, leftShift=0,
         turtle.goto(x-leftShift,y)
 
 #sky(showSun=False) # run/uncomment this before running drawEllipse
-#drawEllipse(200, 100, 0, "pink")
+#drawEllipse(200, 100, 0, "YellowGreen")
 
 #---------------------------------------------------------------------------------
 
 def predictByTheory(planet: SimulatedPlanet, displayParameters: dict):
     """Extracts perihelion and maxSpeed from the simulated planet,
-       predicts and draws in pink its orbit; predicts the orbital period,
+       predicts and draws in light green its orbit; predicts the orbital period,
        predicts that sweepSpeed is constant,
        draws a graph of such a constant function depending on time,
        for time from 0 to the orbital predicted period.
@@ -111,7 +111,7 @@ def predictByTheory(planet: SimulatedPlanet, displayParameters: dict):
     turtle.pendown()
     turtle.pensize(1)
     turtle.speed(3)
-    turtle.pencolor("pink")
+    turtle.pencolor("YellowGreen")
     # Put turtle at the starting position
     turtle.teleport(graphStartX,
                     sweepSpeedAtPerihelion / sweepSpeedScaleDownFactor)

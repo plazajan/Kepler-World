@@ -278,7 +278,7 @@ while in reality there exists an error.
 4. Exit.
           """)
 
-        choice = input("Enter your choice (1-3): ")
+        choice = input("Enter your choice (1-4): ")
         if choice == "":
             return
         if   choice[0] == '1':

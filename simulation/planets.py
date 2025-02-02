@@ -9,7 +9,7 @@ from data import *
 class SimulatedPlanet(object):
 
     def __init__(self, name, mass, perihelionDistance, maxSpeed,
-                 color="green"
+                 color="ForestGreen"
                  # , timeStep=1000
                  ):
         """mass in kg, perihelionDistance in m, maxSpeed in m/s,
@@ -100,13 +100,13 @@ VENUS   = SimulatedPlanet("Venus",
                  VENUS_DATA["mass"],
                  VENUS_DATA["perihelion"],
                  VENUS_DATA["max speed"],
-                 "white"
+                 "gold"
                 )
 EARTH   = SimulatedPlanet("Earth",
                  EARTH_DATA["mass"],
                  EARTH_DATA["perihelion"],
                  EARTH_DATA["max speed"],
-                 "turquoise"
+                 "deepskyblue"
                 )
 MARS    = SimulatedPlanet("Mars",
                  MARS_DATA["mass"],
